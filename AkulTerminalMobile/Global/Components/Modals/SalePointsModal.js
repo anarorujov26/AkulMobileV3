@@ -6,34 +6,19 @@ import SearchBar from '../../UI/SearchBar'
 import CustomColors from '../../Colors/CustomColors'
 import { FlatList } from 'react-native'
 
-const CustomerModal = ({ modalVisible, setModalVisible, idType, nameType, state, save }) => {
+const SalePointsModal = ({ modalVisible, setModalVisible, idType, nameType, state, save }) => {
 
     const [group, setGroup] = useState([]);
     const [search, setSearch] = useState("");
-    
-    const getGroups = async () => {
-        const result = await Api('customers/get.php', { token: await AsyncStorage.getItem('token') })
-        setGroup(result.data.Body.List)
-    }
 
-    const getSearchGroup = async () => {
-        let obj = { fast: search, token: await AsyncStorage.getItem('token') };
-        const result = await Api('customers/getfast.php', obj)
+    const getGroups = async () => {
+        const result = await Api('salepoints/get.php', { token: await AsyncStorage.getItem('token') })
         setGroup(result.data.Body.List)
     }
 
     useEffect(() => {
-        let timer;
-        if (search == "") {
-            getGroups();
-        } else {
-            timer = setTimeout(() => {
-                getSearchGroup();
-            }, 500);
-        }
-
-        return () => clearTimeout(timer);
-    }, [search])
+        getGroups();
+    }, [])
 
     return (
         <Modal
@@ -48,28 +33,28 @@ const CustomerModal = ({ modalVisible, setModalVisible, idType, nameType, state,
                     <SearchBar text={'Axtarış'} vl={search} setVL={setSearch} width={'100%'} addStyle={{ shadowColor: 'black', elevation: 5 }} onChangeText={(e) => { setSearch(e) }} />
                     <View style={{ margin: 10 }} />
                     <View style={{ width: '100%', height: '90%' }}>
-                            <FlatList data={group} renderItem={({ item, index }) => (
-                                <TouchableOpacity key={item.Id} style={styles.listContainer} onPress={() => {
-                                    state(rel => ({ ...rel, [idType]: item.Id }))
-                                    state(rel => ({ ...rel, [nameType]: item.Name }))
-                                    if(save){
-                                        save(true);
-                                    }
-                                    setModalVisible(false);
+                        <FlatList data={group} renderItem={({ item, index }) => (
+                            <TouchableOpacity key={item.Id} style={styles.listContainer} onPress={() => {
+                                state(rel => ({ ...rel, [idType]: item.Id }))
+                                state(rel => ({ ...rel, [nameType]: item.Name }))
+                                if (save) {
+                                    save(true);
+                                }
+                                setModalVisible(false);
 
-                                }}>
-                                    <View style={styles.listFirs}>
-                                        <View style={styles.listFirsContainer}>
-                                            <View style={styles.avatar}>
-                                                <Text style={styles.avatarName}>{item.Name[0] + item.Name[1]}</Text>
-                                            </View>
-                                        </View>
-                                        <View style={styles.listCenterContiner}>
-                                            <Text style={styles.name}>{item.Name}</Text>
+                            }}>
+                                <View style={styles.listFirs}>
+                                    <View style={styles.listFirsContainer}>
+                                        <View style={styles.avatar}>
+                                            <Text style={styles.avatarName}>{item.Name[0] + item.Name[1]}</Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>
-                            )} />
+                                    <View style={styles.listCenterContiner}>
+                                        <Text style={styles.name}>{item.Name}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )} />
                     </View>
                 </View>
             </View>
@@ -77,7 +62,7 @@ const CustomerModal = ({ modalVisible, setModalVisible, idType, nameType, state,
     )
 }
 
-export default CustomerModal
+export default SalePointsModal
 
 const styles = StyleSheet.create({
     centeredView: {

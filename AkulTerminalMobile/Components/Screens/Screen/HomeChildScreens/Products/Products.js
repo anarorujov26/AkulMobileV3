@@ -12,6 +12,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import NewFab from './../../../../../Global/Components/NewFab';
 import { FlatList } from 'react-native';
 import { GlobalContext } from '../../../../../Global/Components/GlobalState';
+import FilterModal from './../../../../../Global/FilterModal';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { TouchableOpacity } from 'react-native';
 
 const Products = ({ navigation }) => {
 
@@ -22,18 +25,20 @@ const Products = ({ navigation }) => {
   const [products, setProducts] = useState([]);
   const [maxPG, setMaxPG] = useState(null);
   const [pg, setPg] = useState(1)
+  const [visible, setVisible] = useState(false);
+  const [prObj, setPrObj] = useState(null)
 
   const getProducts = async () => {
     let obj = {
       ar: 0,
       dr: 0,
-      fast: "",
       gp: "",
       lm: 100,
       pg: pg - 1,
       sr: "Name",
       token: await AsyncStorage.getItem('token')
     }
+    setPrObj(obj);
     const result = await Api('products/get.php', obj);
     if (result.data.Headers.ResponseStatus !== "0") {
       navigation.goBack();
@@ -90,7 +95,14 @@ const Products = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <SearchBar width={'100%'} text={'Axtarış'} onChangeText={(e) => { setSearch_value(e) }} vl={search_value} setVL={setSearch_value} />
+      <View style={{ width: '100%', flexDirection: 'row' }}>
+        <SearchBar width={'85%'} text={'Axtarış'} addStyle={{ borderRadius: 0 }} onChangeText={(e) => { setSearch_value(e) }} vl={search_value} setVL={setSearch_value} />
+        <TouchableOpacity onPress={()=>{
+          setVisible(true)
+        }} style={{ width: '15%',backgroundColor:'white',justifyContent:'center',alignItems:'center'}}>
+          <Ionicons name={'filter'} color={'black'} size={25}/>
+        </TouchableOpacity>
+      </View>
       {
         products == null ?
           <CustomPrimaryButton text={'Siyahını yeniləyin'} width={'100%'} addStyle={{ marginTop: 10, borderRadius: 0 }} onPress={getProducts} />
@@ -100,7 +112,7 @@ const Products = ({ navigation }) => {
               <View style={{ flex: 1, width: '100%' }}>
                 <FlatList
                   data={products}
-                  renderItem={({ item, index }) => (
+                  renderItem={({ item }) => (
                     <ProductsList
                       location={"product"}
                       renderState={setRendersFromProducts}
@@ -154,6 +166,7 @@ const Products = ({ navigation }) => {
           renderList: setRendersFromProducts
         })
       }} />
+      <FilterModal spendItem={true} accounts={true} salePoints={true} stockFrom={true} stockTo={true} owner={true} stock={true} products={true} customer={true} customerName={'Təchizatçı'} group={true} isWeight={true} ar={true} modalVisible={visible} setModalVisible={setVisible} obj={prObj} setState={setProducts} api={'products/get.php'} />
     </View>
   )
 }

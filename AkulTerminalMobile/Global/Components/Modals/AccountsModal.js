@@ -1,24 +1,24 @@
-import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Api from '../Api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import CustomColors from '../../Colors/CustomColors'
 import { FlatList } from 'react-native'
-import { SearchBar } from 'react-native-screens'
 
-const OwnerModal = ({ modalVisible, setModalVisible, idType, nameType, state, save }) => {
+const AccountsModal = ({ modalVisible, setModalVisible, idType, nameType, state, save }) => {
 
-    const [owner, setOwner] = useState([]);
+    const [group, setGroup] = useState([]);
 
-    const getOwner = async () => {
-        const result = await Api('owners/get.php', { token: await AsyncStorage.getItem('token') })
-        setOwner(result.data.Body.List)
+    const getGroups = async () => {
+        const result = await Api('cashes/get.php', { token: await AsyncStorage.getItem('token') })
+        setGroup(result.data.Body.List)
     }
 
-
     useEffect(() => {
-        getOwner();
-    }, [])
+        if (modalVisible) {
+            getGroups();
+        }
+    }, [modalVisible])
 
     return (
         <Modal
@@ -30,31 +30,30 @@ const OwnerModal = ({ modalVisible, setModalVisible, idType, nameType, state, sa
             }}>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
+                    <View style={{ margin: 10 }} />
                     <View style={{ width: '100%', height: '90%' }}>
-                        <ScrollView style={{ width: '100%' }}>
-                            <FlatList data={owner} renderItem={({ item, index }) => (
-                                <TouchableOpacity key={item.Id} style={styles.listContainer} onPress={() => {
-                                    state(rel => ({ ...rel, [idType]: item.Id }))
-                                    state(rel => ({ ...rel, [nameType]: item.Name }))
-                                    if(save){
-                                        save(true);
-                                    }
-                                    setModalVisible(false);
+                        <FlatList data={group} renderItem={({ item, index }) => (
+                            <TouchableOpacity key={item.Id} style={styles.listContainer} onPress={() => {
+                                state(rel => ({ ...rel, [idType]: item.Id }))
+                                state(rel => ({ ...rel, [nameType]: item.Name }))
+                                if (save) {
+                                    save(true);
+                                }
+                                setModalVisible(false);
 
-                                }}>
-                                    <View style={styles.listFirs}>
-                                        <View style={styles.listFirsContainer}>
-                                            <View style={styles.avatar}>
-                                                <Text style={styles.avatarName}>{item.Name[0] + item.Name[1]}</Text>
-                                            </View>
-                                        </View>
-                                        <View style={styles.listCenterContiner}>
-                                            <Text style={styles.name}>{item.Name}</Text>
+                            }}>
+                                <View style={styles.listFirs}>
+                                    <View style={styles.listFirsContainer}>
+                                        <View style={styles.avatar}>
+                                            <Text style={styles.avatarName}>{item.Name[0] + item.Name[1]}</Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>
-                            )} />
-                        </ScrollView>
+                                    <View style={styles.listCenterContiner}>
+                                        <Text style={styles.name}>{item.Name}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )} />
                     </View>
                 </View>
             </View>
@@ -62,7 +61,7 @@ const OwnerModal = ({ modalVisible, setModalVisible, idType, nameType, state, sa
     )
 }
 
-export default OwnerModal
+export default AccountsModal
 
 const styles = StyleSheet.create({
     centeredView: {

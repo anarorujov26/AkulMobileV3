@@ -16,6 +16,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import PricePermission from '../../../../../Global/Components/PricePermission'
 import modificationsGroup from './../../../../../Global/Components/modificationsGroup';
 import DocumentInItems from '../../../../../Global/Components/DocumentInItems'
+import axios from 'axios'
+import RNPrint from 'react-native-print'
 
 const Product = ({ route, navigation }) => {
 
@@ -84,7 +86,7 @@ const Product = ({ route, navigation }) => {
         obj = PriceTypeProsessing(obj, result.data.Body.List)
       }
 
-      obj.Modifications = await modificationsGroup(result.data.Body.List[0].Modifications[0],null);
+      obj.Modifications = await modificationsGroup(result.data.Body.List[0].Modifications[0], null);
       setProduct(obj);
     }
   }
@@ -164,6 +166,37 @@ const Product = ({ route, navigation }) => {
     }
   }
 
+  const getPRINT = async () => {
+    let obj = {
+      token: await AsyncStorage.getItem('token'),
+      TemplateId: 1,
+      List: [
+        {
+          Price: ConvertFixedTable(product.Price),
+          ProductId: product.Id,
+          Quantity: 1
+        }
+      ]
+    }
+
+    const result = await axios.post('https://api.akul.az/1.0/dev/controllers/products/pricelist.php', obj);
+    try {
+      // URL'den HTML içeriği indir
+      // const response = await fetch('https://api.akul.az/1.0/online/controllers/printing/print.php?t=f8c8a1108261d76fd6ef5d6d4abd8097&tp=demands&i=0784b92f-7497-4333-8b21-81c495a8b28f&tm=demands');
+      // const htmlContent = await response.text();
+      // İndirilen HTML içeriğini yazdır
+
+      const jobName = await RNPrint.print({
+        html: result.data,
+        fileName: 'PrintDocument',
+      });
+
+      console.log(`Printing job ${jobName} started`);
+    } catch (error) {
+      console.error('Error printing:', error);
+    }
+  }
+
   useEffect(() => {
     getProductData(id);
   }, [id])
@@ -197,6 +230,13 @@ const Product = ({ route, navigation }) => {
       </View>
       :
       <View style={{ flex: 1 }}>
+        <TouchableOpacity onPress={getPRINT} style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: 5
+        }}>
+          <AntDesign name='printer' color={CustomColors.primary} size={40} />
+        </TouchableOpacity>
         <ScrollView>
           <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
             <View style={{ width: '100%' }}>
@@ -321,11 +361,11 @@ const Product = ({ route, navigation }) => {
 
             {
               id !== null &&
-            <DocumentInItems data={product} itemOne={'title'} itemTwo={'value'}  />
+              <DocumentInItems data={product} itemOne={'title'} itemTwo={'value'} />
 
             }
 
-          </View> 
+          </View>
 
           <View style={{ margin: 40 }} />
 
