@@ -49,7 +49,14 @@ const Invents = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <DocumentSearch getData={getInventData} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setInvents} apiAdress={'inventories/get.php'} />
+      <DocumentSearch apiObject={{
+        api:"inventories/get.php",
+        products:true,
+        stock:true,
+        owner:true,
+        momentFirst:true,
+        momentEnd:true
+      }} getData={getInventData} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setInvents} apiAdress={'inventories/get.php'} />
       {
         invents == null ?
           <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

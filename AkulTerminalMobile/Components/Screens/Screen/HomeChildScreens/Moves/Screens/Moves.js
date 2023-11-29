@@ -50,7 +50,14 @@ const Moves = ({ navigation }) => {
 
         <View style={{ flex: 1, alignItems: 'center' }}>
             <DocumentSearch
-                getData={getMoves} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setMoves} apiAdress={'moves/get.php'} />
+                apiObject={{
+                    products:true,
+                    api:'moves/get.php',
+                    stockFrom:true,
+                    stockTo:true,
+                    momentFirst:true,
+                    momentEnd:true
+                }} getData={getMoves} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setMoves} apiAdress={'moves/get.php'} />
             {
                 moves == null ?
                     <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

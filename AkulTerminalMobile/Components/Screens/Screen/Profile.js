@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import Api from '../../../Global/Components/Api';
 import { useState } from 'react';
 import { ActivityIndicator } from 'react-native';
-import Version from '../../../Version'
+import Version from '../../../Version.js'
 import CustomTextInput from '../../../Global/UI/CustomTextInput';
 import { GlobalContext } from '../../../Global/Components/GlobalState';
 import CustomPrimarySaveButton from '../../../Global/UI/CustomPrimarySaveButton';

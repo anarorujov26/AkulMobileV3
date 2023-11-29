@@ -50,6 +50,16 @@ const Demands = ({ navigation }) => {
 
     <View style={{ flex: 1, alignItems: 'center' }}>
       <DocumentSearch
+      apiObject={{
+        api:"demands/get.php",
+        products:true,
+        stock:true,
+        customer:true,
+        customerName:"Müştəri",
+        customerGroup:true,
+        momentFirst:true,
+        momentEnd:true
+      }}
         getData={getDemands} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDemands} apiAdress={'demands/get.php'} />
         {
           demands == null ?

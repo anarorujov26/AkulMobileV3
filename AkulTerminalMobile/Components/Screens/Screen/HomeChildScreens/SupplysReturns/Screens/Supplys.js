@@ -49,7 +49,15 @@ const Supplys = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
-            <DocumentSearch getData={getSupplys} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSupplys} apiAdress={'supplyreturns/get.php'} />
+            <DocumentSearch apiObject={{
+                api:"supplyreturns/get.php",
+                products:true,
+                stock:true,
+                customer:true,
+                customerName:"Təchizatçı",
+                momentFirst:true,
+                momentEnd:true
+            }} getData={getSupplys} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSupplys} apiAdress={'supplyreturns/get.php'} />
                 {
                     supplys == null ?
                         <View style={{ alignItems: 'center', marginTop: 20 }}>

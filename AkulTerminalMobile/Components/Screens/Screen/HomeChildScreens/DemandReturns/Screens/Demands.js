@@ -49,7 +49,17 @@ const Demands = ({ navigation }) => {
   return (
 
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <DocumentSearch getData={getDemands} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDemands} apiAdress={'demandreturns/get.php'} />
+      <DocumentSearch
+      apiObject={{
+        api:'demandreturns/get.php',
+        products:true,
+        stock:true,
+        customer:true,
+        customerName:"Müştəri",
+        momentFirst:true,
+        momentEnd:true
+      }}
+       getData={getDemands} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDemands} apiAdress={'demandreturns/get.php'} />
         {
           demands == null ?
             <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

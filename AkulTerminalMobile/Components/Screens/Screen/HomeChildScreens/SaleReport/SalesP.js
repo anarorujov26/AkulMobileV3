@@ -43,7 +43,22 @@ const SalesP = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
-            <DocumentSearch getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSales} apiAdress={'salereports/get.php'} />
+            <DocumentSearch 
+            apiObject={{
+                api:"salereports/get.php",
+                products:true,
+                group:true,
+                customer:true,
+                customerName:'Müştəri',
+                stock:true,
+                salePoints:true,
+                spendType:true,
+                momentFirst:true,
+                momentEnd:true,
+                supplierName:"Təchizatçı",
+                supplier:true
+            }}
+            getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSales} apiAdress={'salereports/get.php'} />
             {
                 sales == null ?
                     <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

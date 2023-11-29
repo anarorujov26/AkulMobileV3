@@ -49,7 +49,14 @@ const CustomerOrders = ({ navigation }) => {
   return (
 
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <DocumentSearch getData={getCustomerOrders} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setCustomerOrders} apiAdress={'customerorders/get.php'} />
+      <DocumentSearch apiObject={{
+        api:"customerorders/get.php",
+        products:true,
+        stock:true,
+        owner:true,
+        momentFirst:true,
+        momentEnd:true
+      }} getData={getCustomerOrders} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setCustomerOrders} apiAdress={'customerorders/get.php'} />
         {
           customerOrders == null ?
             <View style={{ alignItems: 'center', marginTop: 20 }}>

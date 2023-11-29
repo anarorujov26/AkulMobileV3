@@ -18,6 +18,12 @@ import SalePointsModal from './Components/Modals/SalePointsModal';
 import AccountsModal from './Components/Modals/AccountsModal';
 import SpendItemModal from './Components/Modals/SpendItemModal';
 import SpendTypeModal from './Components/Modals/SpendModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import FilterDate from './UI/FilterDate';
+import PayTypeModal from './Components/Modals/PayTypeModa';
+import PaydirModal from './Components/Modals/PaydirModal';
+import ZerosModal from './Components/Modals/ZerosModal';
+import EmployeesModal from './Components/Modals/EmployeesModa';
 
 const FilterModal = ({
   modalVisible,
@@ -39,10 +45,19 @@ const FilterModal = ({
   accounts,
   spendItem,
   spendType,
+  momentFirst,
+  momentEnd,
   api,
+  pay,
+  paydir,
+  price,
+  zeros,
+  employees,
+  supplier,
+  supplierName
 }) => {
 
-  const [thisObj, setThisObj] = useState(null);
+  const [thisObj, setThisObj] = useState({});
   const [customerModal, setCustomerModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [groupModal, setGroupModal] = useState(false)
@@ -58,6 +73,14 @@ const FilterModal = ({
   const [cashModal, setCashModal] = useState(false);
   const [spendItemModal, setSpendItemModal] = useState(false)
   const [spendTypeModal, setSpendTypeModal] = useState(false);
+  const [momentFirstModal, setMomentFirstModal] = useState(false);
+  const [momentEndModal, setMomentEndModal] = useState(false);
+  const [payModal, setPayModal] = useState(false);
+  const [paydirModal, setPaydirModal] = useState(false);
+  const [zerosModal, setZerosModal] = useState(false);
+  const [employeesModal, setEmployeesModal] = useState(false);
+  const [supplierModal, setSupplierModal] = useState(false);
+
   const getAPI = async () => {
     setIsLoading(true);
     let obj = { ...thisObj };
@@ -67,7 +90,8 @@ const FilterModal = ({
         obj.cusId = obj.cus;
         obj.customer = obj.cus;
       }
-    } else if (group) {
+    }
+    if (group) {
       delete obj.groupName
     }
     if (customerGroup) {
@@ -118,10 +142,44 @@ const FilterModal = ({
         delete obj.salesName
       }
     }
-    const result = await Api(api, obj)
-    console.log(api);
+    if (obj.employeeId) {
+      delete obj.employeeName
+    }
+    if (!obj.token) {
+      obj.token = await AsyncStorage.getItem("token")
+    }
+    if (obj.momb) {
+      if (!obj.mome) {
+        alert("Bitmə tarixi əlavə edilməyib!")
+        setIsLoading(false)
+        return
+      }
+    }
+    if (obj.mome) {
+      if (!obj.momb) {
+        alert("Başlama tarixi əlavə edilməyib!")
+        setIsLoading(false)
+        return
+      }
+    }
     console.log(obj);
-    console.log(result);
+    if (obj.amb) {
+      if (!obj.ame) {
+        alert("Max.Qiymət əlavə edilməyib!")
+        setIsLoading(false)
+        return
+      }
+    }
+    if (obj.ame) {
+      if (!obj.amb) {
+        alert("Min.Qiymət əlavə edilməyib!")
+        setIsLoading(false)
+        return
+      }
+    }
+
+    const result = await Api(api, obj)
+    console.log(obj);
     if (result.data.Headers.ResponseStatus == "0") {
       if (result.data.Body.List[0]) {
         setState(result.data.Body.List);
@@ -136,7 +194,11 @@ const FilterModal = ({
   }
 
   const getCLEAR = async () => {
-    const result = await Api(api, obj);
+    let obj2 = { ...obj }
+    if (!obj2.token) {
+      obj2.token = await AsyncStorage.getItem('token')
+    }
+    const result = await Api(api, obj2);
     if (result.data.Headers.ResponseStatus == "0") {
       setThisObj(obj);
       if (result.data.Body.List[0]) {
@@ -191,7 +253,7 @@ const FilterModal = ({
                       <TouchableOpacity onPress={() => { setStockModal(true) }}>
                         <CustomTextInput editable={false} text={"Anbar"} width={'100%'} value={thisObj.stockName ? thisObj.stockNAME : "Anbar"} end={true} endText={<AntDesign name='right' size={15} />} />
                       </TouchableOpacity>
-                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dc dcdc", alignSelf: 'center' }} />
                     </>
                   }
                   {
@@ -242,6 +304,25 @@ const FilterModal = ({
                     </>
                   }
                   {
+                    pay &&
+                    <>
+
+                      <TouchableOpacity onPress={() => { setPayModal(true) }}>
+                        <CustomTextInput editable={false} text={"Ödəniş növü"} width={'100%'} value={thisObj.paytype == "p" ? "Nağd" : thisObj.paytype == "i" ? "Köçürmə" : "Hamısı"} end={true} endText={<AntDesign name='right' size={15} />} />
+                      </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                    </>
+                  }
+                  {
+                    paydir &&
+                    <>
+                      <TouchableOpacity onPress={() => { setPaydirModal(true) }}>
+                        <CustomTextInput editable={false} text={"Əməliyyat"} width={'100%'} value={thisObj.paydir == "i" ? "Mədaxil" : thisObj.paydir == "o" ? "Məxaric" : "Hamısı"} end={true} endText={<AntDesign name='right' size={15} />} />
+                      </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                    </>
+                  }
+                  {
                     customer &&
                     <>
 
@@ -257,6 +338,16 @@ const FilterModal = ({
 
                       <TouchableOpacity onPress={() => { setCustomerGP(true) }}>
                         <CustomTextInput editable={false} text={'Müştəri qrupu'} width={'100%'} value={thisObj.gp ? thisObj.customerGroup : "Müştəri qrupu"} end={true} endText={<AntDesign name='right' size={15} />} />
+                      </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                    </>
+                  }
+                  {
+                    supplier &&
+                    <>
+
+                      <TouchableOpacity onPress={() => { setSupplierModal(true) }}>
+                        <CustomTextInput editable={false} text={supplierName} width={'100%'} value={thisObj.supplierId ? thisObj.supplier : supplierName} end={true} endText={<AntDesign name='right' size={15} />} />
                       </TouchableOpacity>
                       <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
                     </>
@@ -294,6 +385,7 @@ const FilterModal = ({
                       <TouchableOpacity onPress={() => { setIsWModal(true) }}>
                         <CustomTextInput editable={false} text={'Arxiv'} width={'100%'} value={thisObj.ar == "1" ? "Arxivli" : thisObj.ar == "0" ? "Arxivsiz" : "Hamısı"} end={true} endText={<AntDesign name='right' size={15} />} />
                       </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
                     </>
                   }
                   {
@@ -302,6 +394,72 @@ const FilterModal = ({
                       <TouchableOpacity onPress={() => { setIsWModal(true) }}>
                         <CustomTextInput editable={false} text={'Çəki'} width={'100%'} value={thisObj.wg == "1" ? "Çəkili" : thisObj.wg == "0" ? "Çəkisiz" : "Hamısı"} end={true} endText={<AntDesign name='right' size={15} />} />
                       </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                    </>
+                  }
+                  {
+                    employees &&
+                    <>
+                      <TouchableOpacity onPress={() => { setEmployeesModal(true) }}>
+                        <CustomTextInput editable={false} text={'Əməkdaşlar'} width={'100%'} value={thisObj.employeeId ? thisObj.employeeName : "Əməkdaşlar"} end={true} endText={<AntDesign name='right' size={15} />} />
+                      </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                    </>
+                  }
+                  {
+                    zeros &&
+                    <>
+                      <TouchableOpacity onPress={() => { setZerosModal(true) }}>
+                        <CustomTextInput editable={false} text={'Siyahı'} width={'100%'} value={
+                          thisObj.zeros ?
+                            thisObj.zeros == "4" ? "0 olanlar"
+                              : thisObj.zeros == "3" ? "0 olmayanlar"
+                                : thisObj.zeros == "2" ? "Borc (verəcək)"
+                                  : thisObj.zeros == "1" ? "Borc (alacaq)"
+                                    : "Bütün borclar" : 'siyahı'
+                        } end={true} endText={<AntDesign name='right' size={15} />} />
+                      </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                    </>
+                  }
+                  {
+                    price &&
+                    <>
+                      <TouchableOpacity>
+                        <CustomTextInput keyboardType={'numeric'} placeholder={'məbləğ'} text={'Min.Məbləğ'} width={'100%'} onChangeText={(e) => {
+                          setThisObj(rel => ({ ...rel, ['amb']: e }))
+                        }} value={thisObj.amb} end={true} endText={<AntDesign name='right' size={15} />} />
+                      </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                    </>
+                  }
+                  {
+                    price &&
+                    <>
+                      <TouchableOpacity >
+                        <CustomTextInput onChangeText={(e) => {
+                          setThisObj(rel => ({ ...rel, ['ame']: e }))
+                        }} keyboardType={'numeric'} placeholder={'məbləğ'} text={'Max.Məbləğ'} width={'100%'} value={thisObj.ame} end={true} endText={<AntDesign name='right' size={15} />} />
+                      </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                    </>
+                  }
+                  {
+                    momentFirst &&
+                    <>
+                      <TouchableOpacity onPress={() => { setMomentFirstModal(true) }}>
+                        <CustomTextInput editable={false} text={'Başlama Tarixi'} width={'100%'} value={thisObj.momb ? thisObj.momb : 'Tarix'} end={true} endText={<AntDesign name='right' size={15} />} />
+                      </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
+                    </>
+                  }
+                  {
+                    momentEnd &&
+                    <>
+                      <TouchableOpacity onPress={() => { setMomentEndModal(true) }}>
+                        <CustomTextInput editable={false} text={'Bitmə Tarixi'} width={'100%'} value={thisObj.mome ? thisObj.mome : 'Tarix'} end={true} endText={<AntDesign name='right' size={15} />} />
+                      </TouchableOpacity>
+                      <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />
                     </>
                   }
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginBottom: 10 }}>
@@ -324,6 +482,7 @@ const FilterModal = ({
         </View>
       </Modal>
       <CustomerModal modalVisible={customerModal} setModalVisible={setCustomerModal} nameType={'customerName'} idType={'cus'} state={setThisObj} />
+      <CustomerModal modalVisible={supplierModal} setModalVisible={setSupplierModal} nameType={'supplier'} idType={'supplierId'} state={setThisObj} />
       <GroupModal modalVisible={groupModal} setModalVisible={setGroupModal} nameType={'groupName'} idType={'gp'} state={setThisObj} />
       <IsWeightModal modalVisible={isWModal} setModalVisible={setIsWModal} setState={setThisObj} />
       <ArchivModal modalVisible={archivModal} setModalVisible={setArchivModal} setState={setThisObj} />
@@ -337,6 +496,12 @@ const FilterModal = ({
       <AccountsModal modalVisible={cashModal} setModalVisible={setCashModal} state={setThisObj} nameType={'cashname'} idType={'cashid'} />
       <SpendItemModal modalVisible={spendItemModal} setModalVisible={setSpendItemModal} state={setThisObj} nameType={'spendName'} idType={'spendItem'} />
       <SpendTypeModal modalVisible={spendTypeModal} setModalVisible={setSpendTypeModal} state={setThisObj} nameType={'salesName'} idType={'sales'} />
+      <FilterDate setDate={setThisObj} date={thisObj.momb ? thisObj.momb : new Date()} type={'momb'} open={momentFirstModal} setOpen={setMomentFirstModal} />
+      <FilterDate setDate={setThisObj} date={thisObj.mome ? thisObj.mome : new Date()} type={'mome'} open={momentEndModal} setOpen={setMomentEndModal} />
+      <PayTypeModal modalVisible={payModal} setModalVisible={setPayModal} setState={setThisObj} />
+      <PaydirModal modalVisible={paydirModal} setModalVisible={setPaydirModal} setState={setThisObj} />
+      <ZerosModal modalVisible={zerosModal} setModalVisible={setZerosModal} setState={setThisObj} />
+      <EmployeesModal modalVisible={employeesModal} setModalVisible={setEmployeesModal} idType={'employeeId'} nameType={'employeeName'} state={setThisObj} />
     </>
   );
 };

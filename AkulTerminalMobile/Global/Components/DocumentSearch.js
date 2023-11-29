@@ -1,11 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import SearchBar from '../UI/SearchBar'
 import { useEffect } from 'react'
 import Api from './Api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { useState } from 'react'
+import FilterModal from '../FilterModal'
 
-const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiAdress }) => {
+const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiAdress, apiObject }) => {
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const getSearchData = async () => {
         let obj = {
@@ -39,10 +44,25 @@ const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiA
     }, [search])
 
     return (
-        <SearchBar text={placeholder} width={'100%'} vl={search} setVL={setSearch} onChangeText={(e) => {
-            setSearch(e)
-        }}
-        />
+        <>
+            <View style={{ width: '100%', flexDirection: 'row' }}>
+                <SearchBar text={placeholder} width={'85%'} vl={search} setVL={setSearch} onChangeText={(e) => {
+                    setSearch(e)
+                }}
+                />
+                <TouchableOpacity onPress={() => {
+                    setModalVisible(true)
+                }} style={{ width: "15%", backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>
+                    <Ionicons name={'filter'} color={'black'} size={25} />
+                </TouchableOpacity>
+            </View>
+            <FilterModal obj={{
+                dr: 1,
+                pg: 0,
+                lm: 100,
+                sr:"Moment"
+            }} modalVisible={modalVisible} setModalVisible={setModalVisible} setState={setData} {...apiObject} />
+        </>
     )
 }
 

@@ -42,7 +42,19 @@ const Debts = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
-            <DocumentSearch getData={getDebts} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDebts} apiAdress={'settlements/get.php'} />
+            <DocumentSearch
+            apiObject={{
+                api:"settlements/get.php",
+                customer:true,
+                customerName:"Qarşı-Tərəf",
+                group:true,
+                owner:true,
+                price:true,
+                momentFirst:true,
+                momentEnd:true,
+                zeros:true
+            }}
+            getData={getDebts} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDebts} apiAdress={'settlements/get.php'} />
             {
                 debts == null ?
                     <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

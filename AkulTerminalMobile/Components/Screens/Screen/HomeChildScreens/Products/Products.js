@@ -166,7 +166,7 @@ const Products = ({ navigation }) => {
           renderList: setRendersFromProducts
         })
       }} />
-      <FilterModal spendItem={true} accounts={true} salePoints={true} stockFrom={true} stockTo={true} owner={true} stock={true} products={true} customer={true} customerName={'Təchizatçı'} group={true} isWeight={true} ar={true} modalVisible={visible} setModalVisible={setVisible} obj={prObj} setState={setProducts} api={'products/get.php'} />
+      <FilterModal stock={true} setState={setProducts} obj={prObj} api={'products/get.php'} modalVisible={visible} setModalVisible={setVisible} group={true} customer={true} customerName={'Təchizatçı'} ar={true} isWeight={true}/>
     </View>
   )
 }
