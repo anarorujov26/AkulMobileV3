@@ -19,6 +19,7 @@ import CustomSuccessSaveButton from './../../../../../../Global/UI/CustomSuccess
 import { ConvertFixedTable } from '../../../../../../Global/Components/ConvertFixedTable';
 import DocumentAmmount from '../../../../../../Global/Components/DocumentAmmount';
 import modificationsGroup from './../../../../../../Global/Components/modificationsGroup';
+import GetAddUnits from './../../../../../../Global/UI/GetAddUnits';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -104,6 +105,7 @@ const CustomerOrder = ({ route, navigation }) => {
 
       let data = { ...result.data.Body.List[0] };
       data.Modifications = await modificationsGroup(result.data.Body.List[0], 'customerorder');
+      data.Positions = GetAddUnits(result)
       setCustomerOrder(data);
     }
   }

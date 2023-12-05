@@ -23,7 +23,6 @@ const Account = ({ route }) => {
       token: await AsyncStorage.getItem("token")
     }
     const result = await Api('transactions/get.php', ob);
-    console.log(result);
 
     if (result.data.Headers.ResponseStatus !== "0") {
       alert(result.data.Body)

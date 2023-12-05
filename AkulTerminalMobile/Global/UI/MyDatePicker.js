@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import DatePicker from 'react-native-date-picker'
+import moment from 'moment'
 
 const MyDatePicker = ({open,setOpen,date,setDate,type,setState}) => {
 
@@ -13,7 +14,7 @@ const MyDatePicker = ({open,setOpen,date,setDate,type,setState}) => {
         date={date}
         onConfirm={(date) => {
           setOpen(false)
-          setDate(rel => ({...rel,[type]:date}))
+          setDate(rel => ({...rel,[type]:moment(date).format("YYYY-MM-DD hh:mm:ss")}))
           setState(true)
         }}
         onCancel={() => {

@@ -16,6 +16,7 @@ import BackModal from './../../../../../../Global/Components/Modals/BackModal';
 import DocumentAmmount from './../../../../../../Global/Components/DocumentAmmount';
 import CustomColors from '../../../../../../Global/Colors/CustomColors';
 import { ConvertFixedTable } from './../../../../../../Global/Components/ConvertFixedTable';
+import GetAddUnits from './../../../../../../Global/UI/GetAddUnits';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -98,8 +99,9 @@ const Catalog = ({ route, navigation }) => {
       if (result.data.Headers.ResponseStatus !== "0") {
         navigation.goBack();
       }
-      console.log(result);
-      setCatalog(result.data.Body.List[0]);
+      let data = { ...result.data.Body.List[0] }
+      data.Positions = GetAddUnits(result)
+      setCatalog(data);
     }
   }
 

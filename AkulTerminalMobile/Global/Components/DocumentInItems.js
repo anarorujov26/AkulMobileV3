@@ -8,8 +8,6 @@ const DocumentInItems = ({ data, itemOne, itemTwo }) => {
 
     const [answer, setAnswer] = useState(false)
 
-    console.log(data);
-
     return (
         answer ?
             <>

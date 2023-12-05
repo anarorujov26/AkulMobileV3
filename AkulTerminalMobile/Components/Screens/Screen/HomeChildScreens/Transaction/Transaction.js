@@ -77,7 +77,7 @@ const Transaction = ({ route, navigation }) => {
         const obj = CustomToLowerCase({ ...tran });
         obj.token = await AsyncStorage.getItem('token');
         console.log(obj);
-        if (obj.spenditem == "" || obj.customerid == "" || type.split(' ')[0] == "Nağdsız" && obj.cashid == "" || obj.amount == "") {
+        if (obj.spenditem == "" || obj.customerid == "" || obj.cashid == "" || obj.amount== "") {
             alert("Lazımlı xanaları doldurun!")
         } else {
             if (obj.name == "") {
@@ -85,6 +85,7 @@ const Transaction = ({ route, navigation }) => {
                     name: "",
                     token: await AsyncStorage.getItem("token"),
                 })
+
                 if (result.data.Headers.ResponseStatus != "0") {
                     alert(result.data.Body)
                 } else {
@@ -192,7 +193,7 @@ const Transaction = ({ route, navigation }) => {
                 </>
             }
             <CustomerModal save={setSaveButton} modalVisible={customer} setModalVisible={setCustomer} state={setTran} nameType={'CustomerName'} idType={'CustomerId'} />
-            <SpendModal save={setSaveButton} modalVisible={spend} setModalVisible={setSpend} state={setTran} nameType={'SpendName'} idType={'SpendId'} />
+            <SpendModal save={setSaveButton} modalVisible={spend} setModalVisible={setSpend} state={setTran} nameType={'SpendName'} idType={'SpendItem'} />
             <CashesModal api={api} save={setSaveButton} modalVisible={cash} setModalVisible={setCash} state={setTran} nameType={'CashName'} idType={'CashId'} />
             <BackModal modalVisible={dontBackModal} setModalVisible={setDontBackModal} pressExit={getExit} pressContinue={() => { setDontBackModal(false) }} />
             <OrderModal setButton={setSaveButton} setData={setApi} modalVisible={orderType} setModalVisible={setOrderType} />

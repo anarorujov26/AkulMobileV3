@@ -60,7 +60,6 @@ const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiA
                 dr: 1,
                 pg: 0,
                 lm: 100,
-                sr:"Moment"
             }} modalVisible={modalVisible} setModalVisible={setModalVisible} setState={setData} {...apiObject} />
         </>
     )

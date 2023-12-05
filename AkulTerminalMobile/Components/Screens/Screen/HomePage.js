@@ -1,14 +1,36 @@
 import { ActivityIndicator, FlatList, Image, ImageBackground, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BackGround from '../../../Images/background.png'
 import HomeCard from './../../../Global/UI/HomeCard';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomColors from '../../../Global/Colors/CustomColors';
+import { useContext } from 'react';
+import { GlobalContext } from '../../../Global/Components/GlobalState';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 let data = [
   [
     [
+      "Göstəricilər",
+      {
+        id: 1,
+        imageName: "price"
+      }
+    ],
+    [
+      {
+        name: "Kalatoq",
+        navName: "catalogsPage",
+      }
+    ],
+  ],
+  [
+    [
       "Məhsullar",
+      {
+        id: 2,
+        imageName: "product"
+      }
     ],
     [
       {
@@ -28,6 +50,10 @@ let data = [
   [
     [
       "Alış",
+      {
+        id: 3,
+        imageName: "supply"
+      }
     ],
     [
       {
@@ -43,6 +69,10 @@ let data = [
   [
     [
       "Satış",
+      {
+        id: 4,
+        imageName: "demand"
+      }
     ],
     [
       {
@@ -61,18 +91,11 @@ let data = [
   ],
   [
     [
-      "Göstəricilər",
-    ],
-    [
-      {
-        name: "Kalatoq",
-        navName: "catalogsPage",
-      }
-    ],
-  ],
-  [
-    [
       "Maliyyə",
+      {
+        id: 5,
+        imageName: "financial",
+      }
     ],
     [
       {
@@ -87,7 +110,11 @@ let data = [
   ],
   [
     [
-      "Pərakəndə"
+      "Pərakəndə",
+      {
+        id: 6,
+        imageName: "rotation"
+      }
     ],
     [
       {
@@ -102,7 +129,11 @@ let data = [
   ],
   [
     [
-      "Hesabatlar"
+      "Hesabatlar",
+      {
+        id: 7,
+        imageName: "accounts"
+      }
     ],
     [
       {
@@ -113,17 +144,9 @@ let data = [
         name: "Mənfəət və Zərər",
         navName: "profitPage"
       },
-      // {
-      //   name: "Gündəlik hesabatlar",
-      //   navName: ""
-      // },
-      // {
-      //   name: "Təchizatçı hesabatı",
-      //   navName: ""
-      // },
       {
-        name:"Hesablar",
-        navName:"accountsPage"
+        name: "Hesablar",
+        navName: "accountsPage"
       }
     ]
   ]
@@ -134,78 +157,139 @@ const HomePage = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [index, setIndex] = useState(null);
 
+  const { pageSetting } = useContext(GlobalContext);
+
+  const [list, setList] = useState(null);
+
+  useEffect(() => {
+    let pD = [...pageSetting];
+    console.log("Home Page Setting - ", pD);
+    console.log("Home Page Data - ", data);
+    let newData = [];
+    for (let index = 0; index < data.length; index++) {
+      if (pD[index].answer) {
+        newData.push(data[index]);
+      }
+    }
+    setList(newData);
+  }, [pageSetting])
+
   return (
     <ImageBackground source={BackGround} style={styles.container}>
       <TouchableOpacity onPress={() => { navigation.navigate("profile") }} style={styles.profile}>
-        <AntDesign size={25} color={'white'} name='setting' />
+        <Ionicons size={25} color={CustomColors.primaryV2} name='settings-sharp' />
       </TouchableOpacity>
       <View style={{ alignItems: 'center', marginTop: 20 }}>
         <Image source={require('../../../Images/akul.png')} style={{ width: 80, height: 80, borderRadius: 10 }} />
-        <Text style={{ marginTop: 10, color: 'white', fontSize: 20, fontWeight: 'bold', textShadowOffset: { width: 0, height: 0 }, textShadowColor: "black", textShadowRadius: 10, padding: 2 }}>Akul Mobile</Text>
+        <Text style={{ marginTop: 0, color: CustomColors.primaryV2, fontSize: 20, fontWeight: 'bold'}}>Akul Mobile</Text>
       </View>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center" }}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => {
-            setIndex(3)
-            setModalVisible(true);
-          }}>
-            <HomeCard image={'price'} w={170} bottom={'Göstəricilər'} />
-          </TouchableOpacity>
-          <View style={{ margin: 10 }} />
+      {
+        list == null ?
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size={50} color={CustomColors.primary} />
+          </View>
+          :
+          !list[0] ?
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <AntDesign name='switcher' color={CustomColors.primaryV2} size={60}/>
+              <Text style={{fontSize:20,color:CustomColors.primaryV2,fontWeight:'bold',marginTop:10}}>Səhifə yoxdur!</Text>
+            </View>
+            :
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              {
+                list[0] &&
+                <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center" }}>
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => {
+                    setIndex(0);
+                    setModalVisible(true);
+                  }}>
+                    <HomeCard image={list[0][0][1].imageName} w={170} bottom={list[0][0][0]} />
+                  </TouchableOpacity>
 
-          <TouchableOpacity activeOpacity={0.8} onPress={() => {
-            setIndex(0);
-            setModalVisible(true);
-          }}>
-            <HomeCard image={'product'} w={170} bottom={'Məhsullar'} />
-          </TouchableOpacity>
+                  {
+                    list[1] && <>
+                      <View style={{ margin: 10 }} />
+                      <TouchableOpacity activeOpacity={0.8} onPress={() => {
+                        setIndex(1);
+                        // setIndex(Number(list[1][0][1].id) - 1);
+                        setModalVisible(true);
+                      }}>
+                        <HomeCard image={list[1][0][1].imageName} w={170} bottom={list[1][0][0]} />
+                      </TouchableOpacity></>
+                  }
+                </View>
+              }
+              {
+                list[2] &&
+                <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => {
+                    setIndex(2);
+                    // setIndex(Number(list[2][0][1].id) - 1);
+                    setModalVisible(true);
+                  }}>
+                    <HomeCard image={list[2][0][1].imageName} w={170} bottom={list[2][0][0]} />
+                  </TouchableOpacity>
 
-        </View>
-        <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => {
-            setIndex(1);
-            setModalVisible(true);
-          }}>
-            <HomeCard image={'supply'} w={170} bottom={'Alışlar'} />
-          </TouchableOpacity>
+                  {
+                    list[3] &&
+                    <>
 
-          <View style={{ margin: 10 }} />
-          <TouchableOpacity activeOpacity={0.8} onPress={() => {
-            setIndex(2)
-            setModalVisible(true);
-          }}>
-            <HomeCard image={'demand'} w={170} bottom={'Satışlar'} />
-          </TouchableOpacity>
-        </View>
-        <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => {
-            setIndex(4);
-            setModalVisible(true);
-          }}>
-            <HomeCard image={'financial'} w={170} bottom={'Maliyyə'} />
-          </TouchableOpacity>
+                      <View style={{ margin: 10 }} />
+                      <TouchableOpacity activeOpacity={0.8} onPress={() => {
+                        setIndex(3);
+                        // setIndex(Number(list[3][0][1].id) - 1);
+                        setModalVisible(true);
+                      }}>
+                        <HomeCard image={list[3][0][1].imageName} w={170} bottom={list[3][0][0]} />
+                      </TouchableOpacity>
+                    </>
+                  }
+                </View>
+              }
+              {
+                list[4] &&
+                <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => {
+                    setIndex(4);
+                    // setIndex(Number(list[4][0][1].id) - 1);
+                    setModalVisible(true);
+                  }}>
+                    <HomeCard image={list[4][0][1].imageName} w={170} bottom={list[4][0][0]} />
+                  </TouchableOpacity>
 
-          <View style={{ margin: 10 }} />
-          <TouchableOpacity activeOpacity={0.8} onPress={() => {
-            setIndex(5)
-            setModalVisible(true);
-          }}>
-            <HomeCard image={'rotation'} w={170} bottom={'Pərakəndə'} />
-          </TouchableOpacity>
-        </View>
-        <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => {
-            setIndex(6)
-            setModalVisible(true);
-          }}>
-            <HomeCard image={'accounts'} w={170} bottom={'Hesabatlar'} />
-          </TouchableOpacity>
+                  {
+                    list[5] &&
+                    <>
 
-          <View style={{ margin: 10 }} />
-          <TouchableOpacity activeOpacity={0.8} style={{ width: 170 }}>
-          </TouchableOpacity>
-        </View>
-      </View>
+                      <View style={{ margin: 10 }} />
+                      <TouchableOpacity activeOpacity={0.8} onPress={() => {
+                        setIndex(5);
+                        // setIndex(Number(list[5][0][1].id) - 1);
+                        setModalVisible(true);
+                      }}>
+                        <HomeCard image={list[5][0][1].imageName} w={170} bottom={list[5][0][0]} />
+                      </TouchableOpacity>
+                    </>
+                  }
+                </View>
+              }
+              {
+                list[6] &&
+                <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
+                  <TouchableOpacity activeOpacity={0.8} onPress={() => {
+                    setIndex(6);
+                    setModalVisible(true);
+                  }}>
+                    <HomeCard image={list[6][0][1].imageName} w={170} bottom={list[6][0][0]} />
+                  </TouchableOpacity>
+
+                  <View style={{ margin: 10 }} />
+                  <TouchableOpacity activeOpacity={0.8} style={{ width: 170 }}>
+                  </TouchableOpacity>
+                </View>
+              }
+            </View>
+      }
       <Modal
         animationType="slide"
         transparent={true}
@@ -221,9 +305,9 @@ const HomePage = ({ navigation }) => {
                 index !== null ?
                   <>
                     <View style={styles.header}>
-                      <Text style={{ fontSize: 22, color: "white", textAlign: 'center' }}>{data[index][0]}</Text>
+                      <Text style={{ fontSize: 22, color: "white", textAlign: 'center' }}>{list[index][0][0]}</Text>
                     </View>
-                    <FlatList data={data[index][1]} renderItem={({ item, index }) => (
+                    <FlatList data={list[index][1]} renderItem={({ item, index }) => (
                       <>
                         <TouchableOpacity onPress={() => {
                           navigation.navigate(item.navName);

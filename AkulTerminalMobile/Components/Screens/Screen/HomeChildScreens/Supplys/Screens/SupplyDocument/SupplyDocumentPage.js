@@ -55,10 +55,8 @@ const SupplyDocumentPage = ({ navigation }) => {
 
       <View style={{ flex: 1, width: '100%' }}>
         <FlatList data={supply.Positions} renderItem={({ item, index }) => (
-          
-          <PositionsList type={'BuySupply'} location={"documentEditModal"} setButton={setSaveButton} element={item} setState={setSupply} state={supply} index={index} name={item.Name} barcode={`${item.BarCode}`} totalPrice={ConvertFixedTable(Number(ConvertFixedTable(item.Price)) * Number(ConvertFixedTable(item.Quantity)))} priceandquantity={`${ConvertFixedTable(Number(item.Quantity))} əd x ${ConvertFixedTable(Number(item.Price))}`} navigation={navigation} />
-        )}keyExtractor={item => item.Id} />
-
+          <PositionsList type={'BuySupply'} location={"documentEditModal"} setButton={setSaveButton} element={item} setState={setSupply} state={supply} index={index} name={item.Name} barcode={`${item.BarCode}`} totalPrice={ConvertFixedTable(Number(ConvertFixedTable(item.Price)) * Number(ConvertFixedTable(item.Quantity)))} priceandquantity={`${ConvertFixedTable(Number(item.Quantity))} ${item.UnitName} x ${ConvertFixedTable(Number(item.Price))}`} navigation={navigation} />
+        )} keyExtractor={item => item.Id} />
       </View>
 
       {saveButton &&

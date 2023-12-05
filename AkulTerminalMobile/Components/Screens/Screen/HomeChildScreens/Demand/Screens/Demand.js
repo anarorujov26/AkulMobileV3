@@ -18,6 +18,7 @@ import CustomSuccessSaveButton from '../../../../../../Global/UI/CustomSuccessSa
 import { ConvertFixedTable } from '../../../../../../Global/Components/ConvertFixedTable';
 import DocumentAmmount from '../../../../../../Global/Components/DocumentAmmount';
 import modificationsGroup from './../../../../../../Global/Components/modificationsGroup';
+import GetAddUnits from '../../../../../../Global/UI/GetAddUnits';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -95,11 +96,14 @@ const Demand = ({ route, navigation }) => {
                 token: await AsyncStorage.getItem('token')
             }
             const result = await Api('demands/get.php', obj);
+
+           
             if (result.data.Headers.ResponseStatus !== "0") {
                 navigation.goBack();
             }
             let data = { ...result.data.Body.List[0] }
             data.Modifications = await modificationsGroup(result.data.Body.List[0], 'demand');
+            data.Positions = GetAddUnits(result)
             setDemand(data);
         }
     }

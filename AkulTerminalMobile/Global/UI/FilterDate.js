@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import DatePicker from 'react-native-date-picker'
 import moment from 'moment/moment'

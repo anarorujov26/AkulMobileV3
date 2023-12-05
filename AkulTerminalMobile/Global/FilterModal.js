@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import CustomColors from './Colors/CustomColors';
 import CustomerModal from './Components/Modals/CustomerModal';
 import Api from './Components/Api';
@@ -162,7 +162,6 @@ const FilterModal = ({
         return
       }
     }
-    console.log(obj);
     if (obj.amb) {
       if (!obj.ame) {
         alert("Max.Qiymət əlavə edilməyib!")
@@ -179,7 +178,6 @@ const FilterModal = ({
     }
 
     const result = await Api(api, obj)
-    console.log(obj);
     if (result.data.Headers.ResponseStatus == "0") {
       if (result.data.Body.List[0]) {
         setState(result.data.Body.List);

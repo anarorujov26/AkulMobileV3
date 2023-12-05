@@ -13,6 +13,8 @@ import Api from '../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastAndroid } from 'react-native';
 import PricePermission from '../PricePermission';
+import GetUnits from './../../UI/GetUnits';
+import UnitsModal from './UnitsModal';
 
 const DocumentEditModal = ({ route, navigation }) => {
 
@@ -27,6 +29,7 @@ const DocumentEditModal = ({ route, navigation }) => {
     setPricePermission(await PricePermission());
     let stateData = [...state.Positions]
     let productOBJ = { ...data };
+
 
     const answer = InspectionPositions(stateData, productOBJ.ProductId || productOBJ.Id);
 
@@ -156,6 +159,7 @@ const DocumentEditModal = ({ route, navigation }) => {
           <View style={{ alignItems: 'center' }}>
             <View style={{ width: '100%', height: 1, backgroundColor: 'grey', borderRadius: 10 }} />
           </View>
+
           {
             type !== "ct" &&
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
@@ -175,10 +179,13 @@ const DocumentEditModal = ({ route, navigation }) => {
             type == "BuySupply" &&
             <CustomTextInput editable={pricePermission} onSubmitEditing={getBash} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.SalePrice)} text={'Satış qiyməti'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['SalePrice']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
           }
+
+          <UnitsModal type={type} data={data} setProduct={setProduct} product={product} />
+          
           <View style={{ flex: 1, justifyContent: 'flex-end' }}>
             {
               type !== "ct" &&
-              <CustomTextInput editable={pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Discount)} onBlur={getDisPRI} text={'Endirim%'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Discount']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
+              <CustomTextInput  editable={pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Discount)} onBlur={getDisPRI} text={'Endirim%'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Discount']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
             }
             <CustomTextInput editable={type == "Buy" || type == "BuySupply" ? true : pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Price']: e.replace(',', '.') })) }} />
             <View style={{ margin: 10 }} ></View>

@@ -13,11 +13,11 @@ import { useCallback } from 'react';
 import { BackHandler } from 'react-native';
 import BackModal from '../../../../../../Global/Components/Modals/BackModal';
 import moment from 'moment';
-import CustomSuccessButton from '../../../../../../Global/UI/CustomSuccessButton';
 import CustomSuccessSaveButton from '../../../../../../Global/UI/CustomSuccessSaveButton';
 import DocumentAmmount from '../../../../../../Global/Components/DocumentAmmount';
 import { ConvertFixedTable } from '../../../../../../Global/Components/ConvertFixedTable';
 import modificationsGroup from '../../../../../../Global/Components/modificationsGroup';
+import GetAddUnits from './../../../../../../Global/UI/GetAddUnits';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -90,18 +90,20 @@ const Supply = ({ route, navigation }) => {
                 Status: 0
             }
             setSupply(obj);
-
         } else {
             let obj = {
                 id: productId,
                 token: await AsyncStorage.getItem('token')
             }
             const result = await Api('supplies/get.php', obj);
+
+
             if (result.data.Headers.ResponseStatus !== "0") {
                 navigation.goBack();
             }
             let data = { ...result.data.Body.List[0] }
-            data.Modifications = await modificationsGroup(result.data.Body.List[0],'supply')
+            data.Positions = GetAddUnits(result);
+            data.Modifications = await modificationsGroup(result.data.Body.List[0], 'supply')
             setSupply(data);
         }
     }
@@ -112,8 +114,6 @@ const Supply = ({ route, navigation }) => {
         } else {
             setIsLoading(true);
             let obj = CustomToLowerCase({ ...supply });
-            console.log(obj)
-            console.log(obj);
             if (obj.name == "") {
                 const result = await Api('supplies/newname.php', {
                     n: "",

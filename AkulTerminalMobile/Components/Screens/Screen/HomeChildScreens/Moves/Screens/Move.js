@@ -18,6 +18,7 @@ import { MovesGlobalContext } from '../MovesGlobalState';
 import MoveDocumentPage from './MoveDocument/MoveDocumentPage';
 import MoveAppointmentPage from './MoveAppointment/MoveAppointmentPage';
 import modificationsGroup from '../../../../../../Global/Components/modificationsGroup';
+import GetAddUnits from './../../../../../../Global/UI/GetAddUnits';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -100,12 +101,13 @@ const Move = ({ route, navigation }) => {
             }
             let data = { ...result.data.Body.List[0] }
             data.Modifications = await modificationsGroup(result.data.Body.List[0], 'move');
+            data.Positions = GetAddUnits(result);
             setMove(data);
         }
     }
 
     const getSaveProsessing = async () => {
-        if (move.CustomerId == "" || move.StockId == "") {
+        if (move.StockFromId == "" || move.StockToId == "") {
             alert("Müştəri və Anbar mütləq seçilməlidir!");
         } else {
             setIsLoading(true);

@@ -23,6 +23,8 @@ const AddProducts = ({ route, navigation }) => {
   const { prices, listType } = useContext(GlobalContext);
   const { location, state, setState, setButton, type, pageName } = route.params
 
+  const [units, setUnits] = useState(null);
+
 
   const [search_value, setSearch_value] = useState();
   const [products, setProducts] = useState(null);
@@ -49,6 +51,7 @@ const AddProducts = ({ route, navigation }) => {
       }
     }
     const result = await Api('products/getfast.php', obj);
+    setUnits(result.data.Body.ProductUnits);
 
     if (result.data.Body.List[0]) {
       setProducts(result.data.Body.List);
@@ -62,13 +65,25 @@ const AddProducts = ({ route, navigation }) => {
 
   let getModal = (item) => {
 
-    let d = { ...item };
-    if (type !== "Buy" && type !== "BuySupply") {
-      if (prices.priceId !== null) {
-        d.Price = d[PriceTypeProses(prices.priceId)];
+    let product = { ...item };
+    let unitsList = { ...units };
+
+
+    product.units = unitsList[product.Id];
+    for (let i = 0; i < unitsList[product.Id].length; i++) {
+      let unit = unitsList[product.Id][i];
+      if (Number(product.UnitId) == Number(unit.Id)) {
+        product.UnitName = unit.Name
+        product.UnitTitle = unit.Title
       }
     }
-    navigation.navigate(location, { data: d, setState, state, type, setButton, pageName })
+
+    if (type !== "Buy" && type !== "BuySupply") {
+      if (prices.priceId !== null) {
+        product.Price = product[PriceTypeProses(prices.priceId)];
+      }
+    }
+    navigation.navigate(location, { data: product, setState, state, type, setButton, pageName })
   }
 
 
@@ -90,7 +105,7 @@ const AddProducts = ({ route, navigation }) => {
       {
         products == null ?
           // <Text style={{ marginTop: 50, textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: CustomColors.primary }}>Məhsul axtarın</Text>
-          <View style={{flex:1,alignContent:'center',justifyContent:'center'}}>
+          <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
             <ActivityIndicator size={50} color={CustomColors.primary} />
           </View>
           :

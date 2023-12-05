@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, Text, View } from 'react-native'
 import React from 'react'
 
 const HomeCard = ({ w, image, bottom }) => {
@@ -22,7 +22,7 @@ const HomeCard = ({ w, image, bottom }) => {
 
 
   return (
-    <View style={{ width: w, height: 110, borderRadius: 10, shadowColor: 'black', elevation: 5, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ width: w, height: 110, borderRadius: 10, shadowColor: 'black', elevation: 3, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
       <Image source={images[image]} style={{ width: 60, height: 60 }} />
       <Text style={{ color: "black", fontWeight: 'bold', fontSize: 17, marginTop: 5 }}>{bottom}</Text>
     </View>

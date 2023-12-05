@@ -7,6 +7,7 @@ import PositionsList from '../../../../../../../Global/UI/PositionsList';
 import { ConvertFixedTable } from '../../../../../../../Global/Components/ConvertFixedTable'
 import StockModal from '../../../../../../../Global/Components/Modals/StockModal';
 import { MovesGlobalContext } from '../../MovesGlobalState'
+import StockFilterModal from '../../../../../../../Global/Components/Modals/StockFilterModal'
 
 const MoveDocumentPage = ({ navigation }) => {
   const { move, setMove, saveButton, setSaveButton } = useContext(MovesGlobalContext)
@@ -57,8 +58,8 @@ const MoveDocumentPage = ({ navigation }) => {
         <View style={{ margin: 30 }} />
       }
 
-      <StockModal save={setSaveButton} modalVisible={customer} setModalVisible={setCustomer} state={setMove} nameType={'StockFromId'} idType={'StockFromId'}/>
-      <StockModal data={move} save={setSaveButton} modalVisible={stock} setModalVisible={setStock} state={setMove} idType={'StockToId'} nameType={'StockToName'} />
+      <StockFilterModal modalVisible={customer} setModalVisible={setCustomer} save={setSaveButton} state={setMove} idType={'StockFromId'} nameType={'StockFromName'} />
+      <StockFilterModal modalVisible={stock} setModalVisible={setStock} save={setSaveButton} state={setMove} idType={'StockToId'} nameType={'StockToName'} />
     </View>
   )
 }

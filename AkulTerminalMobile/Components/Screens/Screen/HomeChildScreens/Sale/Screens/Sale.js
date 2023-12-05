@@ -12,6 +12,7 @@ import DocumentAmmount from '../../../../../../Global/Components/DocumentAmmount
 import { SalesGlobalContext } from '../SalesGlobalState';
 import SaleDocumentPage from './SaleDocument/SaleDocumentPage';
 import SaleAppointmentPage from './SaleAppointment/SaleAppointmentPage';
+import GetAddUnits from '../../../../../../Global/UI/GetAddUnits';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -76,7 +77,9 @@ const Sale = ({ route, navigation }) => {
         if (result.data.Headers.ResponseStatus !== "0") {
             navigation.goBack();
         }
-        setSale(result.data.Body.List[0]);
+        let data = [...result.data.Body.List[0]];
+        data.Positions = GetAddUnits(result)
+        setSale(data);
     }
 
     useEffect(() => {

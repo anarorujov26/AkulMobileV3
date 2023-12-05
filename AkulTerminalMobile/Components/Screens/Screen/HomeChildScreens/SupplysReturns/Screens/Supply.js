@@ -17,6 +17,7 @@ import CustomSuccessSaveButton from '../../../../../../Global/UI/CustomSuccessSa
 import DocumentAmmount from './../../../../../../Global/Components/DocumentAmmount';
 import { ConvertFixedTable } from '../../../../../../Global/Components/ConvertFixedTable';
 import modificationsGroup from './../../../../../../Global/Components/modificationsGroup';
+import GetAddUnits from '../../../../../../Global/UI/GetAddUnits';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -100,7 +101,8 @@ const Supply = ({ route, navigation }) => {
 
             let data = { ...result.data.Body.List[0] }
             data.Modifications = await modificationsGroup(result.data.Body.List[0], 'supplyreturn');
-            setSupply(data);
+            data.Positions = GetAddUnits(result)
+                setSupply(data);
         }
     }
 

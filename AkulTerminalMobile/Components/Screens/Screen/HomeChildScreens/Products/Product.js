@@ -34,7 +34,6 @@ const Product = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false);
   const [dontBackModal, setDontBackModal] = useState(false);
-  const [productModificationsAnswer, setProductModificationsAnswer] = useState(false);
 
   const [pricesTypes, setPricesTYpes] = useState(false);
 
@@ -67,6 +66,7 @@ const Product = ({ route, navigation }) => {
         id: productId,
         token: await AsyncStorage.getItem('token')
       })
+      console.log(result);
 
       if (result.data.Headers.ResponseStatus !== "0") {
         navigation.goBack();
@@ -181,11 +181,6 @@ const Product = ({ route, navigation }) => {
 
     const result = await axios.post('https://api.akul.az/1.0/dev/controllers/products/pricelist.php', obj);
     try {
-      // URL'den HTML içeriği indir
-      // const response = await fetch('https://api.akul.az/1.0/online/controllers/printing/print.php?t=f8c8a1108261d76fd6ef5d6d4abd8097&tp=demands&i=0784b92f-7497-4333-8b21-81c495a8b28f&tm=demands');
-      // const htmlContent = await response.text();
-      // İndirilen HTML içeriğini yazdır
-
       const jobName = await RNPrint.print({
         html: result.data,
         fileName: 'PrintDocument',
@@ -241,7 +236,6 @@ const Product = ({ route, navigation }) => {
           <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
             <View style={{ width: '100%' }}>
               <View style={{ margin: 5 }} />
-
               <CustomTextInput onChangeText={(e) => { setInput('Name', e) }} value={String(product.Name)} text={"Ad"} width={'100%'} />
               <View style={{ margin: 0.5 }} />
               <CustomTextInput onChangeText={(e) => { setInput('BarCode', e) }} value={String(product.BarCode)} text={"Barkod"} width={'100%'} />
@@ -250,7 +244,6 @@ const Product = ({ route, navigation }) => {
                 <CustomTextInput editable={false} value={String(product.GroupName)} text={"Qrup"} width={'100%'} />
               </TouchableOpacity>
               <View style={{ margin: 5 }} />
-
             </View>
             <View style={{ width: '100%' }}>
               <View style={{ margin: 5 }} />
@@ -290,6 +283,8 @@ const Product = ({ route, navigation }) => {
               <View style={{ margin: 0.5 }} />
               <CustomTextInput onChangeText={(e) => setInput('Description', e)} value={String(product.Description)} text={"Şərh"} width={'100%'} />
               <View style={{ margin: 5 }} />
+              <CustomTextInput editable={false} value={String(product.UnitName)} text={"Vahid"} width={'100%'} />
+              <View style={{ margin: 0.5 }} />
 
             </View>
             <View style={{ width: '100%' }}>

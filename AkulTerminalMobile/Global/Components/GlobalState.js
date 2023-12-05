@@ -9,6 +9,36 @@ export const GlobalProvider = (props) => {
     const [prices, setPrices] = useState({ priceId: null, priceName: "Satış qiyməti" });
     const [loginTYPE, setLoginTYPE] = useState(null);
     const [listType, setListType] = useState(2);
+    const [pageSetting, setPageSetting] = useState([
+        {
+            id: 1,
+            answer: false,
+        },
+        {
+            id: 2,
+            answer: true,
+        },
+        {
+            id: 3,
+            answer: true,
+        },
+        {
+            id: 4,
+            answer: true,
+        },
+        {
+            id: 5,
+            answer: false,
+        },
+        {
+            id: 6,
+            answer: false,
+        },
+        {
+            id: 7,
+            answer: false,
+        },
+    ]);
 
     const getPT = async () => {
         if (await AsyncStorage.getItem("lt") !== null) {
@@ -19,6 +49,10 @@ export const GlobalProvider = (props) => {
         }
         if (await AsyncStorage.getItem("pricesType") !== null) {
             setPrices(JSON.parse(await AsyncStorage.getItem("pricesType")));
+        }
+        console.log("GLOBAL STATE - ",JSON.parse(await AsyncStorage.getItem("pS")));
+        if (await AsyncStorage.getItem("pS") !== null) {
+            setPageSetting(JSON.parse(await AsyncStorage.getItem("pS")))
         }
     }
 
@@ -36,7 +70,9 @@ export const GlobalProvider = (props) => {
                 loginTYPE,
                 setLoginTYPE,
                 listType,
-                setListType
+                setListType,
+                pageSetting,
+                setPageSetting
             }
         }>
             {props.children}

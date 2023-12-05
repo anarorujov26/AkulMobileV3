@@ -28,24 +28,20 @@ const InventAddProducts = ({ route, navigation }) => {
     const [imageModal, setImageModal] = useState(false);
     const [pItem, setPItem] = useState({});
 
-    const [search_value, setSearch_value] = useState();
+    const [search_value, setSearch_value] = useState("");
     const [products, setProducts] = useState([]);
 
     const getProductsSearch = async () => {
-
         let obj = {
             token: await AsyncStorage.getItem("token"),
             fast: search_value,
             stockid: state.StockId,
             moment: moment(state.Moment).format('YYYY-MM-DD HH:mm:ss')
-        }
 
-        if (type !== "Buy") {
-            if (prices.priceId !== null) {
-                obj.pricetype = prices.priceId;
-            }
         }
-
+        if (prices.priceId) {
+            obj.pricetype = prices.priceId;
+        }
         const result = await Api('products/getfast.php', obj)
         if (result.data.Body.List[0]) {
             setProducts(result.data.Body.List);
@@ -89,7 +85,8 @@ const InventAddProducts = ({ route, navigation }) => {
                             <FlatList data={products} renderItem={({ item, index }) => (
                                 <TouchableOpacity onLongPress={() => {
                                     item.Pic ?
-                                        (setImageModal(true),
+                                        (
+                                            setImageModal(true),
                                             setPItem(item))
                                         :
                                         alert("Bu məhsulda şəkil yoxdur!")
@@ -119,7 +116,7 @@ const InventAddProducts = ({ route, navigation }) => {
                                         }
                                     </View>
                                 </TouchableOpacity>
-                            )} numColumns={listType} keyExtractor={item => item.Id} />
+                            )}  />
                             <CustomTextInput keyboardType={"numeric"} text={`${maxPG}/${pg}`} width={'100%'} value={String(pg)} onSubmitEditing={() => {
                                 if (maxPG < pg || 1 > pg) {
                                     alert('Yazdığınız hissə mövcut deyil!')

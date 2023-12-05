@@ -54,7 +54,7 @@ const DemandsStack = () => {
                     title: "Satış iadə"
                 }} name='demands' component={Demands} />
                 <Stack.Screen options={{
-                    title: "Satış",
+                    title: "Satış iadə",
                     headerRight: () => (
                         <TouchableOpacity
                             onPress={getDeleteDocument}

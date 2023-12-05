@@ -37,7 +37,6 @@ const Transactions = ({ navigation }) => {
             token: await AsyncStorage.getItem("token")
         }
         const result = await Api("transactions/get.php", obj);
-        console.log(result);
         if (result.data.Headers.ResponseStatus !== "0") {
             navigation.goBack();
         }

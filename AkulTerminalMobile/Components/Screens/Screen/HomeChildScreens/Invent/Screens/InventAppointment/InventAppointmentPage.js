@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Switch, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Switch, Text, View, ScrollView } from 'react-native'
 import React, { useContext, useState } from 'react'
 import CustomTextInput from '../../../../../../../Global/UI/CustomTextInput';
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -8,7 +8,6 @@ import CustomTextare from '../../../../../../../Global/UI/CustomTextare';
 import { InventGlobalContext } from '../../InventGlobalState';
 import { GlobalContext } from '../../../../../../../Global/Components/GlobalState';
 import DocumentInItems from './../../../../../../../Global/Components/DocumentInItems';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const InventAppointmentPage = ({ navigation }) => {
 
@@ -61,7 +60,7 @@ const InventAppointmentPage = ({ navigation }) => {
             }}
           />} />
       }
-      <DocumentInItems data={invent} itemOne={'title'} itemTwo={'value'}/>
+      <DocumentInItems data={invent} itemOne={'title'} itemTwo={'value'} />
       <MyDatePicker setState={setSaveButton} date={invent.Moment == "" ? new Date() : new Date(moment(invent.Moment).format('YYYY-MM-DD'))} setDate={setInvent} type={'Moment'} open={datePicker} setOpen={setDatePicker} />
     </ScrollView>
   )
