@@ -181,6 +181,7 @@ const Product = ({ route, navigation }) => {
 
     const result = await axios.post('https://api.akul.az/1.0/dev/controllers/products/pricelist.php', obj);
     try {
+      console.log(result.data);
       const jobName = await RNPrint.print({
         html: result.data,
         fileName: 'PrintDocument',

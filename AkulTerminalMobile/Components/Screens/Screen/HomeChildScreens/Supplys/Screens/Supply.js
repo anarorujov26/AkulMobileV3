@@ -18,6 +18,7 @@ import DocumentAmmount from '../../../../../../Global/Components/DocumentAmmount
 import { ConvertFixedTable } from '../../../../../../Global/Components/ConvertFixedTable';
 import modificationsGroup from '../../../../../../Global/Components/modificationsGroup';
 import GetAddUnits from './../../../../../../Global/UI/GetAddUnits';
+import Payments from '../../../../../../Global/Components/Payments';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -192,6 +193,9 @@ const Supply = ({ route, navigation }) => {
                     <Tab.Screen options={{
                         tabBarLabel: "Təyinat"
                     }} name='sAppointment' component={SupplyAppointmentPage} />
+                    <Tab.Screen initialParams={{data:supply}} options={{
+                        tabBarLabel: "Ödəniş"
+                    }} name='sPayments' component={Payments} />
                 </Tab.Navigator>
                 {
                     saveButton &&

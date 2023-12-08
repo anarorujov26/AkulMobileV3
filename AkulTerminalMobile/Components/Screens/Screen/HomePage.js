@@ -224,7 +224,6 @@ const HomePage = ({ navigation }) => {
                 <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
                   <TouchableOpacity activeOpacity={0.8} onPress={() => {
                     setIndex(2);
-                    // setIndex(Number(list[2][0][1].id) - 1);
                     setModalVisible(true);
                   }}>
                     <HomeCard image={list[2][0][1].imageName} w={170} bottom={list[2][0][0]} />
@@ -237,7 +236,6 @@ const HomePage = ({ navigation }) => {
                       <View style={{ margin: 10 }} />
                       <TouchableOpacity activeOpacity={0.8} onPress={() => {
                         setIndex(3);
-                        // setIndex(Number(list[3][0][1].id) - 1);
                         setModalVisible(true);
                       }}>
                         <HomeCard image={list[3][0][1].imageName} w={170} bottom={list[3][0][0]} />
@@ -251,7 +249,6 @@ const HomePage = ({ navigation }) => {
                 <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
                   <TouchableOpacity activeOpacity={0.8} onPress={() => {
                     setIndex(4);
-                    // setIndex(Number(list[4][0][1].id) - 1);
                     setModalVisible(true);
                   }}>
                     <HomeCard image={list[4][0][1].imageName} w={170} bottom={list[4][0][0]} />
@@ -264,7 +261,6 @@ const HomePage = ({ navigation }) => {
                       <View style={{ margin: 10 }} />
                       <TouchableOpacity activeOpacity={0.8} onPress={() => {
                         setIndex(5);
-                        // setIndex(Number(list[5][0][1].id) - 1);
                         setModalVisible(true);
                       }}>
                         <HomeCard image={list[5][0][1].imageName} w={170} bottom={list[5][0][0]} />

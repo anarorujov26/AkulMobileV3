@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Supplys from './Screens/Supplys';
@@ -19,6 +19,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import Product from '../Products/Product';
 import DocumentNewModal from './../../../../../Global/Components/Modals/DocumentNewModal';
+import axios from 'axios';
+import RNPrint from 'react-native-print';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +44,23 @@ const SupplysStack = () => {
     navigation.navigate('supplys');
   }
 
+  const getPrint = async () => {
+
+    // const result = await axios.get('https://dev.akul.az/invoice?0d639344-d981-457c-9a30-b874489f94d2#supplies');
+
+    // const jobName = await RNPrint.print({
+    //   html:result.data,
+    //   fileName: 'PrintDocument',
+    // });
+
+    // console.log(jobName)
+
+  }
+
+  const getPdf = async () => {
+
+  }
+
   return (
     <>
       <Stack.Navigator screenOptions={{
@@ -55,6 +74,25 @@ const SupplysStack = () => {
         }} name='supplys' component={Supplys} />
         <Stack.Screen options={{
           title: "Alış",
+          headerLeft: () => (
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity
+                onPress={getPrint}
+                accessibilityRole="button"
+                style={[styles.topTabButton]}
+              >
+                <AntDesign name='printer' size={25} color={CustomColors.primary} />
+              </TouchableOpacity>
+              <View style={{ margin: 10 }} />
+              <TouchableOpacity
+                onPress={getPdf}
+                accessibilityRole="button"
+                style={[styles.topTabButton]}
+              >
+                <AntDesign name='pdffile1' size={25} color={CustomColors.primary} />
+              </TouchableOpacity>
+            </View>
+          ),
           headerRight: () => (
             <TouchableOpacity
               onPress={getDeleteDocument}
