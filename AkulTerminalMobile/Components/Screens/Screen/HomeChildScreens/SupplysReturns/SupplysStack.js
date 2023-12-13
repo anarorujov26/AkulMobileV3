@@ -19,12 +19,16 @@ import { useNavigation } from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Product from '../Products/Product';
 import DocumentNewModal from '../../../../../Global/Components/Modals/DocumentNewModal';
+import Payments from '../../../../../Global/Components/Payments';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Stack = createNativeStackNavigator();
 
 const SupplysStack = () => {
 
   const navigation = useNavigation();
+
+  const [paymentModal, setPaymentModal] = useState(false);
 
   const { supply, setSupply, setSupplyListRender, setSaveButton } = useContext(SupplysGlobalContext);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -63,6 +67,17 @@ const SupplysStack = () => {
             >
               <MaterialIcons name='delete-outline' size={25} color={'red'} />
             </TouchableOpacity>
+          ),
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={()=>[
+                setPaymentModal(true)
+              ]}
+              accessibilityRole="button"
+              style={[styles.topTabButton]}
+            >
+              <MaterialCommunityIcons name='hand-coin' size={25} color={CustomColors.primary} />
+            </TouchableOpacity>
           )
         }} name='supply' component={Supply} />
         <Stack.Screen options={{
@@ -82,6 +97,7 @@ const SupplysStack = () => {
         }} />
       </Stack.Navigator>
       <AnswerModal modalVisible={deleteModal} setModalVisible={setDeleteModal} oneButton={'Sil'} twoButton={'Dəvam et'} text={'Silməyə əminsiniz?'} pressContinue={() => { setDeleteModal(false) }} pressExit={deleteDocument} />
+      <Payments type={'supplyreturns'} setInfo={setSupply} listRender={setSupplyListRender} pT={'ins'} save={setSaveButton} info={supply} modalVisible={paymentModal} setModalVisible={setPaymentModal} />
     </>
   )
 }

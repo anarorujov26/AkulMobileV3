@@ -494,8 +494,8 @@ const FilterModal = ({
       <AccountsModal modalVisible={cashModal} setModalVisible={setCashModal} state={setThisObj} nameType={'cashname'} idType={'cashid'} />
       <SpendItemModal modalVisible={spendItemModal} setModalVisible={setSpendItemModal} state={setThisObj} nameType={'spendName'} idType={'spendItem'} />
       <SpendTypeModal modalVisible={spendTypeModal} setModalVisible={setSpendTypeModal} state={setThisObj} nameType={'salesName'} idType={'sales'} />
-      <FilterDate setDate={setThisObj} date={thisObj.momb ? thisObj.momb : new Date()} type={'momb'} open={momentFirstModal} setOpen={setMomentFirstModal} />
-      <FilterDate setDate={setThisObj} date={thisObj.mome ? thisObj.mome : new Date()} type={'mome'} open={momentEndModal} setOpen={setMomentEndModal} />
+      <FilterDate s={1} setDate={setThisObj} date={thisObj.momb ? thisObj.momb : new Date()} type={'momb'} open={momentFirstModal} setOpen={setMomentFirstModal} />
+      <FilterDate s={2} setDate={setThisObj} date={thisObj.mome ? thisObj.mome : new Date()} type={'mome'} open={momentEndModal} setOpen={setMomentEndModal} />
       <PayTypeModal modalVisible={payModal} setModalVisible={setPayModal} setState={setThisObj} />
       <PaydirModal modalVisible={paydirModal} setModalVisible={setPaydirModal} setState={setThisObj} />
       <ZerosModal modalVisible={zerosModal} setModalVisible={setZerosModal} setState={setThisObj} />

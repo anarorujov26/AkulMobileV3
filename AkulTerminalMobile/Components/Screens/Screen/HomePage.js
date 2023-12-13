@@ -163,8 +163,6 @@ const HomePage = ({ navigation }) => {
 
   useEffect(() => {
     let pD = [...pageSetting];
-    console.log("Home Page Setting - ", pD);
-    console.log("Home Page Data - ", data);
     let newData = [];
     for (let index = 0; index < data.length; index++) {
       if (pD[index].answer) {

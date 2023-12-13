@@ -193,9 +193,6 @@ const Supply = ({ route, navigation }) => {
                     <Tab.Screen options={{
                         tabBarLabel: "Təyinat"
                     }} name='sAppointment' component={SupplyAppointmentPage} />
-                    <Tab.Screen initialParams={{data:supply}} options={{
-                        tabBarLabel: "Ödəniş"
-                    }} name='sPayments' component={Payments} />
                 </Tab.Navigator>
                 {
                     saveButton &&

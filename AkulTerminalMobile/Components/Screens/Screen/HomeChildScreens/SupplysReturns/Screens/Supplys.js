@@ -10,6 +10,7 @@ import { SupplysGlobalContext } from '../SupplysGlobaState'
 import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton'
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
+import DocumentDateFilter from './../../../../../../Global/UI/DocumentDateFilter';
 
 const Supplys = ({ navigation }) => {
 
@@ -23,7 +24,7 @@ const Supplys = ({ navigation }) => {
             sr: "Moment",
             pg: 0,
             lm: 100,
-            token: await AsyncStorage.getItem("token")
+            token:await AsyncStorage.getItem("token")
         }
         const result = await Api("supplyreturns/get.php", obj);
         if (result.data.Headers.ResponseStatus !== "0") {
@@ -49,31 +50,37 @@ const Supplys = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
+            <DocumentDateFilter info={setSupplys} api={'supplyreturns/get.php'} obj={{
+                dr: 1,
+                sr: "Moment",
+                pg: 0,
+                lm: 100,
+            }} />
             <DocumentSearch apiObject={{
-                api:"supplyreturns/get.php",
-                products:true,
-                stock:true,
-                customer:true,
-                customerName:"Təchizatçı",
-                momentFirst:true,
-                momentEnd:true
+                api: "supplyreturns/get.php",
+                products: true,
+                stock: true,
+                customer: true,
+                customerName: "Təchizatçı",
+                momentFirst: true,
+                momentEnd: true
             }} getData={getSupplys} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSupplys} apiAdress={'supplyreturns/get.php'} />
-                {
-                    supplys == null ?
-                        <View style={{ alignItems: 'center', marginTop: 20 }}>
-                            <CustomPrimaryButton text={'Yeniləyin'} width={'80%'} onPress={getSupplys} />
+            {
+                supplys == null ?
+                    <View style={{ alignItems: 'center', marginTop: 20 }}>
+                        <CustomPrimaryButton text={'Yeniləyin'} width={'80%'} onPress={getSupplys} />
+                    </View>
+                    :
+                    !supplys[0] ?
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator size={50} color={CustomColors.primary} />
                         </View>
                         :
-                        !supplys[0] ?
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <ActivityIndicator size={50} color={CustomColors.primary} />
-                            </View>
-                            :
-                            <FlatList data={supplys} renderItem={({ item, index }) => (
-                                <DocumentList key={item.Id} index={index} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'supply'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
-                            )} />
+                        <FlatList data={supplys} renderItem={({ item, index }) => (
+                            <DocumentList key={item.Id} index={index} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'supply'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
+                        )} />
 
-                }
+            }
             <NewFab press={() => {
                 navigation.navigate('supply', { id: null })
             }} />

@@ -20,6 +20,8 @@ import AnswerModal from '../../../../../Global/Components/Modals/AnswerModal';
 import Product from '../Products/Product';
 import AddPsPriceTypes from '../../../../../Global/Components/AddPsPriceTypes';
 import DocumentNewModal from '../../../../../Global/Components/Modals/DocumentNewModal';
+import Payments from '../../../../../Global/Components/Payments';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,7 @@ const DemandsStack = () => {
 
     const { demand, setDemand, setDemandListRender, setSaveButton } = useContext(DemandsGlobalContext);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [paymentModal, setPaymentModal] = useState(false);
 
     const getDeleteDocument = async () => {
         setDeleteModal(true)
@@ -63,6 +66,17 @@ const DemandsStack = () => {
                         >
                             <MaterialIcons name='delete-outline' size={25} color={'red'} />
                         </TouchableOpacity>
+                    ),
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            onPress={() => [
+                                setPaymentModal(true)
+                            ]}
+                            accessibilityRole="button"
+                            style={[styles.topTabButton]}
+                        >
+                            <MaterialCommunityIcons name='hand-coin' size={25} color={CustomColors.primary} />
+                        </TouchableOpacity>
                     )
                 }} name='demand' component={Demand} />
                 <Stack.Screen options={{
@@ -78,13 +92,14 @@ const DemandsStack = () => {
                     title: "Məhsul"
                 }} name='productsCreate' component={Product} />
                 <Stack.Screen options={{
-                    title:"Qiymət növü"
-                }} name='priceTypes' component={AddPsPriceTypes}/>
+                    title: "Qiymət növü"
+                }} name='priceTypes' component={AddPsPriceTypes} />
                 <Stack.Screen options={{
-          title: "Alış"
-        }} name='documentNewModal' component={DocumentNewModal} />
+                    title: "Alış"
+                }} name='documentNewModal' component={DocumentNewModal} />
             </Stack.Navigator>
             <AnswerModal modalVisible={deleteModal} setModalVisible={setDeleteModal} oneButton={'Sil'} twoButton={'Dəvam et'} text={'Silməyə əminsiniz?'} pressContinue={() => { setDeleteModal(false) }} pressExit={deleteDocument} />
+            <Payments type={'demandreturns'} setInfo={setDemand} listRender={setDemandListRender} pT={'outs'} save={setSaveButton} info={demand} modalVisible={paymentModal} setModalVisible={setPaymentModal} />
         </>
     )
 }

@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Supplys from './Screens/Supplys';
@@ -7,7 +7,6 @@ import DocumentEditModal from '../../../../../Global/Components/Modals/DocumentE
 import ProductsScanner from '../../../../../Global/UI/ProductsScanner';
 import AddProducts from '../../../../../Global/Components/AddProducts';
 import CustomColors from '../../../../../Global/Colors/CustomColors';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { SupplysGlobalContext } from './SupplysGlobaState';
 import AnswerModal from '../../../../../Global/Components/Modals/AnswerModal';
 import { useContext } from 'react';
@@ -15,14 +14,16 @@ import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../../../../../Global/Components/Api';
 import { TouchableOpacity } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Entypo from 'react-native-vector-icons/Entypo'
 import { useNavigation } from '@react-navigation/native';
 import Product from '../Products/Product';
 import DocumentNewModal from './../../../../../Global/Components/Modals/DocumentNewModal';
-import axios from 'axios';
-import RNPrint from 'react-native-print';
+import Payments from '../../../../../Global/Components/Payments';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const Stack = createNativeStackNavigator();
+
+const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 
 const SupplysStack = () => {
 
@@ -30,6 +31,8 @@ const SupplysStack = () => {
 
   const { supply, setSupply, setSupplyListRender, setSaveButton } = useContext(SupplysGlobalContext);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [selectionModal, setSelectionModal] = useState(false);
+  const [paymentModal, setPaymentModal] = useState(false);
 
   const getDeleteDocument = async () => {
     setDeleteModal(true)
@@ -44,21 +47,8 @@ const SupplysStack = () => {
     navigation.navigate('supplys');
   }
 
-  const getPrint = async () => {
-
-    // const result = await axios.get('https://dev.akul.az/invoice?0d639344-d981-457c-9a30-b874489f94d2#supplies');
-
-    // const jobName = await RNPrint.print({
-    //   html:result.data,
-    //   fileName: 'PrintDocument',
-    // });
-
-    // console.log(jobName)
-
-  }
-
-  const getPdf = async () => {
-
+  const getPYMT = async () => {
+    setPaymentModal(true)
   }
 
   return (
@@ -74,32 +64,24 @@ const SupplysStack = () => {
         }} name='supplys' component={Supplys} />
         <Stack.Screen options={{
           title: "Alış",
-          headerLeft: () => (
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                onPress={getPrint}
-                accessibilityRole="button"
-                style={[styles.topTabButton]}
-              >
-                <AntDesign name='printer' size={25} color={CustomColors.primary} />
-              </TouchableOpacity>
-              <View style={{ margin: 10 }} />
-              <TouchableOpacity
-                onPress={getPdf}
-                accessibilityRole="button"
-                style={[styles.topTabButton]}
-              >
-                <AntDesign name='pdffile1' size={25} color={CustomColors.primary} />
-              </TouchableOpacity>
-            </View>
-          ),
           headerRight: () => (
             <TouchableOpacity
               onPress={getDeleteDocument}
               accessibilityRole="button"
               style={[styles.topTabButton]}
             >
-              <MaterialIcons name='delete-outline' size={25} color={'red'} />
+              <MaterialCommunityIcons name='delete' size={25} color={CustomColors.primary} />
+            </TouchableOpacity>
+          ),
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={()=>[
+                setPaymentModal(true)
+              ]}
+              accessibilityRole="button"
+              style={[styles.topTabButton]}
+            >
+              <MaterialCommunityIcons name='hand-coin' size={25} color={CustomColors.primary} />
             </TouchableOpacity>
           )
         }} name='supply' component={Supply} />
@@ -120,6 +102,7 @@ const SupplysStack = () => {
         }} />
       </Stack.Navigator>
       <AnswerModal modalVisible={deleteModal} setModalVisible={setDeleteModal} oneButton={'Sil'} twoButton={'Dəvam et'} text={'Silməyə əminsiniz?'} pressContinue={() => { setDeleteModal(false) }} pressExit={deleteDocument} />
+      <Payments type={'supplies'} setInfo={setSupply} listRender={setSupplyListRender} pT={'outs'} save={setSaveButton} info={supply} modalVisible={paymentModal} setModalVisible={setPaymentModal} />
     </>
   )
 }

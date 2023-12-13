@@ -20,6 +20,8 @@ import Product from '../Products/Product';
 import AddPsPriceTypes from '../../../../../Global/Components/AddPsPriceTypes';
 import DocumentNewModal from '../../../../../Global/Components/Modals/DocumentNewModal';
 import PrintURL from './../../../../../Global/Components/PrintURL';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Payments from '../../../../../Global/Components/Payments';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +29,7 @@ const DemandsStack = () => {
 
     let navigation = useNavigation();
 
+    const [paymentModal,setPaymentModal]=useState(false);
     const { demand, setDemand, setDemandListRender, setSaveButton } = useContext(DemandsGlobalContext);
     const [deleteModal, setDeleteModal] = useState(false);
 
@@ -43,9 +46,9 @@ const DemandsStack = () => {
         setSaveButton(false)
     }
 
-    const getPrint = async () => {
-        await PrintURL('demands',await AsyncStorage.getItem("token"),demand.Id);
-    }
+    // const getPrint = async () => {
+    // await PrintURL('demands', await AsyncStorage.getItem("token"), demand.Id);
+    // }
 
     return (
         <>
@@ -70,11 +73,13 @@ const DemandsStack = () => {
                     ),
                     headerLeft: () => (
                         <TouchableOpacity
-                            onPress={getPrint}
+                            onPress={() => [
+                                setPaymentModal(true)
+                            ]}
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialIcons name='local-print-shop' size={25} color={CustomColors.primary} />
+                            <MaterialCommunityIcons name='hand-coin' size={25} color={CustomColors.primary} />
                         </TouchableOpacity>
                     )
                 }} name='demand' component={Demand} />
@@ -96,6 +101,7 @@ const DemandsStack = () => {
                 <Stack.Screen options={{ title: "Qiymet növü" }} name='priceTypes' component={AddPsPriceTypes} />
             </Stack.Navigator>
             <AnswerModal modalVisible={deleteModal} setModalVisible={setDeleteModal} oneButton={'Sil'} twoButton={'Dəvam et'} text={'Silməyə əminsiniz?'} pressContinue={() => { setDeleteModal(false) }} pressExit={deleteDocument} />
+            <Payments type={'demands'} setInfo={setDemand} listRender={setDemandListRender} pT={'ins'} save={setSaveButton} info={demand} modalVisible={paymentModal} setModalVisible={setPaymentModal} />
         </>
     )
 }

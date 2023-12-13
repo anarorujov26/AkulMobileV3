@@ -3,7 +3,7 @@ import React from 'react'
 import DatePicker from 'react-native-date-picker'
 import moment from 'moment/moment'
 
-const FilterDate = ({ date, setDate, open, setOpen, type }) => {
+const FilterDate = ({ date, setDate, open, setOpen, type, s }) => {
     return (
         <DatePicker
             modal
@@ -11,7 +11,14 @@ const FilterDate = ({ date, setDate, open, setOpen, type }) => {
             open={open}
             date={new Date()}
             onConfirm={(date) => {
-                setDate(rel => ({ ...rel, [type]: moment(date).format('YYYY-MM-DD hh:mm:ss') }));
+                if (s === 1) {
+                    setDate(rel => ({ ...rel, [type]: moment(date).format('YYYY-MM-DD 0:00:00') }));
+                }
+
+                if (s === 2) {
+                    setDate(rel => ({ ...rel, [type]: moment(date).format('YYYY-MM-DD 23:59:59') }));
+                }
+
                 setOpen(false);
             }}
             onCancel={() => {

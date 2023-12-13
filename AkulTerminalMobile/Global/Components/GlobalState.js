@@ -12,7 +12,7 @@ export const GlobalProvider = (props) => {
     const [pageSetting, setPageSetting] = useState([
         {
             id: 1,
-            answer: false,
+            answer: true,
         },
         {
             id: 2,
@@ -28,15 +28,15 @@ export const GlobalProvider = (props) => {
         },
         {
             id: 5,
-            answer: false,
+            answer: true,
         },
         {
             id: 6,
-            answer: false,
+            answer: true,
         },
         {
             id: 7,
-            answer: false,
+            answer: true,
         },
     ]);
 
