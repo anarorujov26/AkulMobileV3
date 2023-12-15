@@ -292,8 +292,8 @@ const HomePage = ({ navigation }) => {
           setModalVisible(!modalVisible);
           setIndex(null)
         }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+        <TouchableOpacity activeOpacity={1} onPress={()=>{setModalVisible(false),setIndex(null)}} style={styles.centeredView}>
+          <TouchableOpacity disabled={true} style={styles.modalView}>
             <View style={styles.center}>
               {
                 index !== null ?
@@ -321,8 +321,8 @@ const HomePage = ({ navigation }) => {
                   </View>
               }
             </View>
-          </View>
-        </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
       </Modal>
     </ImageBackground>
   )

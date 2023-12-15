@@ -10,6 +10,7 @@ import { InventGlobalContext } from '../InventGlobalState'
 import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton'
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
+import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
 
 const Invents = ({ navigation }) => {
 
@@ -49,6 +50,12 @@ const Invents = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
+      <DocumentDateFilter info={setInvents} api={'inventories/get.php'} obj={{
+        dr: 1,
+        sr: "Moment",
+        pg: 0,
+        lm: 100,
+      }} />
       <DocumentSearch apiObject={{
         api:"inventories/get.php",
         products:true,

@@ -16,6 +16,7 @@ import { GlobalContext } from '../../../Global/Components/GlobalState';
 import CustomPrimarySaveButton from '../../../Global/UI/CustomPrimarySaveButton';
 import { FlatList } from 'react-native';
 import { ScrollView } from 'react-native';
+import SettingPermission from './../../../Global/Components/SettingPermission';
 
 let data = [
   [
@@ -164,7 +165,7 @@ let data = [
 const Profile = () => {
 
   const { listType, setListType, pageSetting, setPageSetting } = useContext(GlobalContext);
-  const [isLoading,setIsLoading]=useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false)
   const [measurement, setMeasurement] = useState(0);
   const [pageEditModal, setPageEditModal] = useState(false);
@@ -173,6 +174,7 @@ const Profile = () => {
   const [infoData, setInfoData] = useState(null);
   const [login, setLogin] = useState("");
   const [listSettingButton, setListSettingButton] = useState(false);
+  const [settingPermission, setSettingPermission] = useState(false);
 
   const getEXIT = async () => {
     await AsyncStorage.removeItem('token');
@@ -180,7 +182,8 @@ const Profile = () => {
   }
 
   const getProfileInfo = async () => {
-    setMeasurement(listType)
+
+    setSettingPermission(await SettingPermission());
     if (await AsyncStorage.getItem("login") !== null) {
       setLogin(await AsyncStorage.getItem("login"))
     }
@@ -305,9 +308,12 @@ const Profile = () => {
               </>
             }
 
-            <TouchableOpacity onPress={getClick}>
-              <CustomTextInput placeholder="..." text={'Səhifələr'} width={'100%'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors.primary, marginTop: 50 }} editable={false} />
-            </TouchableOpacity>
+            {
+              settingPermission &&
+              <TouchableOpacity onPress={getClick}>
+                <CustomTextInput placeholder="..." text={'Səhifələr'} width={'100%'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors.primary, marginTop: 50 }} editable={false} />
+              </TouchableOpacity>
+            }
 
             {
               pageEditModal &&

@@ -10,6 +10,7 @@ import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
 import { SalesGlobalContext } from '../SalesGlobalState'
+import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
 
 const Sales = ({ navigation }) => {
 
@@ -42,6 +43,12 @@ const Sales = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
+            <DocumentDateFilter info={setSales} api={'sales/get.php'} obj={{
+                dr: 1,
+                sr: "Moment",
+                pg: 0,
+                lm: 100,
+            }} />
             <DocumentSearch
             apiObject={{
                 api:"sales/get.php",

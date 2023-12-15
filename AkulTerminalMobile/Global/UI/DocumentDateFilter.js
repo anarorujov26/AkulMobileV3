@@ -2,6 +2,8 @@ import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-nativ
 import React, { useEffect, useState } from 'react'
 import CustomColors from '../Colors/CustomColors'
 import moment from 'moment'
+import Api from '../Components/Api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 let data = [
   {
@@ -15,10 +17,6 @@ let data = [
   {
     name: "Bu ay",
     type: "thismonth",
-  },
-  {
-    name: "30 gün",
-    type: "30day",
   },
   {
     name: "Müddətsiz",
@@ -41,26 +39,40 @@ const DocumentDateFilter = ({ info, api, obj }) => {
 
     switch (type) {
       case 'today':
-        apiO.momb = moment(new Date()).format("YYYY-MM-DD 0:00:00")
-        apiO.mome = moment(new Date()).format("YYYY-MM-DD 23:59:59")
+        apiO.momb = moment().startOf('day').format("YYYY-MM-DD H:mm:ss")
+        apiO.mome = moment().endOf('day').format("YYYY-MM-DD H:mm:ss")
         break;
       case 'yesterday':
         apiO.momb = moment(new Date()).format(`YYYY-MM-${new Date().getDate() - 1} 0:00:00`)
         apiO.mome = moment(new Date()).format(`YYYY-MM-${new Date().getDate() - 1} 23:59:59`)
         break;
       case 'thismonth':
-        break;
-      case '30day':
+        apiO.momb = moment().startOf('month').format('YYYY-MM-DD H:mm:ss');
+        apiO.mome = moment().endOf('month').format('YYYY-MM-DD H:mm:ss');
         break;
       case 'indefinetly':
+        delete apiO.momb
+        delete apiO.mome
         break;
     }
 
-    console.log(apiO)
+    apiO.token = await AsyncStorage.getItem('token')
+    info([]);
+    let infoApi = await Api(api, apiO);
+    if (infoApi.data.Headers.ResponseStatus == '0') {
+      if(infoApi.data.Body.List[0]){
+        info(infoApi.data.Body.List);
+      }else{
+        info(null);
+      }
+    } else {  
+      alert(infoApi.data.Body);
+    }
+
   }
 
   return (
-    <View style={{ backgroundColor: 'white', width: '100%', height: 50, marginBottom: 2, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 5 }}>
+    <View style={{ backgroundColor: 'white', width: '100%', height: 50, marginBottom: 2, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', padding: 5 }}>
       {
         active.map((element, index) => (
           <TouchableOpacity onPress={() => {

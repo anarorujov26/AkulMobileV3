@@ -15,6 +15,7 @@ import { GlobalContext } from '../../../../../Global/Components/GlobalState';
 import FilterModal from './../../../../../Global/FilterModal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity } from 'react-native';
+import DocumentDateFilter from '../../../../../Global/UI/DocumentDateFilter';
 
 const Products = ({ navigation }) => {
 
@@ -95,14 +96,23 @@ const Products = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
+      <DocumentDateFilter info={setProducts} api={'products/get.php'} obj={{
+        ar: 0,
+        dr: 0,
+        gp: "",
+        lm: 100,
+        pg: 0,
+        sr: "Name",
+      }} />
       <View style={{ width: '100%', flexDirection: 'row' }}>
         <SearchBar width={'85%'} text={'Axtarış'} addStyle={{ borderRadius: 0 }} onChangeText={(e) => { setSearch_value(e) }} vl={search_value} setVL={setSearch_value} />
-        <TouchableOpacity onPress={()=>{
+        <TouchableOpacity onPress={() => {
           setVisible(true)
-        }} style={{ width: '15%',backgroundColor:'white',justifyContent:'center',alignItems:'center'}}>
-          <Ionicons name={'filter'} color={'black'} size={25}/>
+        }} style={{ width: '15%', backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
+          <Ionicons name={'filter'} color={'black'} size={25} />
         </TouchableOpacity>
       </View>
+
       {
         products == null ?
           <CustomPrimaryButton text={'Siyahını yeniləyin'} width={'100%'} addStyle={{ marginTop: 10, borderRadius: 0 }} onPress={getProducts} />
@@ -166,7 +176,7 @@ const Products = ({ navigation }) => {
           renderList: setRendersFromProducts
         })
       }} />
-      <FilterModal stock={true} setState={setProducts} obj={prObj} api={'products/get.php'} modalVisible={visible} setModalVisible={setVisible} group={true} customer={true} customerName={'Təchizatçı'} ar={true} isWeight={true}/>
+      <FilterModal stock={true} setState={setProducts} obj={prObj} api={'products/get.php'} modalVisible={visible} setModalVisible={setVisible} group={true} customer={true} customerName={'Təchizatçı'} ar={true} isWeight={true} />
     </View>
   )
 }

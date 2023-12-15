@@ -10,6 +10,7 @@ import { CustomerOrdersGlobalContext } from './../CustomerOrdersGlobalState';
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton'
 import { FlatList } from 'react-native'
+import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
 
 const CustomerOrders = ({ navigation }) => {
 
@@ -49,6 +50,12 @@ const CustomerOrders = ({ navigation }) => {
   return (
 
     <View style={{ flex: 1, alignItems: 'center' }}>
+      <DocumentDateFilter info={setCustomerOrders} api={'customerorders/get.php'} obj={{
+        dr: 1,
+        sr: "Moment",
+        pg: 0,
+        lm: 100,
+      }} />
       <DocumentSearch apiObject={{
         api:"customerorders/get.php",
         products:true,

@@ -10,6 +10,7 @@ import { SupplysGlobalContext } from '../SupplysGlobaState'
 import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton'
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
+import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
 
 const Supplys = ({ navigation }) => {
 
@@ -49,6 +50,12 @@ const Supplys = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
+             <DocumentDateFilter info={setSupplys} api={'supplies/get.php'} obj={{
+                dr: 1,
+                sr: "Moment",
+                pg: 0,
+                lm: 100,
+            }} />
             <DocumentSearch apiObject={{
                 api: "supplies/get.php",
                 products: true,

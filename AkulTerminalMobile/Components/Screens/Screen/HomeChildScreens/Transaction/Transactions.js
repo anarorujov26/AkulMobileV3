@@ -9,6 +9,7 @@ import DocumentSearch from '../../../../../Global/Components/DocumentSearch'
 import Api from '../../../../../Global/Components/Api'
 import CustomColors from '../../../../../Global/Colors/CustomColors'
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable'
+import DocumentDateFilter from './../../../../../Global/UI/DocumentDateFilter';
 
 const data = [
     {
@@ -60,6 +61,12 @@ const Transactions = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
+            <DocumentDateFilter info={setTransaction} api={'transactions/get.php'} obj={{
+                dr: 1,
+                sr: "Moment",
+                pg: 0,
+                lm: 100,
+            }} />
             <DocumentSearch
             apiObject={{
                 api:"transactions/get.php",

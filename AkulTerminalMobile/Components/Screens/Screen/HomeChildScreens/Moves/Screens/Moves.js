@@ -10,6 +10,7 @@ import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
 import { MovesGlobalContext } from '../MovesGlobalState'
+import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
 
 const Moves = ({ navigation }) => {
 
@@ -49,14 +50,20 @@ const Moves = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
+            <DocumentDateFilter info={setMoves} api={'moves/get.php'} obj={{
+                dr: 1,
+                sr: "Moment",
+                pg: 0,
+                lm: 100,
+            }} />
             <DocumentSearch
                 apiObject={{
-                    products:true,
-                    api:'moves/get.php',
-                    stockFrom:true,
-                    stockTo:true,
-                    momentFirst:true,
-                    momentEnd:true
+                    products: true,
+                    api: 'moves/get.php',
+                    stockFrom: true,
+                    stockTo: true,
+                    momentFirst: true,
+                    momentEnd: true
                 }} getData={getMoves} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setMoves} apiAdress={'moves/get.php'} />
             {
                 moves == null ?

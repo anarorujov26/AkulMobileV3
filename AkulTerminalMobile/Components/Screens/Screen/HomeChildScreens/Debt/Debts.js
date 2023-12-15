@@ -7,6 +7,7 @@ import Api from '../../../../../Global/Components/Api'
 import CustomColors from '../../../../../Global/Colors/CustomColors'
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable'
 import DocumentSearch from '../../../../../Global/Components/DocumentSearch'
+import DocumentDateFilter from '../../../../../Global/UI/DocumentDateFilter'
 
 const Debts = ({ navigation }) => {
 
@@ -42,6 +43,12 @@ const Debts = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
+            <DocumentDateFilter info={setDebts} api={'settlements/get.php'} obj={{
+                dr: 1,
+                sr: "Moment",
+                pg: 0,
+                lm: 100,
+            }} />
             <DocumentSearch
             apiObject={{
                 api:"settlements/get.php",

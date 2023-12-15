@@ -54,7 +54,6 @@ const Orders = ({ navigation }) => {
                             <FlatList data={orders} renderItem={({item,index})=>(
                                 <DocumentList key={item.Id} index={index} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'order'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
                             )}/>
-                          
                 }
             <NewFab press={() => {
                 navigation.navigate('order', { id: null })

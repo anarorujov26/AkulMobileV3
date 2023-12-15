@@ -8,6 +8,7 @@ import CustomColors from '../../../../../Global/Colors/CustomColors'
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable'
 import DocumentList from '../../../../../Global/UI/DocumentList'
 import DocumentSearch from '../../../../../Global/Components/DocumentSearch'
+import DocumentDateFilter from '../../../../../Global/UI/DocumentDateFilter'
 
 const SalesP = ({ navigation }) => {
 
@@ -43,6 +44,12 @@ const SalesP = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
+            <DocumentDateFilter info={setSales} api={'salereports/get.php'} obj={{
+                dr: 1,
+                sr: "Moment",
+                pg: 0,
+                lm: 100,
+            }} />
             <DocumentSearch 
             apiObject={{
                 api:"salereports/get.php",

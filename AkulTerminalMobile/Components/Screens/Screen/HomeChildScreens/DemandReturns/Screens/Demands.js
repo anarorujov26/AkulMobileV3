@@ -10,6 +10,7 @@ import { DemandsGlobalContext } from '../DemandsGlobalState'
 import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton'
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
+import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
 
 const Demands = ({ navigation }) => {
 
@@ -49,33 +50,39 @@ const Demands = ({ navigation }) => {
   return (
 
     <View style={{ flex: 1, alignItems: 'center' }}>
+      <DocumentDateFilter info={setDemands} api={'demandreturns/get.php'} obj={{
+        dr: 1,
+        sr: "Moment",
+        pg: 0,
+        lm: 100,
+      }} />
       <DocumentSearch
-      apiObject={{
-        api:'demandreturns/get.php',
-        products:true,
-        stock:true,
-        customer:true,
-        customerName:"Müştəri",
-        momentFirst:true,
-        momentEnd:true
-      }}
-       getData={getDemands} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDemands} apiAdress={'demandreturns/get.php'} />
-        {
-          demands == null ?
-            <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>
-              <CustomPrimaryButton text={'Yeniləyin'} width={'80%'} onPress={getDemands} />
+        apiObject={{
+          api: 'demandreturns/get.php',
+          products: true,
+          stock: true,
+          customer: true,
+          customerName: "Müştəri",
+          momentFirst: true,
+          momentEnd: true
+        }}
+        getData={getDemands} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDemands} apiAdress={'demandreturns/get.php'} />
+      {
+        demands == null ?
+          <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>
+            <CustomPrimaryButton text={'Yeniləyin'} width={'80%'} onPress={getDemands} />
+          </View>
+          :
+
+          !demands[0] ?
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <ActivityIndicator size={50} color={CustomColors.primary} />
             </View>
             :
-
-            !demands[0] ?
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size={50} color={CustomColors.primary} />
-              </View>
-              :
-              <FlatList data={demands} renderItem={({ item, index }) => (
-                <DocumentList key={item.Id} index={index} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'demand'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
-              )} />
-        }
+            <FlatList data={demands} renderItem={({ item, index }) => (
+              <DocumentList key={item.Id} index={index} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'demand'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
+            )} />
+      }
       <NewFab press={() => {
         navigation.navigate('demand', { id: null })
       }} />
