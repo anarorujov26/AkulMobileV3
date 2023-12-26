@@ -21,7 +21,6 @@ const DocumentList = (props) => {
                     {
                         props.name &&
                     <Text style={styles.customerName}>{props.name}</Text>
-
                     }
                 </View>
             </View>
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#dcdcdc',
+        backgroundColor: CustomColors.primary,
     },
     listContainer: {
         width: '100%',
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
     },
     avatarName: {
         fontSize: 20,
-        color: 'black',
+        color: 'white',
     },
     name: {
         color: 'black',

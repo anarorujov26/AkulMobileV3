@@ -38,7 +38,7 @@ const Accounts = ({ navigation }) => {
 
     return (
 
-        <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flex: 1 }}>
             {
                 sales == null ?
                     <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

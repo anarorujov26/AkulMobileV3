@@ -47,8 +47,6 @@ const CashesModal = ({ modalVisible, setModalVisible, idType, nameType, state, s
                                 state(rel => ({ ...rel, [nameType]: item.Name }))
                                 save(true);
                                 setModalVisible(false);
-                                console.log(api);
-
                             }}>
                                 <View style={styles.listFirs}>
                                     <View style={styles.listFirsContainer}>

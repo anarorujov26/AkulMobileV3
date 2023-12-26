@@ -1,9 +1,11 @@
 export default {
-    primary:'#0264b1',
-    danger:'#ed143d',
-    success:'#198754',
-    connectedPrimary:'#0264b1',
+    primary:'#1677ff',
+    danger:'#e50b2c',
+    success:'#50bd7a',
+    connectedPrimary:'#1677ff',
     black:'black',
     grey:"#606060",
-    primaryV2:'#062F76'
+    primaryV2:'#1677ff',
+    primaryV3:'#1677ff',
+    orange:'#ff8f1f'
 }

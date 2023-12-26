@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { OrdersGlobalContext } from './OrdersGlobalState';
 import Orders from './Screens/Orders';
 import Order from './Screens/Order';
@@ -20,6 +20,10 @@ import CustomColors from '../../Global/Colors/CustomColors';
 import Api from '../../Global/Components/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Profile from '../Screens/Screen/Profile';
+import Setting from './Setting';
+import Employee from './Employee';
+import OrderEditModal from './OrderEditModal';
+import OrderNewModal from './OrderNewModal';
 
 const Stack = createNativeStackNavigator();
 
@@ -60,7 +64,7 @@ const OrdersStack = () => {
                     headerLeft:()=>(
                         <TouchableOpacity onPress={getSetting}>
                             <MaterialIcons name='settings' size={23} color={CustomColors.primary}/>
-                        </TouchableOpacity>
+                        </TouchableOpacity> 
                     )
                 }} name='catalogs' component={Orders} />
                 <Stack.Screen options={{
@@ -71,16 +75,16 @@ const OrdersStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialIcons name='delete-outline' size={25} color={'red'} />
+                            <MaterialIcons name='delete-outline' size={25} color={CustomColors.danger} />
                         </TouchableOpacity>
                     )
                 }} name='order' component={Order} />
                 <Stack.Screen options={{
                     title: "Pərakəndə sifariş"
-                }} name='documentEditModal' component={DocumentEditModal} />
+                }} name='documentEditModal' component={OrderEditModal} />
                 <Stack.Screen options={{
                     title: "Pərakəndə sifariş"
-                }} name='documentNewModal' component={DocumentNewModal} />
+                }} name='documentNewModal' component={OrderNewModal} />
                 <Stack.Screen options={{
                     title: "Pərakəndə sifariş"
                 }} name='scanner' component={ProductsScanner} />
@@ -90,8 +94,11 @@ const OrdersStack = () => {
                 <Stack.Screen name='productsCreate' component={Product} options={{
                     title: "Məhsul"
                 }} />
-                <Stack.Screen name='profile' component={Profile} options={{
+                <Stack.Screen name='profile' component={Setting} options={{
                     title: "Setting"
+                }} />
+                <Stack.Screen name='employee' component={Employee} options={{
+                    title: "Istifadəçilər"
                 }} />
                 <Stack.Screen options={{ title: "Qiymet növü" }} name='priceTypes' component={AddPsPriceTypes} />
             </Stack.Navigator>

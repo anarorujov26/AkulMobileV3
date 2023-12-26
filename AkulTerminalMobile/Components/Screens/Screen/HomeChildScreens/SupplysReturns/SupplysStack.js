@@ -65,7 +65,7 @@ const SupplysStack = () => {
               accessibilityRole="button"
               style={[styles.topTabButton]}
             >
-              <MaterialIcons name='delete-outline' size={25} color={'red'} />
+              <MaterialIcons name='delete-outline' size={25} color={CustomColors.danger} />
             </TouchableOpacity>
           ),
           headerLeft: () => (
@@ -76,7 +76,7 @@ const SupplysStack = () => {
               accessibilityRole="button"
               style={[styles.topTabButton]}
             >
-              <MaterialCommunityIcons name='hand-coin' size={25} color={CustomColors.primary} />
+              <MaterialCommunityIcons name='hand-coin' size={25} color={CustomColors.success} />
             </TouchableOpacity>
           )
         }} name='supply' component={Supply} />

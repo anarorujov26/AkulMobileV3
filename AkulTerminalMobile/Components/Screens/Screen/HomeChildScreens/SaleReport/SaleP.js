@@ -14,7 +14,6 @@ const SaleP = ({ route }) => {
     const [sale, setSale] = useState([]);
 
     const getInfo = async () => {
-        // console.log(id);
         let ob = {
             productid: id,
             dr: 1,
@@ -22,7 +21,6 @@ const SaleP = ({ route }) => {
             token: await AsyncStorage.getItem("token"),
         }
         const result = await Api('producthistory/get.php', ob);
-        console.log(result);
 
 
         if (result.data.Headers.ResponseStatus !== "0") {

@@ -58,6 +58,8 @@ const DocumentDateFilter = ({ info, api, obj }) => {
 
     apiO.token = await AsyncStorage.getItem('token')
     info([]);
+    console.log(api);
+    console.log(apiO);
     let infoApi = await Api(api, apiO);
     if (infoApi.data.Headers.ResponseStatus == '0') {
       if(infoApi.data.Body.List[0]){

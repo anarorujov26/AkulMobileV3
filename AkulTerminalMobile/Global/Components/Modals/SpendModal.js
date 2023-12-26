@@ -46,7 +46,6 @@ const SpendTypeModal = ({ modalVisible, setModalVisible, idType, nameType, state
                             <TouchableOpacity key={item.Id} style={styles.listContainer} onPress={() => {
                                 state(rel => ({ ...rel, [idType]: item.Id }))
                                 state(rel => ({ ...rel, [nameType]: item.Name }))
-                                console.log(item.Id);
                                 if (save) {
                                     save(true);
                                 }

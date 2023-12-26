@@ -11,10 +11,12 @@ import Api from '../../Global/Components/Api';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import CustomColors from '../../Global/Colors/CustomColors';
 import OrdersMain from '../Orders/OrdersMain';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Login = () => {
+const Stack = createStackNavigator();
 
-  const { setPrefix, loginTYPE, setLoginTYPE } = useContext(GlobalContext);
+const LoginPage = () => {
+  const { setPrefix, loginTYPE } = useContext(GlobalContext);
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
@@ -26,10 +28,12 @@ const Login = () => {
 
     setIsLoading(true)
 
-    const result = await Api('pos/pos_getlogin.php', {
+    let loginInfo = {
       login: login,
       password: password
-    })
+    }
+
+    const result = await Api('pos/pos_getlogin.php', loginInfo)
 
     if (result.data.Headers.ResponseStatus == "0") {
       await AsyncStorage.setItem("apiLocation", result.data.Body.PublicMode)
@@ -74,14 +78,11 @@ const Login = () => {
     setIsLoading(false);
   }
 
-  const getClick = async () => {
-    setLoginTYPE(!loginTYPE)
-    await AsyncStorage.setItem('type', JSON.stringify(!loginTYPE))
-  }
-
   const getStartClick = async () => {
-    setLoginTYPE(false);
-    await AsyncStorage.setItem('type', JSON.stringify(false))
+    let publicMode = await AsyncStorage.getItem("apiLocation");
+    if (publicMode === null) {
+      await AsyncStorage.setItem("apiLocation", "dev")
+    }
   }
 
   useEffect(() => {
@@ -94,19 +95,6 @@ const Login = () => {
 
   return (
     <ImageBackground source={BackGround} style={styles.container}>
-      <TouchableOpacity onPress={getClick} style={styles.loginTypeContainer}>
-        <View style={styles.loginTypeContainerLeft}>
-          <Text style={{
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: CustomColors.primary
-          }}>{loginTYPE ? "Sifariş" : "Terminal"}</Text>
-        </View>
-        <View style={styles.loginTypeContainerRight}>
-          <FontAwesome5 name='exchange-alt' size={20} color={CustomColors.primary} />
-        </View>
-      </TouchableOpacity>
-
       <CustomTextInput width={'80%'} text={'Login'} addStyle={{ shadowColor: 'black', elevation: 5 }} value={login} onChangeText={(e) => { setLogin(e) }} />
       <View style={{ margin: 10 }} />
       <CustomTextInput secureTextEntry={true} width={'80%'} text={'Şifrə'} addStyle={{ shadowColor: "black", elevation: 5 }} value={password} onChangeText={(e) => { setPassword(e) }} />
@@ -119,6 +107,47 @@ const Login = () => {
         }
       }} text={'Daxil ol'} />
     </ImageBackground>
+  )
+}
+
+const ScreensPage = ({
+  navigation
+}) => {
+
+  const {setLoginTYPE} = useContext(GlobalContext)
+
+  const terminalClick = async () => {
+    setLoginTYPE(false)
+    await AsyncStorage.setItem('type', JSON.stringify(false))
+    navigation.navigate("terminal")
+  }
+
+  const orderClick = async () => {
+    setLoginTYPE(true)
+    await AsyncStorage.setItem('type', JSON.stringify(true))
+    navigation.navigate("terminal")
+  }
+
+  return (
+    <ImageBackground source={BackGround} style={{ flex: 1,width:'100%',height:'100%', justifyContent: 'center', alignItems: 'center' }}>
+      <CustomPrimaryButton width={'50%'} text={'Terminal'} onPress={terminalClick} />
+      <View style={{ margin: 10 }} />
+      <CustomPrimaryButton width={'50%'} text={'Sifariş'} onPress={orderClick} />
+    </ImageBackground>
+  );
+}
+
+const Login = () => {
+
+  return (
+    <>
+      <Stack.Navigator screenOptions={{
+        headerShown: false
+      }}>
+        <Stack.Screen name='screens' component={ScreensPage} />
+        <Stack.Screen name='terminal' component={LoginPage} />
+      </Stack.Navigator>
+    </>
   )
 }
 

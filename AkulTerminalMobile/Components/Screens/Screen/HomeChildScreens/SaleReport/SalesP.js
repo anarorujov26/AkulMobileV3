@@ -28,7 +28,6 @@ const SalesP = ({ navigation }) => {
         if (result.data.Headers.ResponseStatus !== "0") {
             navigation.goBack();
         }
-        console.log(result.data.Body);
         setSumma(result.data.Body)
         if (result.data.Body.List[0]) {
             setSales(result.data.Body.List);
@@ -43,7 +42,7 @@ const SalesP = ({ navigation }) => {
 
     return (
 
-        <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flex: 1}}>
             <DocumentDateFilter info={setSales} api={'salereports/get.php'} obj={{
                 dr: 1,
                 sr: "Moment",
@@ -68,19 +67,19 @@ const SalesP = ({ navigation }) => {
             getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSales} apiAdress={'salereports/get.php'} />
             {
                 sales == null ?
-                    <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>
+                    <View style={{ alignItems: 'center', marginTop: 20, width: '100%'}}>
                         <CustomPrimaryButton text={'Yeniləyin'} width={'80%'} onPress={getSales} />
                     </View>
                     :
                     !sales[0] ?
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                             <ActivityIndicator size={50} color={CustomColors.primary} />
                         </View>
                         :
                         <>
                             {
                                 search == "" &&
-                                <Text style={{ padding: 5, backgroundColor: 'white', color: "black", width: '100%', textAlign: "left" }}>Məbləğ {ConvertFixedTable(summa.AllAmount)}₼   |   Qazanc {ConvertFixedTable(summa.AllProfit)}₼</Text>
+                                <Text style={{ padding: 5, backgroundColor: 'white', color: "#909090", width: '100%', textAlign: "center" }}>Məbləğ {ConvertFixedTable(summa.AllAmount)}₼   |   Qazanc {ConvertFixedTable(summa.AllProfit)}₼</Text>
                             }
                             <FlatList data={sales} renderItem={({ item, index }) => (
                                 <DocumentList pIcon={true} key={item.ProductId} index={index} customername={item.ProductName} moment={<Text>{item.Quantity} əd x {ConvertFixedTable(Number(Number(item.SumPrice) / Number(item.Quantity)))}</Text>} name={item.Name} navigation={navigation} location={'saleP'} id={item.ProductId} amount={<View>

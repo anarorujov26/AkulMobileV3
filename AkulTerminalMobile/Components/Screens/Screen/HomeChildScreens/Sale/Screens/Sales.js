@@ -50,19 +50,19 @@ const Sales = ({ navigation }) => {
                 lm: 100,
             }} />
             <DocumentSearch
-            apiObject={{
-                api:"sales/get.php",
-                pay:true,
-                products:true,
-                customer:true,
-                customerName:"Müştəri",
-                stock:true,
-                salePoints:true,
-                momentFirst:true,
-                momentEnd:true,
-                employees:true
-                
-            }}
+                apiObject={{
+                    api: "sales/get.php",
+                    pay: true,
+                    products: true,
+                    customer: true,
+                    customerName: "Müştəri",
+                    stock: true,
+                    salePoints: true,
+                    momentFirst: true,
+                    momentEnd: true,
+                    employees: true
+
+                }}
                 getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSales} apiAdress={'sales/get.php'} />
             {
                 sales == null ?
@@ -75,9 +75,9 @@ const Sales = ({ navigation }) => {
                             <ActivityIndicator size={50} color={CustomColors.primary} />
                         </View>
                         :
-                        <FlatList data={sales} renderItem={({ item, index }) => (
-                            <DocumentList key={item.Id} index={index} customername={item.SalePointName} moment={item.Moment} name={item.CustomerName} navigation={navigation} location={'sale'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
-                        )} />
+                            <FlatList data={sales} renderItem={({ item, index }) => (
+                                <DocumentList key={item.Id} index={index} customername={item.SalePointName} moment={item.Moment} name={item.CustomerName} navigation={navigation} location={'sale'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
+                            )} />
 
             }
         </View>

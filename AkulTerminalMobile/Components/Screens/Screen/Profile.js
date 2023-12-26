@@ -187,6 +187,12 @@ const Profile = () => {
     if (await AsyncStorage.getItem("login") !== null) {
       setLogin(await AsyncStorage.getItem("login"))
     }
+
+    if (await AsyncStorage.getItem("lt") !== null) {
+      setMeasurement(await AsyncStorage.getItem("lt"));
+    }else{
+      setMeasurement(2);
+    }
     const result = await Api('company/get.php', {
       token: await AsyncStorage.getItem('token')
     })

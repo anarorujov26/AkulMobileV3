@@ -66,7 +66,6 @@ const Product = ({ route, navigation }) => {
         id: productId,
         token: await AsyncStorage.getItem('token')
       })
-      console.log(result);
 
       if (result.data.Headers.ResponseStatus !== "0") {
         navigation.goBack();
@@ -181,13 +180,11 @@ const Product = ({ route, navigation }) => {
 
     const result = await axios.post('https://api.akul.az/1.0/dev/controllers/products/pricelist.php', obj);
     try {
-      console.log(result.data);
       const jobName = await RNPrint.print({
         html: result.data,
         fileName: 'PrintDocument',
       });
 
-      console.log(`Printing job ${jobName} started`);
     } catch (error) {
       console.error('Error printing:', error);
     }

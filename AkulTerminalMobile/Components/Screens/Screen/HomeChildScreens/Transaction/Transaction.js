@@ -76,7 +76,6 @@ const Transaction = ({ route, navigation }) => {
         setIsLoading(true);
         const obj = CustomToLowerCase({ ...tran });
         obj.token = await AsyncStorage.getItem('token');
-        console.log(obj);
         if (obj.spenditem == "" || obj.customerid == "" || obj.cashid == "" || obj.amount== "") {
             alert("Lazımlı xanaları doldurun!")
         } else {
@@ -93,7 +92,6 @@ const Transaction = ({ route, navigation }) => {
                 }
             }
             let ap = `${api + type}/put.php`
-            console.log(ap);
             const result = await Api(ap, obj);
             if (result.data.Headers.ResponseStatus !== "0") {
                 alert(result.data.Body);

@@ -42,7 +42,7 @@ const Debts = ({ navigation }) => {
 
     return (
 
-        <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flex: 1 }}>
             <DocumentDateFilter info={setDebts} api={'settlements/get.php'} obj={{
                 dr: 1,
                 sr: "Moment",
@@ -76,7 +76,7 @@ const Debts = ({ navigation }) => {
                         <>
                             {
                                 search == "" &&
-                                <Text style={{ padding: 5, backgroundColor: 'white', color: "black", width: '100%', textAlign: "left" }}>Alacaq {ConvertFixedTable(summa.AllInSum)}₼   |   Verəcək {ConvertFixedTable(summa.AllOutSum)}₼</Text>
+                                <Text style={{ padding: 5, backgroundColor: 'white', color: "#909090", width: '100%', textAlign: "center" }}>Alacaq {ConvertFixedTable(summa.AllInSum)}₼   |   Verəcək {ConvertFixedTable(summa.AllOutSum)}₼</Text>
                             }
                             <FlatList data={debts} renderItem={({ item, index }) => (
 
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#dcdcdc',
+        backgroundColor: CustomColors.primary,
     },
     listContainer: {
         width: '100%',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     },
     avatarName: {
         fontSize: 20,
-        color: 'black',
+        color: 'white',
     },
     name: {
         color: 'black',

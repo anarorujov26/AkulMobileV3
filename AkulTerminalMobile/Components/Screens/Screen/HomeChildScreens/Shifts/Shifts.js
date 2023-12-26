@@ -44,7 +44,7 @@ const Shifts = ({ navigation }) => {
 
   return (
 
-    <View style={{ flex: 1, alignItems: 'center' }}>
+    <View style={{ flex: 1 }}>
       {
         shifts == null ?
           <View style={{ alignItems: 'center', marginTop: 20 }}>

@@ -8,6 +8,7 @@ import { GlobalContext } from './Global/Components/GlobalState';
 import OrdersMain from './Components/Orders/OrdersMain';
 import eventEmitter from './eventEmitter';
 import AgainLogin from './AgainLogin';
+import { NavigationContainer } from '@react-navigation/native';
 
 const Home = () => {
 
@@ -39,15 +40,20 @@ const Home = () => {
         };
     }, []);
 
-    
+
     return (
         <View style={{ flex: 1 }}>
-            {
-                token == "" ? "" : token == null ? <Login /> : loginTYPE == null ? '' : loginTYPE ? <OrdersMain /> : <StackScreens />
-            }
-            {
-                showModal &&<AgainLogin showModal={showModal} setShowModal={setShowModal}/>
-            }
+            <NavigationContainer>
+                {
+                    token == "" ? "" : token == null ? <Login /> : loginTYPE == null ? '' : loginTYPE ? <OrdersMain /> :
+
+                        <StackScreens />
+
+                }
+                {
+                    showModal && <AgainLogin showModal={showModal} setShowModal={setShowModal} />
+                }
+            </NavigationContainer>
         </View>
     )
 }

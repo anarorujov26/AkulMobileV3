@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import SearchBar from '../../../../../Global/UI/SearchBar'
 import CustomColors from '../../../../../Global/Colors/CustomColors';
@@ -13,9 +13,9 @@ import NewFab from './../../../../../Global/Components/NewFab';
 import { FlatList } from 'react-native';
 import { GlobalContext } from '../../../../../Global/Components/GlobalState';
 import FilterModal from './../../../../../Global/FilterModal';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity } from 'react-native';
-import DocumentDateFilter from '../../../../../Global/UI/DocumentDateFilter';
+import { ActivityIndicator } from '@ant-design/react-native';
+import getTemplates from './../../../../../Global/Components/getTemplates';
 
 const Products = ({ navigation }) => {
 
@@ -96,14 +96,6 @@ const Products = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <DocumentDateFilter info={setProducts} api={'products/get.php'} obj={{
-        ar: 0,
-        dr: 0,
-        gp: "",
-        lm: 100,
-        pg: 0,
-        sr: "Name",
-      }} />
       <View style={{ width: '100%', flexDirection: 'row' }}>
         <SearchBar width={'85%'} text={'Axtarış'} addStyle={{ borderRadius: 0 }} onChangeText={(e) => { setSearch_value(e) }} vl={search_value} setVL={setSearch_value} />
         <TouchableOpacity onPress={() => {

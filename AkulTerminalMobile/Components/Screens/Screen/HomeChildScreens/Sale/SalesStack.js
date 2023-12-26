@@ -58,7 +58,7 @@ const SalesStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialIcons name='delete-outline' size={25} color={'red'} />
+                            <MaterialIcons name='delete-outline' size={25} color={CustomColors.danger} />
                         </TouchableOpacity>
                     )
                 }} name='sale' component={Sale} />

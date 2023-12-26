@@ -50,7 +50,6 @@ export const GlobalProvider = (props) => {
         if (await AsyncStorage.getItem("pricesType") !== null) {
             setPrices(JSON.parse(await AsyncStorage.getItem("pricesType")));
         }
-        console.log("GLOBAL STATE - ",JSON.parse(await AsyncStorage.getItem("pS")));
         if (await AsyncStorage.getItem("pS") !== null) {
             setPageSetting(JSON.parse(await AsyncStorage.getItem("pS")))
         }

@@ -1,12 +1,10 @@
-import { ActivityIndicator, FlatList, Image, ImageBackground, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import BackGround from '../../../Images/background.png'
-import HomeCard from './../../../Global/UI/HomeCard';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomColors from '../../../Global/Colors/CustomColors';
 import { useContext } from 'react';
 import { GlobalContext } from '../../../Global/Components/GlobalState';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 let data = [
   [
@@ -14,14 +12,20 @@ let data = [
       "Göstəricilər",
       {
         id: 1,
-        imageName: "price"
+        imageName: "dashboard"
       }
     ],
     [
       {
+        name: "Əsas",
+        navName: "dashboards",
+        image: require('../../../Images/Pages/dashboards.png')
+      },
+      {
         name: "Kalatoq",
         navName: "catalogsPage",
-      }
+        image: require('../../../Images/Pages/catalog.png')
+      },
     ],
   ],
   [
@@ -29,101 +33,113 @@ let data = [
       "Məhsullar",
       {
         id: 2,
-        imageName: "product"
+        imageName: "inbox"
       }
     ],
     [
       {
         name: "Məhsullar",
         navName: "productsStack",
+        image: require('../../../Images/Pages/products.png')
       },
       {
         name: "Yerdəyişmə",
-        navName: 'move'
+        navName: 'move',
+        image: require('../../../Images/Pages/move.png')
       },
       {
         name: "İnventarizasiya",
-        navName: "inventsPage"
+        navName: "inventsPage",
+        image: require('../../../Images/Pages/inventory.png')
       },
     ],
   ],
   [
     [
-      "Alış",
+      "Alışlar",
       {
         id: 3,
-        imageName: "supply"
+        imageName: "download"
       }
     ],
     [
       {
         name: "Alış",
         navName: "supplysMain",
+        image: require('../../../Images/Pages/supply.png')
       },
       {
         name: "Alış iadəsi",
-        navName: "supplysReturnsMain"
+        navName: "supplysReturnsMain",
+        image: require('../../../Images/Pages/supplyreturns.png')
       }
     ],
   ],
   [
     [
-      "Satış",
+      "Satışlar",
       {
         id: 4,
-        imageName: "demand"
+        imageName: "upload",
       }
     ],
     [
       {
         name: "Satış",
         navName: "demandsMain",
+        image: require('../../../Images/Pages/demand.png')
       },
       {
         name: "Satış iadəsi",
-        navName: "demandReturns"
+        navName: "demandReturns",
+        image: require('../../../Images/Pages/demandreturns.png')
       },
       {
         name: "Sifariş",
-        navName: "customerOrdersPage"
+        navName: "customerOrdersPage",
+        image: require('../../../Images/Pages/demandorder.png')
       }
     ],
   ],
   [
     [
-      "Maliyyə",
+      "Maliyyələr",
       {
         id: 5,
-        imageName: "financial",
+        imageName: "wallet",
       }
     ],
     [
       {
         name: "Ödənişlər",
-        navName: "transactionsPage"
+        navName: "transactionsPage",
+        image: require('../../../Images/Pages/payments.png')
       },
       {
         name: "Borclar",
-        navName: "debtPage"
+        navName: "debtPage",
+        image: require('../../../Images/Pages/settlements.png')
       }
     ]
   ],
   [
     [
-      "Pərakəndə",
+      "Pərakəndələr",
       {
         id: 6,
-        imageName: "rotation"
+        imageName: "shoppingcart"
       }
     ],
     [
       {
         name: "Növbələr",
         navName: "shiftsPage",
+        image: require('../../../Images/Pages/shifts.png')
       },
       {
         name: "Satışlar",
         navName: "salePage",
+        image: require('../../../Images/Pages/sale.png')
       },
     ]
   ],
@@ -132,31 +148,150 @@ let data = [
       "Hesabatlar",
       {
         id: 7,
-        imageName: "accounts"
+        imageName: "linechart"
       }
     ],
     [
       {
         name: "Mənfəət",
         navName: "salePPage",
+        image: require('../../../Images/Pages/profit.png')
       },
       {
         name: "Mənfəət və Zərər",
-        navName: "profitPage"
+        navName: "profitPage",
+        image: require('../../../Images/Pages/profit2.png')
       },
       {
         name: "Hesablar",
-        navName: "accountsPage"
+        navName: "accountsPage",
+        image: require('../../../Images/Pages/wallet.png')
       }
     ]
   ]
 ];
 
+function MyTabBar({ state, descriptors, navigation, position }) {
+  return (
+    <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {state.routes.map((route, index) => {
+          let indexIcon = () => {
+            let icon;
+            data.forEach((element, index) => {
+              if (element[0][0] === route.name) {
+                icon = element[0][1].imageName;
+              }
+            });
+
+            return icon;
+          }
+          let icon = indexIcon();
+          const { options } = descriptors[route.key];
+          const label =
+            options.tabBarLabel !== undefined
+              ? options.tabBarLabel
+              : options.title !== undefined
+                ? options.title
+                : route.name;
+
+          const isFocused = state.index === index;
+
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
+
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name, route.params);
+            }
+          };
+
+          const onLongPress = () => {
+            navigation.emit({
+              type: 'tabLongPress',
+              target: route.key,
+            });
+          };
+
+          return (
+            <TouchableOpacity
+              accessibilityRole="button"
+              accessibilityState={isFocused ? { selected: true } : {}}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+              testID={options.tabBarTestID}
+              onPress={onPress}
+              onLongPress={onLongPress}
+              style={styles.tabButton}
+            >
+              <AntDesign name={icon} size={25} color={isFocused ? CustomColors.primaryV3 : 'black'} />
+              <View style={{ margin: 1 }} />
+              <Text style={[!isFocused ? styles.tabButtonTextActive : styles.tabButtonText]}>
+                {label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
+}
+
+const GetModal = ({ route }) => {
+  const {
+    list,
+    setList,
+    navigation,
+    index
+  } = route.params
+
+  return (
+    <View activeOpacity={1} style={styles.centeredView}>
+      <TouchableOpacity disabled={true} style={styles.modalView}>
+        <View style={styles.center}>
+          {
+            index !== null ?
+              <>
+                <View style={styles.header}>
+                  <Text style={{ fontSize: 20, color: '#bcbcbc', textAlign: 'center' }}>{list[index][0][0]}</Text>
+                </View>
+                <FlatList data={list[index][1]} renderItem={({ item, index }) => (
+                  <>
+                    <TouchableOpacity onPress={() => {
+                      navigation.navigate(item.navName);
+                    }} style={styles.listItem}>
+                      <View style={styles.listItemFirst}>
+                        <View style={styles.listItemAvatar}>
+                          <Image source={item.image} style={{width:20,height:20}}/>
+                        </View>
+                      </View>
+                      <View style={styles.listItemEnd}>
+                        <Text style={styles.itemText}>{item.name}</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <View style={{ alignItems: 'center' }}>
+                      <View style={styles.straight} />
+                    </View>
+                  </>
+                )} />
+              </>
+              :
+              <View style={{ justifyContent: 'center', alignItems: 'center', padding: 20 }}>
+                <ActivityIndicator size={50} color={CustomColors.primaryV3} />
+              </View>
+          }
+        </View>
+      </TouchableOpacity>
+    </View>
+  )
+
+}
+
+const Tab = createMaterialTopTabNavigator();
+
 const HomePage = ({ navigation }) => {
-
-  const [modalVisible, setModalVisible] = useState(false);
-  const [index, setIndex] = useState(null);
-
   const { pageSetting } = useContext(GlobalContext);
 
   const [list, setList] = useState(null);
@@ -173,158 +308,27 @@ const HomePage = ({ navigation }) => {
   }, [pageSetting])
 
   return (
-    <ImageBackground source={BackGround} style={styles.container}>
-      <TouchableOpacity onPress={() => { navigation.navigate("profile") }} style={styles.profile}>
-        <Ionicons size={25} color={CustomColors.primaryV2} name='settings-sharp' />
-      </TouchableOpacity>
+    <>
       <View style={{ alignItems: 'center', marginTop: 20 }}>
-        <Image source={require('../../../Images/akul.png')} style={{ width: 80, height: 80, borderRadius: 10 }} />
-        <Text style={{ marginTop: 0, color: CustomColors.primaryV2, fontSize: 20, fontWeight: 'bold'}}>Akul Mobile</Text>
+        <Image source={require('../../../Images/akul.png')} style={{ width: 150, height: 150, borderRadius: 10 }} />
       </View>
       {
-        list == null ?
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size={50} color={CustomColors.primary} />
-          </View>
-          :
-          !list[0] ?
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <AntDesign name='switcher' color={CustomColors.primaryV2} size={60}/>
-              <Text style={{fontSize:20,color:CustomColors.primaryV2,fontWeight:'bold',marginTop:10}}>Səhifə yoxdur!</Text>
-            </View>
-            :
-            <View style={{ flex: 1, justifyContent: 'center' }}>
-              {
-                list[0] &&
-                <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center" }}>
-                  <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                    setIndex(0);
-                    setModalVisible(true);
-                  }}>
-                    <HomeCard image={list[0][0][1].imageName} w={170} bottom={list[0][0][0]} />
-                  </TouchableOpacity>
+        list !== null &&
+        <Tab.Navigator tabBar={props => <MyTabBar {...props} />} tabBarPosition='bottom'>
+          {
+            list.map((element, index) => (
+              <Tab.Screen name={element[0][0]} initialParams={{
+                list,
+                setList,
+                navigation,
+                index,
 
-                  {
-                    list[1] && <>
-                      <View style={{ margin: 10 }} />
-                      <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                        setIndex(1);
-                        // setIndex(Number(list[1][0][1].id) - 1);
-                        setModalVisible(true);
-                      }}>
-                        <HomeCard image={list[1][0][1].imageName} w={170} bottom={list[1][0][0]} />
-                      </TouchableOpacity></>
-                  }
-                </View>
-              }
-              {
-                list[2] &&
-                <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
-                  <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                    setIndex(2);
-                    setModalVisible(true);
-                  }}>
-                    <HomeCard image={list[2][0][1].imageName} w={170} bottom={list[2][0][0]} />
-                  </TouchableOpacity>
-
-                  {
-                    list[3] &&
-                    <>
-
-                      <View style={{ margin: 10 }} />
-                      <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                        setIndex(3);
-                        setModalVisible(true);
-                      }}>
-                        <HomeCard image={list[3][0][1].imageName} w={170} bottom={list[3][0][0]} />
-                      </TouchableOpacity>
-                    </>
-                  }
-                </View>
-              }
-              {
-                list[4] &&
-                <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
-                  <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                    setIndex(4);
-                    setModalVisible(true);
-                  }}>
-                    <HomeCard image={list[4][0][1].imageName} w={170} bottom={list[4][0][0]} />
-                  </TouchableOpacity>
-
-                  {
-                    list[5] &&
-                    <>
-
-                      <View style={{ margin: 10 }} />
-                      <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                        setIndex(5);
-                        setModalVisible(true);
-                      }}>
-                        <HomeCard image={list[5][0][1].imageName} w={170} bottom={list[5][0][0]} />
-                      </TouchableOpacity>
-                    </>
-                  }
-                </View>
-              }
-              {
-                list[6] &&
-                <View style={{ flexDirection: 'row', width: '100%', display: 'flex', justifyContent: "center", marginTop: 10 }}>
-                  <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                    setIndex(6);
-                    setModalVisible(true);
-                  }}>
-                    <HomeCard image={list[6][0][1].imageName} w={170} bottom={list[6][0][0]} />
-                  </TouchableOpacity>
-
-                  <View style={{ margin: 10 }} />
-                  <TouchableOpacity activeOpacity={0.8} style={{ width: 170 }}>
-                  </TouchableOpacity>
-                </View>
-              }
-            </View>
+              }} component={GetModal} />
+            ))
+          }
+        </Tab.Navigator>
       }
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-          setIndex(null)
-        }}>
-        <TouchableOpacity activeOpacity={1} onPress={()=>{setModalVisible(false),setIndex(null)}} style={styles.centeredView}>
-          <TouchableOpacity disabled={true} style={styles.modalView}>
-            <View style={styles.center}>
-              {
-                index !== null ?
-                  <>
-                    <View style={styles.header}>
-                      <Text style={{ fontSize: 22, color: "white", textAlign: 'center' }}>{list[index][0][0]}</Text>
-                    </View>
-                    <FlatList data={list[index][1]} renderItem={({ item, index }) => (
-                      <>
-                        <TouchableOpacity onPress={() => {
-                          navigation.navigate(item.navName);
-                          setModalVisible(false);
-                        }} style={styles.listItem}>
-                          <Text style={styles.itemText}>{item.name}</Text>
-                        </TouchableOpacity>
-                        <View style={{ alignItems: 'center' }}>
-                          <View style={styles.straight} />
-                        </View>
-                      </>
-                    )} />
-                  </>
-                  :
-                  <View style={{ justifyContent: 'center', alignItems: 'center', padding: 20 }}>
-                    <ActivityIndicator size={50} color={CustomColors.primary} />
-                  </View>
-              }
-            </View>
-          </TouchableOpacity>
-        </TouchableOpacity>
-      </Modal>
-    </ImageBackground>
+    </>
   )
 }
 
@@ -348,8 +352,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+    width:'100%'
   },
   modalView: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -361,20 +368,38 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   header: {
-    height: 50, width: '100%',
-    backgroundColor: CustomColors.primary,
-    borderTopStartRadius: 30,
-    borderTopRightRadius: 30,
+    borderBottomWidth: 1,
+    borderColor: '#eaecef',
+    height: 40, width: '100%',
+    backgroundColor: 'white',
     justifyContent: 'center',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20
   },
   center: {
-    backgroundColor: 'white'
+    width:'100%',
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20
   },
   listItem: {
-    width: '100%',
-    height: 50,
-    justifyContent: 'center',
-    paddingLeft: 20
+    width:'100%',
+    height: 60,
+    flexDirection:'row',
+  },
+  listItemFirst:{
+    width:'20%',
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  listItemAvatar:{
+    backgroundColor:"#eaecef",
+    borderRadius:10,
+    padding:10,
+  },
+  listItemEnd:{
+    width:'80%',
+    justifyContent:'center'
   },
   straight: {
     width: '90%',
@@ -383,7 +408,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemText: {
-    fontSize: 20,
+    fontSize: 16,
     color: 'black',
-  }
+  },
+  tabButton: {
+    height: 70,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  tabButtonText: {
+    backgroundColor: CustomColors.primaryV3,
+    color: "white",
+    borderRadius: 10,
+    textAlign: 'center',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  tabButtonTextActive: {
+    backgroundColor: '#eaecef',
+    color: "black",
+    borderRadius: 10,
+    textAlign: 'center',
+    paddingLeft: 10,
+    paddingRight: 10
+  },
 })

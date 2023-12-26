@@ -19,13 +19,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Product from '../Products/Product';
 import AddPsPriceTypes from '../../../../../Global/Components/AddPsPriceTypes';
 import DocumentNewModal from '../../../../../Global/Components/Modals/DocumentNewModal';
-import PrintURL from './../../../../../Global/Components/PrintURL';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Payments from '../../../../../Global/Components/Payments';
+import MoreCohices from './../../../../../Global/Components/Modals/MoreCohices';
+import CustomDangerButton from '../../../../../Global/UI/CustomDangerButton';
+import CustomSuccessButton from './../../../../../Global/UI/CustomSuccessButton';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const Stack = createNativeStackNavigator();
 
 const DemandsStack = () => {
+
+    const [modalAnswer,setModalAnswer]=useState(false)
 
     let navigation = useNavigation();
 
@@ -45,11 +50,7 @@ const DemandsStack = () => {
         setDemand(null);
         setSaveButton(false)
     }
-
-    // const getPrint = async () => {
-    // await PrintURL('demands', await AsyncStorage.getItem("token"), demand.Id);
-    // }
-
+    
     return (
         <>
             <Stack.Navigator screenOptions={{
@@ -64,22 +65,24 @@ const DemandsStack = () => {
                     title: "Satış",
                     headerRight: () => (
                         <TouchableOpacity
-                            onPress={getDeleteDocument}
+                            onPress={()=>{
+                                setModalAnswer(true)
+                            }}
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialIcons name='delete-outline' size={25} color={'red'} />
+                            <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors.primary} />
                         </TouchableOpacity>
                     ),
                     headerLeft: () => (
                         <TouchableOpacity
                             onPress={() => [
-                                setPaymentModal(true)
+                                console.log('asdasd')
                             ]}
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialCommunityIcons name='hand-coin' size={25} color={CustomColors.primary} />
+                            <Entypo name='share' size={25} color={CustomColors.primary} />
                         </TouchableOpacity>
                     )
                 }} name='demand' component={Demand} />
@@ -102,6 +105,13 @@ const DemandsStack = () => {
             </Stack.Navigator>
             <AnswerModal modalVisible={deleteModal} setModalVisible={setDeleteModal} oneButton={'Sil'} twoButton={'Dəvam et'} text={'Silməyə əminsiniz?'} pressContinue={() => { setDeleteModal(false) }} pressExit={deleteDocument} />
             <Payments type={'demands'} setInfo={setDemand} listRender={setDemandListRender} pT={'ins'} save={setSaveButton} info={demand} modalVisible={paymentModal} setModalVisible={setPaymentModal} />
+            <MoreCohices modalVisible={modalAnswer} setModalVisible={setModalAnswer}>
+                <CustomDangerButton text={'Sil'} width={'100%'} onPress={getDeleteDocument}/>
+                <View style={{margin:10}}/>
+                <CustomSuccessButton text={"Ödəniş"} width={'100%'} onPress={()=>{
+                    setPaymentModal(true)
+                }}/>
+            </MoreCohices>
         </>
     )
 }

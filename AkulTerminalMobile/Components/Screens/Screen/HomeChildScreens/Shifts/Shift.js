@@ -4,6 +4,7 @@ import Api from '../../../../../Global/Components/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomColors from '../../../../../Global/Colors/CustomColors';
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable';
+import { Card, WingBlank } from '@ant-design/react-native';
 
 const Shift = ({ route, navigation }) => {
 
@@ -23,7 +24,7 @@ const Shift = ({ route, navigation }) => {
         getInfo();
     }, [])
     return (
-        <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flex: 1,backgroundColor:'white',alignItems:'center'}}>
             {
 
                 shift == null ?
@@ -34,6 +35,7 @@ const Shift = ({ route, navigation }) => {
 
                     <>
                         <View style={styles.firsContainer}>
+
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '95%' }}>
                                 <View>
                                     <Text style={styles.bigText}>Satışlar</Text>
@@ -144,7 +146,7 @@ const Shift = ({ route, navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    firsContainer: { backgroundColor: "white", width: '95%', padding: 10, borderRadius: 10, shadowColor: "black", elevation: 10, marginTop: 10, alignItems: 'center' },
+    firsContainer: { backgroundColor: "white", width: '95%', padding: 10, borderRadius: 10, shadowColor: "black", elevation: 4, marginTop: 10, alignItems: 'center' },
     bigText: { fontSize: 20, color: 'black' },
     line: {
         width: '95%',

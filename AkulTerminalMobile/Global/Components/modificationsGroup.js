@@ -15,9 +15,6 @@ const modificationsGroup = async (pM, type) => {
 
     let m = result.data.Body;
 
-    console.log(m);
-
-
     if (m && pM) {
         let modifications = [...m];
         let productModifications = { ...pM };
