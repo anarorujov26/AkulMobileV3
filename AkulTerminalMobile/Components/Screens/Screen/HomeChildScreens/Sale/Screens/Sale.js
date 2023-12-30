@@ -13,6 +13,7 @@ import { SalesGlobalContext } from '../SalesGlobalState';
 import SaleDocumentPage from './SaleDocument/SaleDocumentPage';
 import SaleAppointmentPage from './SaleAppointment/SaleAppointmentPage';
 import GetAddUnits from '../../../../../../Global/UI/GetAddUnits';
+import axios from 'axios';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -73,16 +74,16 @@ const Sale = ({ route, navigation }) => {
             id: productId,
             token: await AsyncStorage.getItem('token')
         }
-        const result = await Api('sales/get.php', obj);
+        const result = await axios.post('https://api.akul.az/1.0/dev/controllers/sales/get.php', obj);
         if (result.data.Headers.ResponseStatus !== "0") {
             navigation.goBack();
         }
-        let data = [...result.data.Body.List[0]];
-        data.Positions = GetAddUnits(result)
+        let data = result.data.Body.List[0];
         setSale(data);
     }
 
     useEffect(() => {
+        console.log(id);
         getSale(id);
     }, [id])
 

@@ -97,7 +97,7 @@ const InventAddProducts = ({ route, navigation }) => {
                                                 item.Pic ?
                                                     <Image style={styles.avatar} source={{ uri: item.Pic }} />
                                                     :
-                                                    <View style={[styles.avatar, { backgroundColor: CustomColors.primary }]}>
+                                                    <View style={[styles.avatar, { backgroundColor: CustomColors.greyV1 }]}>
                                                         <Text style={styles.avatarName}>{item.Name.slice(0, 2)}</Text>
                                                     </View>
                                             }

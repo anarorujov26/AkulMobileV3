@@ -6,6 +6,7 @@ import Product from './Product';
 import ProductSearchScan from './ProductSearchScan';
 import CustomColors from '../../../../../Global/Colors/CustomColors';
 import ProductsHome from './ProductsHome';
+import ShareComponents from '../../../../../Global/Components/Modals/ShareComponents';
 
 const ProductsStack = () => {
 
@@ -15,7 +16,7 @@ const ProductsStack = () => {
         <Stack.Navigator screenOptions={{
             headerTitleAlign: 'center',
             headerBackVisible: false,
-            headerTintColor:CustomColors.connectedPrimary
+            headerTintColor: CustomColors.greyV2
         }}>
             <Stack.Screen options={{
                 title: 'Məhsullar',
@@ -26,6 +27,9 @@ const ProductsStack = () => {
             <Stack.Screen options={{
                 title: 'Məhsullar'
             }} name='productSearchScan' component={ProductSearchScan} />
+            <Stack.Screen options={{
+                title: "Share",
+            }} name='share' component={ShareComponents} />
         </Stack.Navigator>
     )
 }

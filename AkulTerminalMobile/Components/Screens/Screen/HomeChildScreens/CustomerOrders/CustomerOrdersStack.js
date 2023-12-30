@@ -48,7 +48,7 @@ const CustomerOrdersStack = () => {
             <Stack.Navigator screenOptions={{
                 headerBackVisible: false,
                 headerTitleAlign: 'center',
-                headerTintColor: CustomColors.connectedPrimary
+                headerTintColor: CustomColors.greyV2
             }}>
                 <Stack.Screen options={{
                     title: "Sifariş"

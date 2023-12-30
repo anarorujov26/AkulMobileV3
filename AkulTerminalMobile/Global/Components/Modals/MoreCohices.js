@@ -4,7 +4,7 @@ import React from 'react'
 const MoreCohices = ({ modalVisible, setModalVisible, ...props }) => {
   return (
     <Modal
-      animationType="fade"
+      animationType="none"
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {

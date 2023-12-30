@@ -1,4 +1,4 @@
-import { ActivityIndicator, BackHandler, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, BackHandler, FlatList, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import Api from '../../../../../Global/Components/Api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -18,10 +18,14 @@ import modificationsGroup from './../../../../../Global/Components/modifications
 import DocumentInItems from '../../../../../Global/Components/DocumentInItems'
 import axios from 'axios'
 import RNPrint from 'react-native-print'
+import TmpModal from '../../../../../Global/Components/Modals/TmpModal'
+import getTemplates from '../../../../../Global/Components/getTemplates'
 
 const Product = ({ route, navigation }) => {
 
   const [pricePermission, setPricePermission] = useState(true);
+
+  const [quantity, setQuantity] = useState(1);
 
   const { type, renderList } = route.params;
 
@@ -36,6 +40,9 @@ const Product = ({ route, navigation }) => {
   const [dontBackModal, setDontBackModal] = useState(false);
 
   const [pricesTypes, setPricesTYpes] = useState(false);
+
+  const [tmps, setTmps] = useState([]);
+  const [tmpModal, setTmpModal] = useState(false);
 
   const getProductData = async (productId) => {
     setPricePermission(await PricePermission());
@@ -165,10 +172,10 @@ const Product = ({ route, navigation }) => {
     }
   }
 
-  const getPRINT = async () => {
+  const getPRINT = async (id) => {
     let obj = {
       token: await AsyncStorage.getItem('token'),
-      TemplateId: 1,
+      TemplateId: id,
       List: [
         {
           Price: ConvertFixedTable(product.Price),
@@ -176,6 +183,9 @@ const Product = ({ route, navigation }) => {
           Quantity: 1
         }
       ]
+    }
+    if (quantity !== 1 || quantity !== "") {
+      obj.List[0].Quantity = quantity;
     }
 
     const result = await axios.post('https://api.akul.az/1.0/dev/controllers/products/pricelist.php', obj);
@@ -188,6 +198,14 @@ const Product = ({ route, navigation }) => {
     } catch (error) {
       console.error('Error printing:', error);
     }
+  }
+
+  const getShare = async () => {
+    let data = await getTemplates('products');
+    if (data[0]) {
+      setTmps(data);
+    }
+    setTmpModal(true);
   }
 
   useEffect(() => {
@@ -223,7 +241,7 @@ const Product = ({ route, navigation }) => {
       </View>
       :
       <View style={{ flex: 1 }}>
-        <TouchableOpacity onPress={getPRINT} style={{
+        <TouchableOpacity onPress={getShare} style={{
           alignItems: 'center',
           justifyContent: 'center',
           marginTop: 5
@@ -374,7 +392,22 @@ const Product = ({ route, navigation }) => {
             </View>
           </>
         }
-
+        {
+          tmps[0] &&
+          <TmpModal modalVisible={tmpModal} setModalVisible={setTmpModal}>
+            <FlatList data={tmps} renderItem={({ item, index }) => (
+              <TouchableOpacity style={{ width: 200, justifyContent: 'center', alignItems: 'flex-start', marginTop: 20 }} onPress={() => {
+                setTmpModal(false);
+                getPRINT(item.Id);
+              }}>
+                <Text style={{ color: '#0264b1', fontSize: 20 }}>{item.Name}</Text>
+              </TouchableOpacity>
+            )} />
+            <CustomTextInput width={200} addStyle={{ borderWidth: 1, marginTop: 20, borderColor: "#0264b1" }} placeholder="miqdar..." text={'Miqdar'} value={String(quantity)} onChangeText={(e) => {
+              setQuantity(e);
+            }} />
+          </TmpModal>
+        }
       </View>
   )
 }

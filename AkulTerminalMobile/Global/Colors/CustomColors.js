@@ -7,5 +7,7 @@ export default {
     grey:"#606060",
     primaryV2:'#1677ff',
     primaryV3:'#1677ff',
-    orange:'#ff8f1f'
+    orange:'#ff8f1f',
+    greyV1:'#eaecef',
+    greyV2:'#bcbcbc'
 }

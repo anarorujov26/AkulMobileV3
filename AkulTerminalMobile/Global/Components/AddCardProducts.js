@@ -27,11 +27,11 @@ const AddCardProducts = ({ name, price, pic, press, ...props }) => {
                         <Image source={{ uri: pic }} style={styles.image} />
                         :
                         <View style={[styles.image, {
-                            backgroundColor: CustomColors.primary,
+                            backgroundColor: CustomColors.greyV1,
                             justifyContent: 'center',
                             alignItems: 'center'
                         }]}>
-                            <Text style={{ fontSize: 40 }}>{name.slice(0, 2)}</Text>
+                            <Text style={{ fontSize: 40,color:'black' }}>{name.slice(0, 2)}</Text>
                         </View>
                 }
                 <View style={styles.text}>

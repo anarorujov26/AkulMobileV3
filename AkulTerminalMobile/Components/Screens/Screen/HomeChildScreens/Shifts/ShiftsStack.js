@@ -13,7 +13,7 @@ const ShiftsStack = () => {
         <Stack.Navigator screenOptions={{
             headerTitleAlign: 'center',
             headerBackVisible: false,
-            headerTintColor: CustomColors.connectedPrimary
+            headerTintColor: CustomColors.grey
         }}>
             <Stack.Screen options={{
                 title: 'Növbələr',

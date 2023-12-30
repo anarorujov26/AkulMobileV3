@@ -23,7 +23,7 @@ const PositionsList = ({ state, setState, setButton, pageName,ds, type, ...props
                             props.element.Pic ?
                                 <Image style={styles.avatar} source={{ uri: props.element.Pic }} />
                                 :
-                                <View style={[styles.avatar, { backgroundColor: CustomColors.primary }]}>
+                                <View style={[styles.avatar, { backgroundColor: CustomColors.greyV1 }]}>
                                     <Text style={styles.avatarName}>{props.name.slice(0, 2)}</Text>
                                 </View>
                         }
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: CustomColors.primary,
+        backgroundColor: CustomColors.greyV1,
     },
     listContainer: {
         width: '100%',
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     avatarName: {
         fontSize: 20,
-        color: 'white'
+        color: 'black'
     },
     name: {
         color: 'black'

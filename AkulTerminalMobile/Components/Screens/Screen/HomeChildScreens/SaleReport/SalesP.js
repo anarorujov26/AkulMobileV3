@@ -43,7 +43,7 @@ const SalesP = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1}}>
-            <DocumentDateFilter info={setSales} api={'salereports/get.php'} obj={{
+            <DocumentDateFilter body={true} setBody={setSumma} info={setSales} api={'salereports/get.php'} obj={{
                 dr: 1,
                 sr: "Moment",
                 pg: 0,
@@ -79,7 +79,7 @@ const SalesP = ({ navigation }) => {
                         <>
                             {
                                 search == "" &&
-                                <Text style={{ padding: 5, backgroundColor: 'white', color: "#909090", width: '100%', textAlign: "center" }}>Məbləğ {ConvertFixedTable(summa.AllAmount)}₼   |   Qazanc {ConvertFixedTable(summa.AllProfit)}₼</Text>
+                                <Text style={{ padding: 5, backgroundColor: 'white', color: "#909090", width: '100%', textAlign: "center" }}>Satış {ConvertFixedTable(summa.AllAmount)}₼   |  Qaytarma {ConvertFixedTable(summa.RetAllAmount)}₼  |   Qazanc {ConvertFixedTable(summa.AllProfit)}₼</Text>
                             }
                             <FlatList data={sales} renderItem={({ item, index }) => (
                                 <DocumentList pIcon={true} key={item.ProductId} index={index} customername={item.ProductName} moment={<Text>{item.Quantity} əd x {ConvertFixedTable(Number(Number(item.SumPrice) / Number(item.Quantity)))}</Text>} name={item.Name} navigation={navigation} location={'saleP'} id={item.ProductId} amount={<View>

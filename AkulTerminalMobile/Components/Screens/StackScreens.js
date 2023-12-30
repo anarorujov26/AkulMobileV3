@@ -67,14 +67,14 @@ const StackScreens = () => {
                 headerShown: true,
                 headerTitle: "Göstəricilər",
                 headerTitleAlign: 'center',
-                headerTitleStyle: { color: CustomColors.primary },
+                headerTitleStyle: { color: CustomColors.greyV2 },
                 headerBackVisible: false
             }} />
             <Stack.Screen name='profitPage' component={Profits} options={{
                 headerShown: true,
                 headerTitle: "Mənfəət və Zərər",
                 headerTitleAlign: 'center',
-                headerTitleStyle: { color: CustomColors.primary },
+                headerTitleStyle: { color: CustomColors.greyV2 },
                 headerBackVisible: false
             }} />
             <Stack.Screen name='accountsPage' component={AccountsStack} />

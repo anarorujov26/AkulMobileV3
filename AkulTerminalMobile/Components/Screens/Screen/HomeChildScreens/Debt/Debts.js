@@ -43,7 +43,7 @@ const Debts = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1 }}>
-            <DocumentDateFilter info={setDebts} api={'settlements/get.php'} obj={{
+            <DocumentDateFilter body={true} setBody={setSumma} info={setDebts} api={'settlements/get.php'} obj={{
                 dr: 1,
                 sr: "Moment",
                 pg: 0,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: CustomColors.primary,
+        backgroundColor: CustomColors.greyV1,
     },
     listContainer: {
         width: '100%',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     },
     avatarName: {
         fontSize: 20,
-        color: 'white',
+        color: 'black',
     },
     name: {
         color: 'black',

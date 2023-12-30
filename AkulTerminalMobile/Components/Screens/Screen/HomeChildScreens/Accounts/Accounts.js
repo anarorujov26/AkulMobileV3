@@ -51,7 +51,7 @@ const Accounts = ({ navigation }) => {
                         </View>
                         :
                         <>
-                            <Text style={{ padding: 5, backgroundColor: 'white', color: "black", width: '100%', textAlign: "left" }}>Cəm {ConvertFixedTable(summa.AllSum)}₼</Text>
+                            <Text style={{ padding: 5, backgroundColor: 'white', color: CustomColors.grey, width: '100%', textAlign: "center" }}>Cəm {ConvertFixedTable(summa.AllSum)}₼</Text>
                             <FlatList data={sales} renderItem={({ item, index }) => (
                                 <DocumentList pIcon={true}  key={item.Id} index={index} customername={item.Name} moment={item.CashType == " cash" ? "Nağd" : item.CashType == "noncash" ? "Nağdsız" : "Satış nöqtəsi" }  navigation={navigation} location={'account'} id={item.Id} amount={ConvertFixedTable(item.Balance)} />
                             )} />

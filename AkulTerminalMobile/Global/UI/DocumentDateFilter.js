@@ -24,7 +24,7 @@ let data = [
   }
 ]
 
-const DocumentDateFilter = ({ info, api, obj }) => {
+const DocumentDateFilter = ({ info, api, obj, body, setBody }) => {
 
   const [active, setActive] = useState(() => {
     let newData = [...data]
@@ -58,16 +58,20 @@ const DocumentDateFilter = ({ info, api, obj }) => {
 
     apiO.token = await AsyncStorage.getItem('token')
     info([]);
+    let infoApi = await Api(api, apiO);
     console.log(api);
     console.log(apiO);
-    let infoApi = await Api(api, apiO);
+    console.log(infoApi)
+    if(body){
+      setBody(infoApi.data.Body)
+    }
     if (infoApi.data.Headers.ResponseStatus == '0') {
-      if(infoApi.data.Body.List[0]){
+      if (infoApi.data.Body.List[0]) {
         info(infoApi.data.Body.List);
-      }else{
+      } else {
         info(null);
       }
-    } else {  
+    } else {
       alert(infoApi.data.Body);
     }
 

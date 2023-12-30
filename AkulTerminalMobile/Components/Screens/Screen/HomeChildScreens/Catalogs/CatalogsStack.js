@@ -45,7 +45,7 @@ const CatalogsStack = () => {
       <Stack.Navigator screenOptions={{
         headerTitleAlign: 'center',
         headerBackVisible: false,
-        headerTintColor: CustomColors.connectedPrimary
+        headerTintColor: CustomColors.greyV2
 
       }}>
         <Stack.Screen options={{

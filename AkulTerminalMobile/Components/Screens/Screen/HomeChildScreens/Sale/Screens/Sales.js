@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import Api from '../../../../../../Global/Components/Api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -16,6 +16,7 @@ const Sales = ({ navigation }) => {
 
     const [sales, setSales] = useState([]);
     const [search, setSearch] = useState("");
+    const [summa, setSumma] = useState({});
 
     const getSales = async () => {
         let obj = {
@@ -26,6 +27,7 @@ const Sales = ({ navigation }) => {
             token: await AsyncStorage.getItem("token")
         }
         const result = await Api("sales/get.php", obj);
+        setSumma(result.data.Body);
         if (result.data.Headers.ResponseStatus !== "0") {
             navigation.goBack();
         }
@@ -43,7 +45,7 @@ const Sales = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
-            <DocumentDateFilter info={setSales} api={'sales/get.php'} obj={{
+            <DocumentDateFilter body={true} setBody={setSumma} info={setSales} api={'sales/get.php'} obj={{
                 dr: 1,
                 sr: "Moment",
                 pg: 0,
@@ -75,9 +77,13 @@ const Sales = ({ navigation }) => {
                             <ActivityIndicator size={50} color={CustomColors.primary} />
                         </View>
                         :
+                        <>
+
+                            <Text style={{ padding: 5, backgroundColor: 'white', color: "#909090", width: '100%', textAlign: "center" }}>Nağd {ConvertFixedTable(summa.CashSum)}  |  Kart {ConvertFixedTable(summa.BankSum)}  |  Bonus {ConvertFixedTable(summa.BonusSum)}  |  Nisyə {ConvertFixedTable(summa.CreditSum)}  |  Cəm {ConvertFixedTable(summa.AmountSum)}</Text>
                             <FlatList data={sales} renderItem={({ item, index }) => (
                                 <DocumentList key={item.Id} index={index} customername={item.SalePointName} moment={item.Moment} name={item.CustomerName} navigation={navigation} location={'sale'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
                             )} />
+                        </>
 
             }
         </View>

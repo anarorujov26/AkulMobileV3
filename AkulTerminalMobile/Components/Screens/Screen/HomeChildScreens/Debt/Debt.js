@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#dcdcdc',
+        backgroundColor: CustomColors.greyV1,
     },
     listContainer: {
         width: '100%',

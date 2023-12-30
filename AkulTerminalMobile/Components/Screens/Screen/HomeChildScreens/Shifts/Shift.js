@@ -146,11 +146,11 @@ const Shift = ({ route, navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    firsContainer: { backgroundColor: "white", width: '95%', padding: 10, borderRadius: 10, shadowColor: "black", elevation: 4, marginTop: 10, alignItems: 'center' },
+    firsContainer: { backgroundColor: "#ececec", width: '95%', padding: 10, borderRadius: 10, marginTop: 10, alignItems: 'center' },
     bigText: { fontSize: 20, color: 'black' },
     line: {
         width: '95%',
-        backgroundColor: "#dcdcdc",
+        backgroundColor: "#aac3da",
         borderRadius: 10,
         height: 2,
         marginTop: 10
