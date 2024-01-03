@@ -14,6 +14,7 @@ const Orders = ({ navigation }) => {
 
     const { ordersListRender } = useContext(OrdersGlobalContext);
     const [orders, setOrders] = useState([]);
+    const [isRefresh,setIsRefresh]=useState(false);
 
     const getOrders = async () => {
         let obj = {
@@ -24,6 +25,10 @@ const Orders = ({ navigation }) => {
             setOrders(result.data.Body.List);
         } else {
             setOrders(null);
+        }
+
+        if(isRefresh){
+            setIsRefresh(false);
         }
     }
 
@@ -51,7 +56,7 @@ const Orders = ({ navigation }) => {
                                 <ActivityIndicator size={50} color={CustomColors.primary} />
                             </View>
                             :
-                            <FlatList data={orders} renderItem={({item,index})=>(
+                            <FlatList refreshing={isRefresh} onRefresh={getOrders} data={orders} renderItem={({item,index})=>(
                                 <DocumentList key={item.Id} index={index} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'order'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
                             )}/>
                 }

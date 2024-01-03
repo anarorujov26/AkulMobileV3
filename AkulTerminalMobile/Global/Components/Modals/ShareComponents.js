@@ -22,7 +22,6 @@ const ShareComponents = ({ navigation, route }) => {
         type: 'application/png',
       }
       const result = await Share.open(shareOptions);
-      console.log(result)
     })
   }
 

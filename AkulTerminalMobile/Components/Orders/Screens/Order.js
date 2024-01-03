@@ -115,7 +115,6 @@ const Order = ({ route, navigation }) => {
             if (await AsyncStorage.getItem("emp") != null) {
                 obj.employeeid = JSON.parse(await AsyncStorage.getItem("emp")).empId
             }
-            console.log(obj);
             const result = await Api('tmpsales/put.php', obj);
             if (result.data.Headers.ResponseStatus == "0") {
                 setOrder(null)

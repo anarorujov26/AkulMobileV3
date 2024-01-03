@@ -59,9 +59,6 @@ const DocumentDateFilter = ({ info, api, obj, body, setBody }) => {
     apiO.token = await AsyncStorage.getItem('token')
     info([]);
     let infoApi = await Api(api, apiO);
-    console.log(api);
-    console.log(apiO);
-    console.log(infoApi)
     if(body){
       setBody(infoApi.data.Body)
     }

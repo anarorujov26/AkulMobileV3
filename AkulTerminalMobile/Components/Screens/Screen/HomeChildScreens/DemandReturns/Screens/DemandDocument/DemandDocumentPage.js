@@ -16,7 +16,7 @@ const DemandDocumentPage = ({ navigation }) => {
 
   const { listType } = useContext(GlobalContext);
 
-  const { demand, setDemand, saveButton, setSaveButton } = useContext(DemandsGlobalContext)
+  const { demand, setDemand, saveButton, setSaveButton,debtQuantity } = useContext(DemandsGlobalContext)
   const [customer, setCustomer] = useState(false);
   const [stock, setStock] = useState(false);
 
@@ -25,6 +25,12 @@ const DemandDocumentPage = ({ navigation }) => {
       <TouchableOpacity onPress={() => { setCustomer(true) }}>
         <CustomTextInput editable={false} text={'Müştəri'} width={'100%'} value={demand.CustomerName} end={true} endText={<AntDesign name='right' size={15} />} />
       </TouchableOpacity>
+      <Text style={{
+        color:"red",
+        textAlign:'right',
+        width:'100%',
+        paddingRight:10
+      }}>Qalıq borc: <Text style={{color:'black'}}>{debtQuantity}</Text></Text>
       <TouchableOpacity onPress={() => { setStock(true) }}>
         <CustomTextInput editable={false} text={'Anbar'} width={'100%'} value={demand.StockName} end={true} endText={<AntDesign name='right' size={15} />} />
       </TouchableOpacity>

@@ -23,7 +23,6 @@ const OrderNewModal = ({ route, navigation }) => {
     const [product, setProduct] = useState(null);
 
     const getInfo = async () => {
-        console.log(data);
         setPricePermission(await PricePermission());
         let stateData = [...state.Positions]
         let productOBJ = { ...data };
@@ -59,7 +58,6 @@ const OrderNewModal = ({ route, navigation }) => {
         }
 
         productOBJ.NewQuantity = 1
-        console.log(productOBJ);
 
         setProduct(productOBJ);
     }

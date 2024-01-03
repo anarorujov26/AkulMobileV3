@@ -4,7 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api from '../../Global/Components/Api';
 import SearchBar from '../../Global/UI/SearchBar';
 
-const Employee = ({ navigation }) => {
+const Employee = ({ route, navigation }) => {
+
+  const { component } = route.params;
 
   const [search, setSearch] = useState("");
   const [employee, setEmployee] = useState([]);
@@ -31,6 +33,7 @@ const Employee = ({ navigation }) => {
     await AsyncStorage.setItem("emp", JSON.stringify({ empName: element.Name, empId: element.Id }))
     navigation.goBack();
     successAlert();
+    component();
   }
 
   const deleteEmployee = async () => {
@@ -70,7 +73,7 @@ const Employee = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <SearchBar vl={search} onChangeText={(e)=>{
+      <SearchBar vl={search} onChangeText={(e) => {
         setSearch(e);
       }} setVL={setSearch} width={'100%'} text={'Axtarış'} />
       <View style={{ marginTop: 2 }} />

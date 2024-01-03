@@ -83,7 +83,6 @@ const Sale = ({ route, navigation }) => {
     }
 
     useEffect(() => {
-        console.log(id);
         getSale(id);
     }, [id])
 

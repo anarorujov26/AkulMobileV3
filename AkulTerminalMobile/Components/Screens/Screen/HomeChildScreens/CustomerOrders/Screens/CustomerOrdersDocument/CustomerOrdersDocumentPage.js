@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useState } from 'react'
 import CustomTextInput from '../../../../../../../Global/UI/CustomTextInput'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -13,7 +13,7 @@ import { GlobalContext } from '../../../../../../../Global/Components/GlobalStat
 const CustomerOrdersDocumentPage = ({ navigation }) => {
 
   const { listType } = useContext(GlobalContext);
-  const { customerOrder, setCustomerOrder, saveButton, setSaveButton } = useContext(CustomerOrdersGlobalContext)
+  const { customerOrder, setCustomerOrder, saveButton, setSaveButton,debtQuantity } = useContext(CustomerOrdersGlobalContext)
   const [customer, setCustomer] = useState(false);
   const [stock, setStock] = useState(false);
 
@@ -22,6 +22,12 @@ const CustomerOrdersDocumentPage = ({ navigation }) => {
       <TouchableOpacity onPress={() => { setCustomer(true) }}>
         <CustomTextInput editable={false} text={'Müştəri'} width={'100%'} value={customerOrder.CustomerName} end={true} endText={<AntDesign name='right' size={15} />} />
       </TouchableOpacity>
+      <Text style={{
+        color: "red",
+        textAlign: 'right',
+        width: '100%',
+        paddingRight: 10
+      }}>Qalıq borc: <Text style={{ color: 'black' }}>{debtQuantity}</Text></Text>
       <TouchableOpacity onPress={() => { setStock(true) }}>
         <CustomTextInput editable={false} text={'Anbar'} width={'100%'} value={customerOrder.StockName} end={true} endText={<AntDesign name='right' size={15} />} />
       </TouchableOpacity>

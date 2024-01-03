@@ -38,6 +38,10 @@ export const GlobalProvider = (props) => {
             id: 7,
             answer: true,
         },
+        {
+            id:8,
+            answer:true
+        }
     ]);
 
     const getPT = async () => {

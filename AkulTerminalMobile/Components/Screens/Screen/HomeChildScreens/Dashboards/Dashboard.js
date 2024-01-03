@@ -13,7 +13,6 @@ const Dashboard = () => {
     const result = await Api('dashboard/get.php', {
       token: await AsyncStorage.getItem("token")
     });
-    console.log(result);
     if (result.data.Headers.ResponseStatus === "0") {
       setInfo(result.data.Body);
     }

@@ -71,7 +71,7 @@ const Tab = createMaterialTopTabNavigator();
 const Demand = ({ route, navigation }) => {
 
     const { id } = route.params
-    const { saveButton, demand, setDemand, setSaveButton, setDemandListRender } = useContext(DemandsGlobalContext)
+    const { saveButton, demand, setDemand, setSaveButton, setDemandListRender, setDebtQuantity } = useContext(DemandsGlobalContext)
     const [isLoading, setIsLoading] = useState(false);
     const [dontBackModal, setDontBackModal] = useState(false);
 
@@ -95,12 +95,16 @@ const Demand = ({ route, navigation }) => {
                 token: await AsyncStorage.getItem('token')
             }
             const result = await Api('demands/get.php', obj);
-
-           
             if (result.data.Headers.ResponseStatus !== "0") {
                 navigation.goBack();
             }
             let data = { ...result.data.Body.List[0] }
+            let ob = {
+                id: data.CustomerId,
+                token: await AsyncStorage.getItem('token')
+            }
+            const debt = await Api("customers/getdata.php", ob)
+            setDebtQuantity(ConvertFixedTable(debt.data.Body.Debt));
             data.Modifications = await modificationsGroup(result.data.Body.List[0], 'demand');
             data.Positions = GetAddUnits(result)
             setDemand(data);

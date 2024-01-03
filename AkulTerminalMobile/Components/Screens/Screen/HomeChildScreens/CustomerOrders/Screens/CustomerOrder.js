@@ -73,7 +73,7 @@ const Tab = createMaterialTopTabNavigator();
 const CustomerOrder = ({ route, navigation }) => {
 
   const { id } = route.params
-  const { saveButton, customerOrder, setCustomerOrder, setSaveButton, setCustomerOrdersListRender } = useContext(CustomerOrdersGlobalContext)
+  const { saveButton, customerOrder, setCustomerOrder, setSaveButton, setCustomerOrdersListRender, setDebtQuantity } = useContext(CustomerOrdersGlobalContext)
   const [isLoading, setIsLoading] = useState(false);
   const [dontBackModal, setDontBackModal] = useState(false);
 
@@ -104,6 +104,14 @@ const CustomerOrder = ({ route, navigation }) => {
       }
 
       let data = { ...result.data.Body.List[0] };
+      let ob = {
+        id: data.CustomerId,
+        token: await AsyncStorage.getItem('token')
+      }
+       (ob);
+      const debt = await Api("customers/getdata.php", ob)
+       (debt);
+      setDebtQuantity(ConvertFixedTable(debt.data.Body.Debt));
       data.Modifications = await modificationsGroup(result.data.Body.List[0], 'customerorder');
       data.Positions = GetAddUnits(result)
       setCustomerOrder(data);

@@ -15,9 +15,10 @@ import Api from '../../Global/Components/Api';
 import CustomTextInput from '../../Global/UI/CustomTextInput';
 
 
-const Setting = ({navigation}) => {
+const Setting = ({ navigation }) => {
 
   const [infoData, setInfoData] = useState(null);
+  const [emp, setEmp] = useState(null);
   const [login, setLogin] = useState("");
   const [empModal, setEmpModal] = useState(false);
 
@@ -40,10 +41,23 @@ const Setting = ({navigation}) => {
     })
     obj.CashBalance = resultCash.data.Body.AccountBalance;
     setInfoData(obj);
+    getEmp();
+
+  }
+
+  const getEmp = async () => {
+    if (await AsyncStorage.getItem("emp") !== null) {
+      const empData = JSON.parse(await AsyncStorage.getItem("emp"));
+      setEmp(empData.empName);
+    } else {
+      setEmp("");
+    }
   }
 
   const getEMPClick = () => {
-    navigation.navigate('employee')
+    navigation.navigate('employee',{
+      component:getEmp
+    })
   }
 
   useEffect(() => {
@@ -82,11 +96,14 @@ const Setting = ({navigation}) => {
               <Text style={{ padding: 10 }}>Balans: {infoData.CashBalance}</Text>
             }
           </View>
-          <View style={{width:'100%',alignItems:'center',marginTop:10}}>
-            <TouchableOpacity onPress={getEMPClick}>
-              <CustomTextInput text={'Əməkdaşlar'} width={'95%'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors.primary }} editable={false} />
-            </TouchableOpacity>
-          </View>
+          {
+            emp !== null &&
+            <View style={{ width: '100%', alignItems: 'center', marginTop: 10 }}>
+              <TouchableOpacity onPress={getEMPClick}>
+                <CustomTextInput text={'Əməkdaşlar'} value={emp} width={'95%'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors.primary }} editable={false} />
+              </TouchableOpacity>
+            </View>
+          }
 
           <View style={{
             flex: 1,

@@ -7,6 +7,7 @@ export const CustomerOrdersGlobalProvider = (props) => {
   const [customerOrdersListRender, setCustomerOrdersListRender] = useState(0);
   const [customerOrder, setCustomerOrder] = useState(null);
   const [saveButton, setSaveButton] = useState(false);
+  const [debtQuantity, setDebtQuantity] = useState('');
 
 
   return (
@@ -17,7 +18,9 @@ export const CustomerOrdersGlobalProvider = (props) => {
         customerOrder,
         setCustomerOrder,
         saveButton,
-        setSaveButton
+        setSaveButton,
+        debtQuantity,
+        setDebtQuantity
       }
     }>
       {props.children}

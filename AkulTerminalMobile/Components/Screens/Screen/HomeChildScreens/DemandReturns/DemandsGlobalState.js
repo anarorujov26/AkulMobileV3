@@ -5,8 +5,9 @@ export const DemandsGlobalContext = createContext();
 export const DemandsGlobalProvider = (props) => {
 
     const [demandListRender, setDemandListRender] = useState(0);
-    const [demand,setDemand]=useState(null);
-    const [saveButton,setSaveButton]=useState(false);
+    const [demand, setDemand] = useState(null);
+    const [saveButton, setSaveButton] = useState(false);
+    const [debtQuantity, setDebtQuantity] = useState("");
 
 
     return (
@@ -17,7 +18,9 @@ export const DemandsGlobalProvider = (props) => {
                 demand,
                 setDemand,
                 saveButton,
-                setSaveButton
+                setSaveButton,
+                debtQuantity,
+                setDebtQuantity
             }
         }>
             {props.children}

@@ -60,7 +60,6 @@ const DemandsStack = () => {
 
     const getShare = async () => {
         let data = await getTemplates('demands');
-        console.log(data);
         if (data[0]) {
             setTmps(data);
         }
@@ -73,7 +72,6 @@ const DemandsStack = () => {
             TemplateId: tId,
             token: await AsyncStorage.getItem("token")
         }
-        console.log(obj);
         const result = await axios.post('https://api.akul.az/1.0/dev/controllers/demands/print.php', obj);
         navigation.navigate("share", {
             html: result.data,

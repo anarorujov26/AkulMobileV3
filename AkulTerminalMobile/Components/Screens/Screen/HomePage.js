@@ -103,6 +103,22 @@ let data = [
   ],
   [
     [
+      "Tərəf-Müqabil",
+      {
+        id: 5,
+        imageName: "user",
+      }
+    ],
+    [
+      {
+        name: "Tərəf-Müqabil",
+        navName: "aa",
+        image: require('../../../Images/Pages/customers.png')
+      },
+    ],
+  ],
+  [
+    [
       "Maliyyələr",
       {
         id: 5,
@@ -264,7 +280,7 @@ const GetModal = ({ route }) => {
                     }} style={styles.listItem}>
                       <View style={styles.listItemFirst}>
                         <View style={styles.listItemAvatar}>
-                          <Image source={item.image} style={{width:20,height:20}}/>
+                          <Image source={item.image} style={{ width: 20, height: 20 }} />
                         </View>
                       </View>
                       <View style={styles.listItemEnd}>
@@ -352,7 +368,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    width:'100%'
+    width: '100%'
   },
   modalView: {
     borderTopLeftRadius: 20,
@@ -377,29 +393,29 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20
   },
   center: {
-    width:'100%',
+    width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20
   },
   listItem: {
-    width:'100%',
+    width: '100%',
     height: 60,
-    flexDirection:'row',
+    flexDirection: 'row',
   },
-  listItemFirst:{
-    width:'20%',
-    alignItems:'center',
-    justifyContent:'center'
+  listItemFirst: {
+    width: '20%',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  listItemAvatar:{
-    backgroundColor:"#eaecef",
-    borderRadius:10,
-    padding:10,
+  listItemAvatar: {
+    backgroundColor: "#eaecef",
+    borderRadius: 10,
+    padding: 10,
   },
-  listItemEnd:{
-    width:'80%',
-    justifyContent:'center'
+  listItemEnd: {
+    width: '80%',
+    justifyContent: 'center'
   },
   straight: {
     width: '90%',

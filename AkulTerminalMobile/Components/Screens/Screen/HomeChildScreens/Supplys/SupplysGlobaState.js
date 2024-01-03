@@ -7,6 +7,7 @@ export const SupplysGlobalProvider = (props) => {
     const [saveButton, setSaveButton] = useState(false);
     const [supply,setSupply]=useState(null);
     const [supplyListRender,setSupplyListRender]=useState(0);
+    const [debtQuantity,setDebtQuantity]=useState('');
 
     return (
         <SupplysGlobalContext.Provider value={
@@ -16,7 +17,9 @@ export const SupplysGlobalProvider = (props) => {
                 supply,
                 setSupply,
                 supplyListRender,
-                setSupplyListRender
+                setSupplyListRender,
+                debtQuantity,
+                setDebtQuantity
             }
         }>
             {props.children}
