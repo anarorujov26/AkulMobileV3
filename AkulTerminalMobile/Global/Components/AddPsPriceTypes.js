@@ -16,7 +16,7 @@ const AddPsPriceTypes = ({ route, navigation }) => {
 
     const { prices, setPrices } = useContext(GlobalContext)
     const [pricePermission, setPricePermission] = useState(true);
-    const { data, setData, setButton } = route.params;
+    const { data, setData, setButton,addPermission } = route.params;
     const [priceTypes, setPriceTypes] = useState([]);
 
     const getPriceTypes = async () => {
@@ -30,7 +30,7 @@ const AddPsPriceTypes = ({ route, navigation }) => {
     }
 
     const getPrice = async (item) => {
-        if (pricePermission) {
+        if (pricePermission || addPermission == true) {
 
             let documentData = { ...data };
             await AsyncStorage.setItem("pricesType", JSON.stringify({ priceId: item.Id, priceName: item.Name }))

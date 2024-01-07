@@ -112,7 +112,7 @@ let data = [
     [
       {
         name: "Tərəf-Müqabil",
-        navName: "aa",
+        navName: "customers",
         image: require('../../../Images/Pages/customers.png')
       },
     ],

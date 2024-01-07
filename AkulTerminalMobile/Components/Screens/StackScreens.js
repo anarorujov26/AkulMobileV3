@@ -23,6 +23,7 @@ import AccountsStack from './Screen/HomeChildScreens/Accounts/AccountsStack';
 import CustomColors from '../../Global/Colors/CustomColors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Dashboard from './Screen/HomeChildScreens/Dashboards/Dashboard';
+import CustomersMain from './Screen/HomeChildScreens/Customers/CustomersMain';
 
 const StackScreens = () => {
     const navigation = useNavigation();
@@ -78,6 +79,7 @@ const StackScreens = () => {
                 headerBackVisible: false
             }} />
             <Stack.Screen name='accountsPage' component={AccountsStack} />
+            <Stack.Screen name='customers' component={CustomersMain} />
             <Stack.Screen options={{
                 headerShown: true,
                 headerBackVisible: false,

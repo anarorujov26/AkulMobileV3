@@ -1,6 +1,5 @@
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import CustomColors from '../Colors/CustomColors'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import moment from 'moment'
 import Api from '../Components/Api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -33,6 +32,7 @@ const DocumentDateFilter = ({ info, api, obj, body, setBody }) => {
     })
     return newData
   });
+
   const getInfo = async (type) => {
 
     let apiO = { ...obj };
@@ -59,7 +59,7 @@ const DocumentDateFilter = ({ info, api, obj, body, setBody }) => {
     apiO.token = await AsyncStorage.getItem('token')
     info([]);
     let infoApi = await Api(api, apiO);
-    if(body){
+    if (body) {
       setBody(infoApi.data.Body)
     }
     if (infoApi.data.Headers.ResponseStatus == '0') {
