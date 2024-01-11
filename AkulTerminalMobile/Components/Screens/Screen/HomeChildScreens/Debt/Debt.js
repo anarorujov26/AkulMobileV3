@@ -10,8 +10,29 @@ const Debt = ({ route, navigation }) => {
 
     const { id } = route.params;
     const [debt, setDebt] = useState(null);
+    const [info, setInfo] = useState(null);
+
+    const purchasedDocTypes = [
+        'Return',
+        'PaymentIn',
+        'Supply',
+        'InvoiceIn',
+        'CreditPayIn',
+        'DemandReturn',
+        'Intermediaries',
+    ]
+    const givenDocTypes = [
+        'Demand',
+        'Sale',
+        'PaymentOut',
+        'SupplyReturn',
+        'InvoiceOut',
+        'CreditPayOut',
+        'Mediary',
+    ]
 
     const getInfo = async () => {
+        let totalDebtt = 0;
         const result = await Api('documents/get.php', {
             cus: id,
             moment: "",
@@ -19,11 +40,57 @@ const Debt = ({ route, navigation }) => {
             token: await AsyncStorage.getItem('token')
         })
 
+        const totalDebt = await Api("customers/getdata.php", {
+            id: id,
+            token: await AsyncStorage.getItem("token")
+        })
+        if (totalDebt.data.Headers.ResponseStatus !== "0") {
+            alert(totalDebt.data.Body);
+        } else {
+            totalDebtt = ConvertFixedTable(totalDebt.data.Body.Debt);
+        }
+
         if (result.data.Headers.ResponseStatus !== "0") {
             alert(result.data.Body)
         } else {
-            setDebt(result.data.Body.List);
+            calculationDebt(totalDebtt, result.data.Body.List);
+            let o = { ...result.data.Body }
+            o.TotalDebt = totalDebtt
+            setInfo(o);
         }
+    }
+
+    const calculationDebt = (totalDebt, debts) => {
+        let data = [...debts];
+        for (let i = 0; i < data.length; i++) {
+            if (purchasedDocTypes.indexOf(data[i].DocType) !== -1) {
+                data[i].TYPE = "purchase"
+            } else {
+                data[i].TYPE = "given"
+            }
+        }
+
+        data[0].AllDebt = totalDebt;
+
+        data.forEach((element, index) => {
+            if (index + 1 < data.length - 1) {
+                if (element.TYPE == "purchase" || element.TYPE == "Return") {
+                    data[index + 1].AllDebt = element.AllDebt + ConvertFixedTable(element.Amount);
+                } else {
+                    data[index + 1].AllDebt = element.AllDebt - ConvertFixedTable(element.Amount);
+                }
+            }
+
+            if (index == data.length - 1) {
+                let oldData = data[index - 1];
+                if (oldData.TYPE == "purchase" || element.TYPE == "Return") {
+                    element.AllDebt = oldData.AllDebt + ConvertFixedTable(oldData.Amount);
+                } else {
+                    element.AllDebt = oldData.AllDebt - ConvertFixedTable(oldData.Amount);
+                }
+            }
+        })
+        setDebt(data)
     }
 
     useEffect(() => {
@@ -32,9 +99,20 @@ const Debt = ({ route, navigation }) => {
 
     return (
         <View style={{ flex: 1 }}>
+            {
+                info !== null &&
+                <View style={{ alignItems: 'center', backgroundColor: "white" }}>
+                    <Text style={{ color: "black", fontSize: 20 }}>{info.CustomerName}</Text>
+                </View>
+            }
+            {
+                info !== null &&
+                <View>
+                    <Text style={{ padding: 5, backgroundColor: 'white', color: "#909090", width: '100%', textAlign: "center" }}>Alınıb {ConvertFixedTable(info.Debits)}₼   |   Verilib {ConvertFixedTable(info.Credits)}₼   |   Yekun Borc {ConvertFixedTable(info.TotalDebt)}₼</Text>
+                </View>
+            }
             <FlatList data={debt} renderItem={({ item, index }) => (
-
-                <View style={styles.listContainer}>
+                <View style={[styles.listContainer, item.TYPE == "purchase" && { backgroundColor: '#bfd6c5' }]}>
                     <View style={styles.listFirs}>
                         <View style={styles.listFirsContainer}>
                             <View style={styles.avatar}>
@@ -45,15 +123,14 @@ const Debt = ({ route, navigation }) => {
                             {
                                 item.CustomerName &&
                                 <Text style={styles.name}>{item.DocType == "InvoiceIn" ? "Mədaxil nağdsız" : item.DocType == "InvoiceOut" ? 'Məxaric nağdsız' : item.DocType == "PaymentIn" ? 'Mədaxil nağd' : 'Məxaric nağdsız'}</Text>
-
                             }
                         </View>
                     </View>
                     <View style={styles.listEndContainer}>
-                        <Text style={styles.price}>{ConvertFixedTable(item.Amount)}₼</Text>
+                        <Text style={styles.name}>{ConvertFixedTable(item.Amount)}</Text>
+                        <Text style={styles.price}>{ConvertFixedTable(item.AllDebt)}₼</Text>
                     </View>
                 </View>
-
             )} />
         </View>
     )
@@ -93,7 +170,7 @@ const styles = StyleSheet.create({
     },
     listFirs: {
         flexDirection: 'row',
-        width: '80%',
+        width: '60%',
     },
     listFirsContainer: {
         justifyContent: 'center',
@@ -103,10 +180,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     listEndContainer: {
-        width: '20%',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        marginRight: 10
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     avatarName: {
         fontSize: 20,

@@ -45,17 +45,18 @@ const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiA
 
     return (
         <>
-            <View style={{ width: '100%', flexDirection: 'row' }}>
+            {/* <View style={{ width: '100%', flexDirection: 'row' }}>
                 <SearchBar text={placeholder} width={'85%'} vl={search} setVL={setSearch} onChangeText={(e) => {
                     setSearch(e)
                 }}
                 />
-                <TouchableOpacity onPress={() => {
-                    setModalVisible(true)
-                }} style={{ width: "15%", backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>
-                    <Ionicons name={'filter'} color={'black'} size={25} />
-                </TouchableOpacity>
-            </View>
+                
+            </View> */}
+            <TouchableOpacity onPress={() => {
+                setModalVisible(true)
+            }} style={{ width: "100%", backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>
+                <Ionicons name={'filter'} color={'black'} size={25} />
+            </TouchableOpacity>
             <FilterModal obj={{
                 dr: 1,
                 pg: 0,

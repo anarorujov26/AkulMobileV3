@@ -58,7 +58,7 @@ const CustomersStack = () => {
               accessibilityRole="button"
               style={[styles.topTabButton]}
             >
-              <MaterialIcons name='delete' size={25} color={CustomColors.primary} />
+              <MaterialIcons name='delete' size={25} color={CustomColors.danger} />
             </TouchableOpacity>
           ),
         }} name='customer' component={Customer} />

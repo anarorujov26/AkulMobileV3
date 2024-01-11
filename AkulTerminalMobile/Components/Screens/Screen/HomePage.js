@@ -115,6 +115,11 @@ let data = [
         navName: "customers",
         image: require('../../../Images/Pages/customers.png')
       },
+      {
+        name: "Əməkdaşlar",
+        navName: "employees",
+        image: require('../../../Images/Pages/employee.png')
+      },
     ],
   ],
   [

@@ -150,6 +150,7 @@ const Customer = ({ route, navigation }) => {
                 alert(putData.data.Body);
             }
         }
+        
         setIsLoading(false);
     }
 
@@ -222,6 +223,7 @@ const Customer = ({ route, navigation }) => {
                                             key={index + 1}
                                             {...element.props}
                                             value={element.name == "Endirim" ? String(ConvertFixedTable(customer[element.value])) : customer[element.value]}
+                                            labelNumber={4}
                                         >
                                             {element.name}
                                         </InputItem>
@@ -230,6 +232,7 @@ const Customer = ({ route, navigation }) => {
                                             setGpModal(true);
                                         }}>
                                             <InputItem
+                                            labelNumber={4}
                                                 key={index + 1}
                                                 {...element.props}
                                                 value={customer[element.value]}
@@ -246,7 +249,7 @@ const Customer = ({ route, navigation }) => {
                             <InputItem
                                 editable={false}
                                 value={customer.PriceTypeName}
-                            >
+                                labelNumber={4}>
                                 Qiymət Növü
                             </InputItem>
                         </TouchableOpacity>

@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import Api from '../../../../../../Global/Components/Api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -7,6 +7,7 @@ import CustomColors from '../../../../../../Global/Colors/CustomColors'
 import SearchBar from './../../../../../../Global/UI/SearchBar';
 import { CustomersGlobalContext } from '../CustomersGlobalState'
 import NewFab from './../../../../../../Global/Components/NewFab';
+import DocumentList from '../../../../../../Global/UI/DocumentList'
 
 const Customers = ({ navigation }) => {
 
@@ -78,26 +79,27 @@ const Customers = ({ navigation }) => {
       <SearchBar onChangeText={(e) => {
         setSearch(e)
       }} value={search} setVL={setSearch} />
-      <ScrollView>
         {
           customers !== null ?
-            <List>
-              <FlatList data={customers} renderItem={({ item, index }) => (
-                <List.Item onPress={() => {
-                  navigation.navigate("customer", {
-                    id: item.Id
-                  })
-                }} data-seed="logId">
-                  {item.Name}
-                </List.Item>
-              )} />
-            </List>
+            <FlatList data={customers} renderItem={({ item, index }) => (
+              <TouchableOpacity style={styles.listContainer} onPress={() => { navigation.navigate("customer", { id: item.id }) }}>
+                <View style={styles.listFirs}>
+                  <View style={styles.listFirsContainer}>
+                    <View style={styles.avatar}>
+                      <Text style={styles.avatarName}>{index + 1}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.listCenterContiner}>
+                    <Text style={styles.name}>{item.Name}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            )} />
             :
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <ActivityIndicator size={50} color={CustomColors.primary} />
             </View>
         }
-      </ScrollView>
       <NewFab press={() => {
         navigation.navigate('customer', {
           id: null,
@@ -109,4 +111,55 @@ const Customers = ({ navigation }) => {
 
 export default Customers
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: CustomColors.greyV1,
+  },
+  listContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    padding: 10,
+    backgroundColor: 'white',
+    marginTop: 2
+  },
+  listFirs: {
+    flexDirection: 'row',
+    width: '80%',
+  },
+  listFirsContainer: {
+    justifyContent: 'center',
+    marginRight: 10
+  },
+  listCenterContiner: {
+    justifyContent: 'center'
+  },
+  listEndContainer: {
+    width: '20%',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    marginRight: 10
+  },
+  avatarName: {
+    fontSize: 20,
+    color: 'black',
+  },
+  name: {
+    color: 'black',
+    fontWeight: '600',
+    fontSize:16,
+  },
+  barcode: {
+    fontSize: 13,
+  },
+  customerName: {
+    color: CustomColors.connectedPrimary
+  },
+  price: {
+    color: 'black',
+  }
+})

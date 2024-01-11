@@ -41,6 +41,10 @@ export const GlobalProvider = (props) => {
         {
             id:8,
             answer:true
+        },
+        {
+            id:9,
+            answer:true
         }
     ]);
 

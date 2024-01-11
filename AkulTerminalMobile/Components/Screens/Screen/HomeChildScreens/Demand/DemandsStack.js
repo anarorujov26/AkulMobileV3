@@ -145,11 +145,11 @@ const DemandsStack = () => {
                 tmps[0] &&
                 <TmpModal modalVisible={tmpModal} setModalVisible={setTmpModal}>
                     <FlatList data={tmps} renderItem={({ item, index }) => (
-                        <TouchableOpacity style={{width:200,justifyContent:'center',alignItems:'flex-start',marginTop:20}} onPress={()=>{
+                        <TouchableOpacity style={{ width: 200, justifyContent: 'center', alignItems: 'flex-start', marginTop: 20 }} onPress={() => {
                             setTmpModal(false);
                             getPrintTMP(item.Id);
                         }}>
-                            <Text style={{color:'#0264b1',fontSize:20}}>{item.Name}</Text>
+                            <Text style={{ color: '#0264b1', fontSize: 20 }}>{item.Name}</Text>
                         </TouchableOpacity>
                     )} />
                 </TmpModal>

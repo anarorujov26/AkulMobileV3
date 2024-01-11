@@ -10,14 +10,28 @@ const CustomerModal = ({ modalVisible, setModalVisible, idType, nameType, state,
 
     const [group, setGroup] = useState([]);
     const [search, setSearch] = useState("");
-    
+
     const getGroups = async () => {
-        const result = await Api('customers/get.php', { token: await AsyncStorage.getItem('token') })
+        const result = await Api('customers/get.php', {
+            ar: 0,
+            dr: 0,
+            gp: "",
+            lm: 100,
+            pg: 0,
+            sr: "GroupName", token: await AsyncStorage.getItem('token')
+        })
         setGroup(result.data.Body.List)
     }
 
     const getSearchGroup = async () => {
-        let obj = { fast: search, token: await AsyncStorage.getItem('token') };
+        let obj = {
+            fast: search,
+            ar: 0,
+            dr: 1,
+            lm: 100,
+            pg: 0,
+            token: await AsyncStorage.getItem('token')
+        };
         const result = await Api('customers/getfast.php', obj)
         setGroup(result.data.Body.List)
     }
@@ -48,28 +62,28 @@ const CustomerModal = ({ modalVisible, setModalVisible, idType, nameType, state,
                     <SearchBar text={'Axtarış'} vl={search} setVL={setSearch} width={'100%'} addStyle={{ shadowColor: 'black', elevation: 5 }} onChangeText={(e) => { setSearch(e) }} />
                     <View style={{ margin: 10 }} />
                     <View style={{ width: '100%', height: '90%' }}>
-                            <FlatList data={group} renderItem={({ item, index }) => (
-                                <TouchableOpacity key={item.Id} style={styles.listContainer} onPress={() => {
-                                    state(rel => ({ ...rel, [idType]: item.Id }))
-                                    state(rel => ({ ...rel, [nameType]: item.Name }))
-                                    if(save){
-                                        save(true);
-                                    }
-                                    setModalVisible(false);
+                        <FlatList data={group} renderItem={({ item, index }) => (
+                            <TouchableOpacity key={item.Id} style={styles.listContainer} onPress={() => {
+                                state(rel => ({ ...rel, [idType]: item.Id }))
+                                state(rel => ({ ...rel, [nameType]: item.Name }))
+                                if (save) {
+                                    save(true);
+                                }
+                                setModalVisible(false);
 
-                                }}>
-                                    <View style={styles.listFirs}>
-                                        <View style={styles.listFirsContainer}>
-                                            <View style={styles.avatar}>
-                                                <Text style={styles.avatarName}>{item.Name[0] + item.Name[1]}</Text>
-                                            </View>
-                                        </View>
-                                        <View style={styles.listCenterContiner}>
-                                            <Text style={styles.name}>{item.Name}</Text>
+                            }}>
+                                <View style={styles.listFirs}>
+                                    <View style={styles.listFirsContainer}>
+                                        <View style={styles.avatar}>
+                                            <Text style={styles.avatarName}>{item.Name[0] + item.Name[1]}</Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>
-                            )} />
+                                    <View style={styles.listCenterContiner}>
+                                        <Text style={styles.name}>{item.Name}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )} />
                     </View>
                 </View>
             </View>

@@ -4,7 +4,6 @@ import Api from "./Api"
 const GetPriceType = async (id) => {
     let answer;
     const result = await Api('pricetypes/get.php', { token: await AsyncStorage.getItem("token") });
-    console.log(result);
     if (id === 0) {
         answer = {
             Id: 0,

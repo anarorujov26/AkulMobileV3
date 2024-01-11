@@ -32,7 +32,7 @@ const Demands = ({ navigation }) => {
     }
     if (result.data.Body.List[0]) {
       setDemands(result.data.Body.List);
-    } else {
+     } else {
       setDemands(null);
     }
   }
