@@ -32,7 +32,7 @@ const Demands = ({ navigation }) => {
     }
     if (result.data.Body.List[0]) {
       setDemands(result.data.Body.List);
-     } else {
+    } else {
       setDemands(null);
     }
   }
@@ -50,24 +50,30 @@ const Demands = ({ navigation }) => {
   return (
 
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <DocumentDateFilter info={setDemands} api={'demands/get.php'} obj={{
-        dr: 1,
-        sr: "Moment",
-        pg: 0,
-        lm: 100,
-      }} />
-      <DocumentSearch
-        apiObject={{
-          api: "demands/get.php",
-          products: true,
-          stock: true,
-          customer: true,
-          customerName: "Müştəri",
-          customerGroup: true,
-          momentFirst: true,
-          momentEnd: true
-        }}
-        getData={getDemands} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDemands} apiAdress={'demands/get.php'} />
+      <View style={{ width: '100%', flexDirection: 'row' }}>
+        <View style={{width:'90%'}}>
+          <DocumentDateFilter info={setDemands} api={'demands/get.php'} obj={{
+            dr: 1,
+            sr: "Moment",
+            pg: 0,
+            lm: 100,
+          }} />
+        </View>
+        <View style={{width:'10%'}}>
+          <DocumentSearch
+            apiObject={{
+              api: "demands/get.php",
+              products: true,
+              stock: true,
+              customer: true,
+              customerName: "Müştəri",
+              customerGroup: true,
+              momentFirst: true,
+              momentEnd: true
+            }}
+            getData={getDemands} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDemands} apiAdress={'demands/get.php'} />
+        </View>
+      </View>
       {
         demands == null ?
           <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

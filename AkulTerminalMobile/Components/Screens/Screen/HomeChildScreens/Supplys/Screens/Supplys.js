@@ -11,6 +11,7 @@ import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
 import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
+import GetRowProsessing from '../../../../../../Global/Components/GetRowProsessing'
 
 const Supplys = ({ navigation }) => {
 
@@ -50,21 +51,28 @@ const Supplys = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
-             <DocumentDateFilter info={setSupplys} api={'supplies/get.php'} obj={{
-                dr: 1,
-                sr: "Moment",
-                pg: 0,
-                lm: 100,
-            }} />
-            <DocumentSearch apiObject={{
-                api: "supplies/get.php",
-                products: true,
-                stock: true,
-                customer: true,
-                customerName: "Təchizatçı",
-                momentFirst: true,
-                momentEnd: true
-            }} getData={getSupplys} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSupplys} apiAdress={'supplies/get.php'} />
+            <GetRowProsessing
+                firstWidth={'90%'}
+                firstContent={<DocumentDateFilter info={setSupplys} api={'supplies/get.php'} obj={{
+                    dr: 1,
+                    sr: "Moment",
+                    pg: 0,
+                    lm: 100,
+                }} />}
+                endWidth={'10%'}
+                endContent={
+                    <DocumentSearch apiObject={{
+                        api: "supplies/get.php",
+                        products: true,
+                        stock: true,
+                        customer: true,
+                        customerName: "Təchizatçı",
+                        momentFirst: true,
+                        momentEnd: true
+                    }} getData={getSupplys} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSupplys} apiAdress={'supplies/get.php'} />
+                }
+            />
+
             {
                 supplys == null ?
                     <View style={{ alignItems: 'center', marginTop: 20 }}>

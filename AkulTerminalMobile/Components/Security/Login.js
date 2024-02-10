@@ -12,11 +12,17 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import CustomColors from '../../Global/Colors/CustomColors';
 import OrdersMain from '../Orders/OrdersMain';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Checkbox } from '@ant-design/react-native';
+import getAccountAddList from '../../Global/Components/getAccountAddList';
+import getAccountList from './../../Global/Components/getAccountList';
+import GetAccountsModal from '../../Global/Components/Modals/GetAccountsModal';
 
 const Stack = createStackNavigator();
 
 const LoginPage = () => {
+  const [accountsModal, setAccountsModal] = useState(false);
   const { setPrefix, loginTYPE } = useContext(GlobalContext);
+  const [saveToAccount, setSaveToAccount] = useState(false);
 
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
@@ -36,6 +42,9 @@ const LoginPage = () => {
     const result = await Api('pos/pos_getlogin.php', loginInfo)
 
     if (result.data.Headers.ResponseStatus == "0") {
+      if (saveToAccount) {
+        getAccountAddList(login, password)
+      }
       await AsyncStorage.setItem("apiLocation", result.data.Body.PublicMode)
       await AsyncStorage.setItem("login", login);
       setAnswer(true);
@@ -60,6 +69,9 @@ const LoginPage = () => {
     })
 
     if (result.data.Headers.ResponseStatus == "0") {
+      if (saveToAccount) {
+        getAccountAddList(login, password)
+      }
       await AsyncStorage.setItem("apiLocation", result.data.Body.PublicMode)
       await AsyncStorage.setItem("login", login);
       const a = await Api('constants/get.php', {
@@ -85,6 +97,13 @@ const LoginPage = () => {
     }
   }
 
+  const getFocus = async () => {
+    let accounts = await getAccountList();
+    if (login !== "") return;
+    if (accounts == null) return;
+    setAccountsModal(true);
+  }
+
   useEffect(() => {
     getStartClick();
   }, [])
@@ -95,10 +114,18 @@ const LoginPage = () => {
 
   return (
     <ImageBackground source={BackGround} style={styles.container}>
-      <CustomTextInput width={'80%'} text={'Login'} addStyle={{ shadowColor: 'black', elevation: 5 }} value={login} onChangeText={(e) => { setLogin(e) }} />
+      <CustomTextInput onFocus={getFocus} width={'80%'} text={'Login'} addStyle={{ shadowColor: 'black', elevation: 5 }} value={login} onChangeText={(e) => { setLogin(e) }} />
       <View style={{ margin: 10 }} />
-      <CustomTextInput secureTextEntry={true} width={'80%'} text={'Şifrə'} addStyle={{ shadowColor: "black", elevation: 5 }} value={password} onChangeText={(e) => { setPassword(e) }} />
+      <CustomTextInput onFocus={getFocus} secureTextEntry={true} width={'80%'} text={'Şifrə'} addStyle={{ shadowColor: "black", elevation: 5 }} value={password} onChangeText={(e) => { setPassword(e) }} />
       <View style={{ margin: 10 }} />
+      <View style={{
+        width: '80%',
+        marginBottom: 10
+      }}>
+        <Checkbox checked={saveToAccount} onChange={(e) => {
+          setSaveToAccount(e.target.checked)
+        }}>Yadda Saxla</Checkbox>
+      </View>
       <CustomPrimaryButton disabled={isLoading} isLoading={isLoading} width={'80%'} onPress={() => {
         if (loginTYPE) {
           getLoginTypeTrue();
@@ -106,6 +133,7 @@ const LoginPage = () => {
           getLogin();
         }
       }} text={'Daxil ol'} />
+      <GetAccountsModal modalVisible={accountsModal} setModalVisible={setAccountsModal} setLogin={setLogin} setPassword={setPassword} />
     </ImageBackground>
   )
 }
@@ -114,7 +142,7 @@ const ScreensPage = ({
   navigation
 }) => {
 
-  const {setLoginTYPE} = useContext(GlobalContext)
+  const { setLoginTYPE } = useContext(GlobalContext)
 
   const terminalClick = async () => {
     setLoginTYPE(false)
@@ -129,7 +157,7 @@ const ScreensPage = ({
   }
 
   return (
-    <ImageBackground source={BackGround} style={{ flex: 1,width:'100%',height:'100%', justifyContent: 'center', alignItems: 'center' }}>
+    <ImageBackground source={BackGround} style={{ flex: 1, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
       <CustomPrimaryButton width={'50%'} text={'Terminal'} onPress={terminalClick} />
       <View style={{ margin: 10 }} />
       <CustomPrimaryButton width={'50%'} text={'Sifariş'} onPress={orderClick} />

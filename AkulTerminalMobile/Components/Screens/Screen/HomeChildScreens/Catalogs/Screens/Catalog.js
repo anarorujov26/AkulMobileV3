@@ -106,7 +106,7 @@ const Catalog = ({ route, navigation }) => {
   }
 
   const getSaveProsessing = async () => {
-    4
+    
     if (catalog.DepartmentId == "" || catalog.OwnerId == "") {
       alert("Şöbə və Cavabdeh mütləq seçilməlidir!");
     } else {
@@ -138,7 +138,6 @@ const Catalog = ({ route, navigation }) => {
       }
       setIsLoading(false)
     }
-
   }
 
   const successAlert = () => {
@@ -172,7 +171,6 @@ const Catalog = ({ route, navigation }) => {
       };
 
       BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
       return () =>
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, [saveButton]))

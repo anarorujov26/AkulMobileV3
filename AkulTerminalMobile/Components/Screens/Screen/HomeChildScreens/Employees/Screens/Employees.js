@@ -1,11 +1,16 @@
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Api from '../../../../../../Global/Components/Api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import CustomColors from '../../../../../../Global/Colors/CustomColors'
 import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton'
+import NewFab from '../../../../../../Global/Components/NewFab'
+import { EmployeesGlobalContext } from './../EmployeesGlobalState';
 
 const Employees = ({ navigation }) => {
+
+    const { empsListRender, setEmpsListRender } = useContext(EmployeesGlobalContext);
+    const [isLoading,setIsLoading]=useState(false);
 
     const [emps, setEmps] = useState([]);
 
@@ -22,20 +27,31 @@ const Employees = ({ navigation }) => {
         if (result.data.Headers.ResponseStatus == "0") {
             setEmps(result.data.Body.List);
         }
+        if(isLoading){
+            setIsLoading(false);
+        }
     }
 
     useEffect(() => {
         getEmps();
     }, [])
 
+    useEffect(() => {
+        if (empsListRender > 0) {
+            getEmps();
+        }
+    }, [empsListRender])
+
     return (
         <View style={{ flex: 1 }}>
             {
                 emps[0] ?
                     <FlatList
+                    refreshing={isLoading}
+                    onRefresh={getEmps}
                         data={emps}
                         renderItem={({ item, index }) => (
-                            <TouchableOpacity style={styles.listContainer} onPress={() => { navigation.navigate("emp", { id: item.id }) }}>
+                            <TouchableOpacity style={styles.listContainer} onPress={() => { navigation.navigate("emp", { id: item.Id }) }}>
                                 <View style={styles.listFirs}>
                                     <View style={styles.listFirsContainer}>
                                         <View style={styles.avatar}>
@@ -63,6 +79,11 @@ const Employees = ({ navigation }) => {
                             <ActivityIndicator size={50} color={CustomColors.primary} />
                         </View>
             }
+            <NewFab press={() => {
+                navigation.navigate('emp', {
+                    id: null,
+                })
+            }} />
         </View>
     )
 }

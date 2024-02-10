@@ -9,6 +9,7 @@ import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixed
 import DocumentList from '../../../../../Global/UI/DocumentList'
 import DocumentSearch from '../../../../../Global/Components/DocumentSearch'
 import DocumentDateFilter from '../../../../../Global/UI/DocumentDateFilter'
+import GetRowProsessing from '../../../../../Global/Components/GetRowProsessing'
 
 const SalesP = ({ navigation }) => {
 
@@ -42,37 +43,45 @@ const SalesP = ({ navigation }) => {
 
     return (
 
-        <View style={{ flex: 1}}>
-            <DocumentDateFilter body={true} setBody={setSumma} info={setSales} api={'salereports/get.php'} obj={{
-                dr: 1,
-                sr: "Moment",
-                pg: 0,
-                lm: 100,
-            }} />
-            <DocumentSearch 
-            apiObject={{
-                api:"salereports/get.php",
-                products:true,
-                group:true,
-                customer:true,
-                customerName:'Müştəri',
-                stock:true,
-                salePoints:true,
-                spendType:true,
-                momentFirst:true,
-                momentEnd:true,
-                supplierName:"Təchizatçı",
-                supplier:true
-            }}
-            getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSales} apiAdress={'salereports/get.php'} />
+        <View style={{ flex: 1 }}>
+            <GetRowProsessing firstContent={
+                <DocumentDateFilter body={true} setBody={setSumma} info={setSales} api={'salereports/get.php'} obj={{
+                    dr: 1,
+                    sr: "Moment",
+                    pg: 0,
+                    lm: 100,
+                }} />
+            } firstWidth={'90%'}
+                endContent={
+                    <DocumentSearch
+                        apiObject={{
+                            api: "salereports/get.php",
+                            products: true,
+                            group: true,
+                            stock:true,
+                            customer: true,
+                            customerName: 'Müştəri',
+                            salePoints: true,
+                            spendType: true,
+                            momentFirst: true,
+                            momentEnd: true,
+                            supplierName: "Təchizatçı",
+                            supplier: true
+                        }}
+                        getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSales} apiAdress={'salereports/get.php'} />
+                }
+                endWidth={'10%'}
+            />
+
+
             {
                 sales == null ?
-                    <View style={{ alignItems: 'center', marginTop: 20, width: '100%'}}>
+                    <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>
                         <CustomPrimaryButton text={'Yeniləyin'} width={'80%'} onPress={getSales} />
                     </View>
                     :
                     !sales[0] ?
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                             <ActivityIndicator size={50} color={CustomColors.primary} />
                         </View>
                         :

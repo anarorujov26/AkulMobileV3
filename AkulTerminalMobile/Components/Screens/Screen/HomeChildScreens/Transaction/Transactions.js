@@ -10,6 +10,7 @@ import Api from '../../../../../Global/Components/Api'
 import CustomColors from '../../../../../Global/Colors/CustomColors'
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable'
 import DocumentDateFilter from './../../../../../Global/UI/DocumentDateFilter';
+import GetRowProsessing from '../../../../../Global/Components/GetRowProsessing'
 
 const data = [
     {
@@ -28,6 +29,7 @@ const Transactions = ({ navigation }) => {
     const [transaction, setTransaction] = useState([]);
     const [search, setSearch] = useState("");
     const [newModal, setNewModal] = useState(false);
+    const [allSums, setAllSums] = useState({});
 
     const getTransactions = async () => {
         let obj = {
@@ -42,7 +44,9 @@ const Transactions = ({ navigation }) => {
             navigation.goBack();
         }
         if (result.data.Body.List[0]) {
+
             setTransaction(result.data.Body.List);
+            setAllSums(result.data.Body);
         } else {
             setTransaction(null);
         }
@@ -61,25 +65,33 @@ const Transactions = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
-            <DocumentDateFilter info={setTransaction} api={'transactions/get.php'} obj={{
-                dr: 1,
-                sr: "Moment",
-                pg: 0,
-                lm: 100,
-            }} />
-            <DocumentSearch
-            apiObject={{
-                api:"transactions/get.php",
-                spendItem:true,
-                accounts:true,
-                momentFirst:true,
-                momentEnd:true,
-                customer:true,
-                customerName:"Qarşı-tərəf",
-                pay:true,
-                paydir:true
-            }}
-                getData={getTransactions} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setTransaction} apiAdress={'transactions/get.php'} />
+            <GetRowProsessing
+                firstWidth={'90%'}
+                firstContent={
+                    <DocumentDateFilter info={setTransaction} api={'transactions/get.php'} obj={{
+                        dr: 1,
+                        sr: "Moment",
+                        pg: 0,
+                        lm: 100,
+                    }} />
+                }
+                endWidth={'10%'}
+                endContent={
+                    <DocumentSearch
+                        apiObject={{
+                            api: "transactions/get.php",
+                            spendItem: true,
+                            accounts: true,
+                            momentFirst: true,
+                            momentEnd: true,
+                            customer: true,
+                            customerName: "Qarşı-tərəf",
+                            pay: true,
+                            paydir: true
+                        }}
+                        getData={getTransactions} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setTransaction} apiAdress={'transactions/get.php'} />
+                }
+            />
             {
                 transaction == null ?
                     <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>
@@ -91,31 +103,34 @@ const Transactions = ({ navigation }) => {
                             <ActivityIndicator size={50} color={CustomColors.primary} />
                         </View>
                         :
-                        <FlatList data={transaction} renderItem={({ item, index }) => (
+                        <>
+                            <Text style={{ padding: 5, backgroundColor: 'white', color: "#909090", width: '100%', textAlign: "center" }}>Mədaxil {ConvertFixedTable(allSums.InSum)}  |  Məxaric {ConvertFixedTable(allSums.OutSum)}</Text>
+                            <FlatList data={transaction} renderItem={({ item, index }) => (
 
-                            <TouchableOpacity style={styles.listContainer} onPress={() => { navigation.navigate('transaction', { id: item.Id, type: item.Direct == "i" ? "ins" : 'outs', link: item.Type == "i" ? 'invoice' : 'payment' }) }}>
-                                <View style={styles.listFirs}>
-                                    <View style={styles.listFirsContainer}>
-                                        <View style={styles.avatar}>
-                                            <Text style={styles.avatarName}>{index + 1}</Text>
+                                <TouchableOpacity style={styles.listContainer} onPress={() => { navigation.navigate('transaction', { id: item.Id, type: item.Direct == "i" ? "ins" : 'outs', link: item.Type == "i" ? 'invoice' : 'payment' }) }}>
+                                    <View style={styles.listFirs}>
+                                        <View style={styles.listFirsContainer}>
+                                            <View style={styles.avatar}>
+                                                <Text style={styles.avatarName}>{index + 1}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.listCenterContiner}>
+                                            {
+                                                item.CustomerName &&
+                                                <Text style={styles.name}>{item.CustomerName}</Text>
+
+                                            }
+                                            <Text style={styles.barcode}>{item.Moment}</Text>
+                                            <Text style={styles.customerName}>{item.Name}</Text>
                                         </View>
                                     </View>
-                                    <View style={styles.listCenterContiner}>
-                                        {
-                                            item.CustomerName &&
-                                            <Text style={styles.name}>{item.CustomerName}</Text>
-
-                                        }
-                                        <Text style={styles.barcode}>{item.Moment}</Text>
-                                        <Text style={styles.customerName}>{item.Name}</Text>
+                                    <View style={styles.listEndContainer}>
+                                        <Text style={styles.price}>{ConvertFixedTable(item.Amount)}₼</Text>
                                     </View>
-                                </View>
-                                <View style={styles.listEndContainer}>
-                                    <Text style={styles.price}>{ConvertFixedTable(item.Amount)}₼</Text>
-                                </View>
-                            </TouchableOpacity>
+                                </TouchableOpacity>
 
-                        )} />
+                            )} />
+                        </>
 
             }
             <NewFab press={() => {

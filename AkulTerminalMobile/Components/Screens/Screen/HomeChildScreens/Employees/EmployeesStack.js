@@ -11,6 +11,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Employees from './Screens/Employees';
 import Employee from './Screens/Employee';
 import { EmployeesGlobalContext } from './EmployeesGlobalState';
+import Api from '../../../../../Global/Components/Api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +20,7 @@ const EmployeesStack = () => {
 
     let navigation = useNavigation();
     const [deleteModal, setDeleteModal] = useState(false);
-    const { emp, setEmp, setEmpsListRender, setSaveButton } = useContext(EmployeesGlobalContext);
+    const { employee, setEmployee, setEmpsListRender, setSaveButton } = useContext(EmployeesGlobalContext);
 
     const getDeleteDocument = async () => {
         setDeleteModal(true)
@@ -26,15 +28,15 @@ const EmployeesStack = () => {
 
     const deleteDocument = async () => {
         setDeleteModal(false)
-        // const result = await Api(`customers/del.php?id=${customer.Id}`, { token: await AsyncStorage.getItem('token') });
-        // if (result.data.Headers.ResponseStatus == '0') {
-        //     setCustomersListRender(rel => rel + 1);
-        //     navigation.navigate('customers');
-        //     setCustomer(null);
-        //     setSaveButton(false)
-        // } else {
-        //     alert(result.data.Body)
-        // }
+        const result = await Api(`employees/del.php?id=${employee.Id}`, { token: await AsyncStorage.getItem('token') });
+        if (result.data.Headers.ResponseStatus == '0') {
+            setEmpsListRender(rel => rel + 1);
+            navigation.navigate('emps');
+            setEmployee(null);
+            setSaveButton(false)
+        } else {
+            alert(result.data.Body)
+        }
 
     }
 

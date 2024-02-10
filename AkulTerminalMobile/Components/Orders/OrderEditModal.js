@@ -27,7 +27,8 @@ const OrderEditModal = ({ route, navigation }) => {
     setPricePermission(await PricePermission());
     let stateData = [...state.Positions]
     let productOBJ = { ...data };
-
+    console.log(data);
+    console.log(state.Positions);
 
     const answer = InspectionPositions(stateData, productOBJ.ProductId || productOBJ.Id);
 
@@ -87,6 +88,7 @@ const OrderEditModal = ({ route, navigation }) => {
 
   const getDisPRI = () => {
     setProduct(rel => ({ ...rel, ['Price']: EnteredDiscount(ConvertFixedTable(Number(product.BasicPrice)), ConvertFixedTable(Number(product.Discount))) }))
+
   }
 
   const getDelete = () => {
@@ -96,8 +98,7 @@ const OrderEditModal = ({ route, navigation }) => {
       if (data.Positions[index].ProductId == productOBJ.ProductId) {
         data.Positions.splice(index, 1);
       }
-    }
-
+      }
     setState(data);
     navigation.goBack();
     setButton(true)
@@ -163,20 +164,6 @@ const OrderEditModal = ({ route, navigation }) => {
             <View style={{ width: '100%', height: 1, backgroundColor: 'grey', borderRadius: 10 }} />
           </View>
 
-          {
-            type !== "ct" &&
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
-              <Text style={{ color: 'black', fontSize: 16 }}>{'Anbar qalığı'}</Text>
-              <Text style={{ color: 'black', fontSize: 16 }}>{ConvertFixedTable(product.StockQuantity)}</Text>
-            </View>
-          }
-          {
-            type !== "Buy" && type !== "BuySupply" && type !== "ct" &&
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
-              <Text style={{ color: 'black', fontSize: 16 }}>{'Min.Qiymət'}</Text>
-              <Text style={{ color: 'black', fontSize: 16 }}>{ConvertFixedTable(product.MinPrice)}</Text>
-            </View>
-          }
           <View style={{ margin: 20 }} />
           {
             type == "BuySupply" &&

@@ -2,13 +2,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import CustomColors from '../Colors/CustomColors'
 
-const DocumentList = (props) => {
+const DocumentorderList = (props) => {
     return (
         <TouchableOpacity style={styles.listContainer} onPress={() => { props.navigation.navigate(props.location, { id: props.id }) }}>
             <View style={styles.listFirs}>
                 <View style={styles.listFirsContainer}>
                     <View style={styles.avatar}>
-                        <Text style={styles.avatarName}>{props.index +1}</Text>
+                        <Text style={styles.avatarName}>{props.index}</Text>
                     </View>
                 </View>
                 <View style={styles.listCenterContiner}>
@@ -31,7 +31,7 @@ const DocumentList = (props) => {
     )
 }
 
-export default DocumentList
+export default DocumentorderList
 
 const styles = StyleSheet.create({
     avatar: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     },
     avatarName: {
         fontSize: 20,
-        color: 'black',
+        color: 'white',
     },
     name: {
         color: 'black',

@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import PStatusList from './../../../../../Global/Components/PStatusList';
 import Item from '@ant-design/react-native/lib/list/ListItem';
 import { Accordion, List } from '@ant-design/react-native';
+import DashBoardComponents from '../../../../../Global/Components/Modals/DashBoardComponents';
 
 const Profits = () => {
 
@@ -40,16 +41,24 @@ const Profits = () => {
                 <ActivityIndicator size={50} color={CustomColors.primary} />
             </View>
             :
-            <View style={{ flex: 1 }}>
-                <Item extra={ConvertFixedTable(profit.SaleSum)} arrow="empty">
-                    Satış dövrüyyəsi
-                </Item>
-                <Item extra={ConvertFixedTable(profit.CostSum)} arrow="empty">
-                    Mayası
-                </Item>
-                <Item extra={ConvertFixedTable(profit.TurnoverProfit)} arrow="empty">
-                    Dövrüyyə mənfəəti
-                </Item>
+            <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <View style={styles.listItem}>
+                    <Text style={{ color: 'black', fontSize: 20 }}>Satış dövrüyyəsi</Text>
+                    <Text style={{ color: 'black', fontSize: 20 }}>{ConvertFixedTable(profit.SaleSum)}</Text>
+                </View>
+                <View style={styles.listItem}>
+                    <Text style={{ color: 'black', fontSize: 20 }}>Mayası</Text>
+                    <Text style={{ color: 'black', fontSize: 20 }}>{ConvertFixedTable(profit.CostSum)}</Text>
+                </View>
+
+                <View style={styles.listItem}>
+                    <Text style={{ color: 'black', fontSize: 20 }}>Dövrüyyə mənfəəti</Text>
+                    <Text style={{ color: 'black', fontSize: 20 }}>{ConvertFixedTable(profit.TurnoverProfit)}</Text>
+                </View>
+                <View style={styles.listItem}>
+                    <Text style={{ color: 'black', fontSize: 20 }}>Təmiz mənfəət</Text>
+                    <Text style={{ color: 'black', fontSize: 20 }}>{ConvertFixedTable(profit.NetProfit)}</Text>
+                </View>
                 <Accordion style={{ backgroundColor: 'white' }} onChange={onChange} activeSections={activeSections}>
                     <Accordion.Panel header="Xərclər (toplam)">
                         <List>
@@ -62,14 +71,22 @@ const Profits = () => {
                         </List>
                     </Accordion.Panel>
                 </Accordion>
-                <Item extra={ConvertFixedTable(profit.NetProfit)} arrow="empty">
-                    Təmiz mənfəət
-                </Item>
+
             </View>
     )
 }
 
 
-
+const styles = StyleSheet.create({
+    listItem: {
+        backgroundColor: '#ececec',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        margin: 10,
+        borderRadius: 10
+    }
+})
 
 export default Profits

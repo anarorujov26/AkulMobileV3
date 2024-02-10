@@ -63,6 +63,13 @@ const Transaction = ({ route, navigation }) => {
 
             } else {
                 let obj = { ...result.data.Body.List[0] }
+                let resultDebt = await Api('customers/getdata.php', {
+                    id: obj.CustomerId,
+                    token: await AsyncStorage.getItem("token")
+                })
+                if (resultDebt.data.Headers.ResponseStatus == "0") {
+                    obj.DebtAmount = resultDebt.data.Body.Debt;
+                }
                 obj.Amount = ConvertFixedTable(obj.Amount);
                 let tp = type == 'outs' ? 'out' : 'in'
                 let location = api + tp;
@@ -76,7 +83,7 @@ const Transaction = ({ route, navigation }) => {
         setIsLoading(true);
         const obj = CustomToLowerCase({ ...tran });
         obj.token = await AsyncStorage.getItem('token');
-        if (obj.spenditem == "" || obj.customerid == "" || obj.cashid == "" || obj.amount== "") {
+        if (obj.spenditem == "" || obj.customerid == "" || obj.cashid == "" || obj.amount == "") {
             alert("Lazımlı xanaları doldurun!")
         } else {
             if (obj.name == "") {
@@ -172,6 +179,13 @@ const Transaction = ({ route, navigation }) => {
                         <TouchableOpacity style={{ width: '100%' }} onPress={() => { setCustomer(true) }}>
                             <CustomTextInput editable={false} text={'Tərəf-müqabil'} placeholder={'....'} width={'100%'} value={tran.CustomerName} end={true} endText={<AntDesign name='right' size={15} />} />
                         </TouchableOpacity>
+                        {
+                            id !== null &&
+                            <View style={{width:'100%',padding:5,backgroundColor:"white",borderTopWidth:1,borderColor:"#ececec",flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                                <Text style={{color:CustomColors.danger}}>Qalıq borc:</Text>
+                                <Text style={{color:'black'}}>{ConvertFixedTable(tran.DebtAmount)}</Text>
+                            </View>
+                        }
                         <CustomTextInput keyboardType={'numeric'} editable={true} text={"Məbləğ"} placeholder={'....'} width={'100%'} value={String(tran.Amount)} end={true} endText={<AntDesign name='right' size={15} />} onChangeText={(e) => {
                             setTran(item => ({ ...item, ['Amount']: e.replace(',', '.') }))
                             if (!saveButton) setSaveButton(true)

@@ -100,6 +100,7 @@ const Order = ({ route, navigation }) => {
             if (result.data.Headers.ResponseStatus !== "0") {
                 navigation.goBack();
             }
+            console.log(result);
             setOrder(result.data.Body.List[0]);
         }
     }

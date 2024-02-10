@@ -26,6 +26,7 @@ const OrderNewModal = ({ route, navigation }) => {
         setPricePermission(await PricePermission());
         let stateData = [...state.Positions]
         let productOBJ = { ...data };
+        console.log(productOBJ);
 
         const answer = InspectionPositions(stateData, productOBJ.ProductId || productOBJ.Id);
 
@@ -33,13 +34,13 @@ const OrderNewModal = ({ route, navigation }) => {
             productOBJ = state.Positions[answer.index]
             productOBJ.Price = ConvertFixedTable(Number(productOBJ.Price))
             productOBJ.Quantity = ConvertFixedTable(Number(productOBJ.Quantity))
-            if (type !== "ct") {
-                productOBJ.Discount = ConvertFixedTable(Number(RetioDiscount(productOBJ.BasicPrice, productOBJ.Price)));
-            }
+            productOBJ.StockQuantity = ConvertFixedTable(Number(productOBJ.StockBalance))
+
         } else {
             productOBJ.ProductId = productOBJ.Id
             productOBJ.Quantity = 0;
             productOBJ.ProductName = productOBJ.Name
+            productOBJ.StockQuantity = productOBJ.StockBalance
             if (type !== "ct") {
                 productOBJ.Discount = 0;
             }
@@ -149,30 +150,20 @@ const OrderNewModal = ({ route, navigation }) => {
                     <View style={{ alignItems: 'center' }}>
                         <View style={{ width: '100%', height: 1, backgroundColor: 'grey', borderRadius: 10 }} />
                     </View>
-                    {
-                        type !== "ct" &&
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
-                            <Text style={{ color: 'black', fontSize: 16 }}>{'Anbar qalığı'}</Text>
-                            <Text style={{ color: 'black', fontSize: 16 }}>{ConvertFixedTable(product.StockQuantity)}</Text>
-                        </View>
-                    }
-                    {
-                        type !== "Buy" && type !== "BuyPrice" && type !== "ct" &&
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
-                            <Text style={{ color: 'black', fontSize: 16 }}>{'Minimal qiymət'}</Text>
-                            <Text style={{ color: 'black', fontSize: 16 }}>{ConvertFixedTable(product.MinPrice)}</Text>
-                        </View>
-                    }
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
+                        <Text style={{ color: 'black', fontSize: 16 }}>{'Anbar qalığı'}</Text>
+                        <Text style={{ color: 'black', fontSize: 16 }}>{ConvertFixedTable(product.StockBalance)}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
+                        <Text style={{ color: 'black', fontSize: 16 }}>{'Minimal qiymət'}</Text>
+                        <Text style={{ color: 'black', fontSize: 16 }}>{ConvertFixedTable(product.MinPrice)}</Text>
+                    </View>
                     <View style={{ margin: 20 }} />
                     {
                         type == "BuySupply" &&
                         <CustomTextInput editable={pricePermission} onSubmitEditing={getBash} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.SalePrice)} text={'Satış qiyməti'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['SalePrice']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
                     }
                     <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-                        {
-                            type !== "ct" &&
-                            <CustomTextInput editable={pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Discount)} onBlur={getDisPRI} text={'Endirim%'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Discount']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
-                        }
                         <CustomTextInput editable={type != "Buy" || type != "BuySupply" && pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Price']: e.replace(',', '.') })) }} />
                         <View style={{ margin: 10 }} ></View>
                         <Text style={{ color: 'grey', fontSize: 15, textAlign: 'center' }}>{'Əlavə miqdar'}</Text>

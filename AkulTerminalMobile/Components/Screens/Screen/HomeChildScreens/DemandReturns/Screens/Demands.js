@@ -11,6 +11,7 @@ import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
 import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
+import GetRowProsessing from '../../../../../../Global/Components/GetRowProsessing'
 
 const Demands = ({ navigation }) => {
 
@@ -50,23 +51,28 @@ const Demands = ({ navigation }) => {
   return (
 
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <DocumentDateFilter info={setDemands} api={'demandreturns/get.php'} obj={{
-        dr: 1,
-        sr: "Moment",
-        pg: 0,
-        lm: 100,
-      }} />
-      <DocumentSearch
-        apiObject={{
-          api: 'demandreturns/get.php',
-          products: true,
-          stock: true,
-          customer: true,
-          customerName: "Müştəri",
-          momentFirst: true,
-          momentEnd: true
-        }}
-        getData={getDemands} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDemands} apiAdress={'demandreturns/get.php'} />
+      <GetRowProsessing firstWidth={'90%'} firstContent={
+        <DocumentDateFilter info={setDemands} api={'demandreturns/get.php'} obj={{
+          dr: 1,
+          sr: "Moment",
+          pg: 0,
+          lm: 100,
+        }} />
+      } endWidth={'10%'} endContent={
+        <DocumentSearch
+          apiObject={{
+            api: 'demandreturns/get.php',
+            products: true,
+            stock: true,
+            customer: true,
+            customerName: "Müştəri",
+            momentFirst: true,
+            momentEnd: true
+          }}
+          getData={getDemands} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDemands} apiAdress={'demandreturns/get.php'} />
+      } />
+
+
       {
         demands == null ?
           <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

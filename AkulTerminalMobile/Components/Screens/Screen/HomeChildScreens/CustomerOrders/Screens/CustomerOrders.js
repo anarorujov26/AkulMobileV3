@@ -11,6 +11,7 @@ import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton'
 import { FlatList } from 'react-native'
 import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
+import GetRowProsessing from './../../../../../../Global/Components/GetRowProsessing';
 
 const CustomerOrders = ({ navigation }) => {
 
@@ -50,35 +51,40 @@ const CustomerOrders = ({ navigation }) => {
   return (
 
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <DocumentDateFilter info={setCustomerOrders} api={'customerorders/get.php'} obj={{
-        dr: 1,
-        sr: "Moment",
-        pg: 0,
-        lm: 100,
-      }} />
-      <DocumentSearch apiObject={{
-        api:"customerorders/get.php",
-        products:true,
-        stock:true,
-        owner:true,
-        momentFirst:true,
-        momentEnd:true
-      }} getData={getCustomerOrders} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setCustomerOrders} apiAdress={'customerorders/get.php'} />
-        {
-          customerOrders == null ?
-            <View style={{ alignItems: 'center', marginTop: 20 }}>
-              <CustomPrimaryButton text={'Yeniləyin'} width={'80%'} onPress={getCustomerOrders} />
+      <GetRowProsessing firstWidth={'90%'} endWidth={'10%'} firstContent={
+        <DocumentDateFilter info={setCustomerOrders} api={'customerorders/get.php'} obj={{
+          dr: 1,
+          sr: "Moment",
+          pg: 0,
+          lm: 100,
+        }} />
+      } endContent={
+        <DocumentSearch apiObject={{
+          api: "customerorders/get.php",
+          products: true,
+          stock: true,
+          owner: true,
+          momentFirst: true,
+          momentEnd: true
+        }} getData={getCustomerOrders} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setCustomerOrders} apiAdress={'customerorders/get.php'} />
+      } />
+
+
+      {
+        customerOrders == null ?
+          <View style={{ alignItems: 'center', marginTop: 20 }}>
+            <CustomPrimaryButton text={'Yeniləyin'} width={'80%'} onPress={getCustomerOrders} />
+          </View>
+          :
+          !customerOrders[0] ?
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <ActivityIndicator size={50} color={CustomColors.primary} />
             </View>
             :
-            !customerOrders[0] ?
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size={50} color={CustomColors.primary} />
-              </View>
-              :
-              <FlatList data={customerOrders} renderItem={({ item, index }) => (
-                <DocumentList key={item.Id} index={index} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'customerOrder'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
-              )} />
-        }
+            <FlatList data={customerOrders} renderItem={({ item, index }) => (
+              <DocumentList key={item.Id} index={index} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'customerOrder'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
+            )} />
+      }
       <NewFab press={() => {
         navigation.navigate('customerOrder', { id: null })
       }} />

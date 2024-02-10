@@ -108,9 +108,7 @@ const CustomerOrder = ({ route, navigation }) => {
         id: data.CustomerId,
         token: await AsyncStorage.getItem('token')
       }
-       (ob);
       const debt = await Api("customers/getdata.php", ob)
-       (debt);
       setDebtQuantity(ConvertFixedTable(debt.data.Body.Debt));
       data.Modifications = await modificationsGroup(result.data.Body.List[0], 'customerorder');
       data.Positions = GetAddUnits(result)

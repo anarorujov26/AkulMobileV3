@@ -19,6 +19,7 @@ import { ConvertFixedTable } from '../../../../../../Global/Components/ConvertFi
 import modificationsGroup from '../../../../../../Global/Components/modificationsGroup';
 import GetAddUnits from './../../../../../../Global/UI/GetAddUnits';
 import Payments from '../../../../../../Global/Components/Payments';
+import GetPayments from '../../../../../../Global/Components/GetPayments';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -191,13 +192,19 @@ const Supply = ({ route, navigation }) => {
             </View>
             :
             <>
-                <Tab.Navigator key={id} tabBar={props => <MyTabBar {...props} />}>
+                <Tab.Navigator initialRouteName='sDocument' key={id} tabBar={props => <MyTabBar {...props} />}>
+                <Tab.Screen options={{
+                        tabBarLabel: "Təyinat"
+                    }} name='sAppointment' component={SupplyAppointmentPage} />
                     <Tab.Screen options={{
                         tabBarLabel: "Sənəd"
                     }} name='sDocument' component={SupplyDocumentPage} />
-                    <Tab.Screen options={{
-                        tabBarLabel: "Təyinat"
-                    }} name='sAppointment' component={SupplyAppointmentPage} />
+                    <Tab.Screen name='sGetPayment' initialParams={{
+                        id:id,
+                        type:"supplies"
+                    }} options={{
+                        tabBarLabel:"Ödəmələr"
+                    }} component={GetPayments}/>
                 </Tab.Navigator>
                 {
                     saveButton &&

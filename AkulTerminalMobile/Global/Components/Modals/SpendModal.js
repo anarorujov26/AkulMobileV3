@@ -13,7 +13,7 @@ const SpendTypeModal = ({ modalVisible, setModalVisible, idType, nameType, state
     const getGroups = async () => {
         setGroup([
             {
-                Name: "Rərakəndə",
+                Name: "Pərakəndə",
                 Id: "retail"
             },
             {

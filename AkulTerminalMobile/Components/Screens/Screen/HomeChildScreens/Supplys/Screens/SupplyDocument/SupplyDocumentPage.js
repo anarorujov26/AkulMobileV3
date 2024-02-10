@@ -22,7 +22,7 @@ const SupplyDocumentPage = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <TouchableOpacity onPress={() => { setCustomer(true) }}>
-        <CustomTextInput editable={false} text={'Müştəri'} width={'100%'} value={supply.CustomerName} end={true} endText={<AntDesign name='right' size={15} />} />
+        <CustomTextInput editable={false} text={'Təchizatçı'} width={'100%'} value={supply.CustomerName} end={true} endText={<AntDesign name='right' size={15} />} />
       </TouchableOpacity>
       <Text style={{
         color:"red",

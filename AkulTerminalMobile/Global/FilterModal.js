@@ -267,7 +267,7 @@ const FilterModal = ({
                   {
                     spendType &&
                     <>
-                      <TouchableOpacity onPress={() => { setStockToModal(true) }}>
+                      <TouchableOpacity onPress={() => { setSpendTypeModal(true) }}>
                         <CustomTextInput editable={false} text={"Satış növü"} width={'100%'} value={thisObj.sales ? thisObj.salesName : "Satış Növü"} end={true} endText={<AntDesign name='right' size={15} />} />
                       </TouchableOpacity>
                       <View style={{ width: '95%', height: 1, backgroundColor: "#dcdcdc", alignSelf: 'center' }} />

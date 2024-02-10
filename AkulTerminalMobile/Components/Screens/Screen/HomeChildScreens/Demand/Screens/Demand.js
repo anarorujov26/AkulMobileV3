@@ -198,7 +198,7 @@ const Demand = ({ route, navigation }) => {
                         tabBarLabel: "Sənəd"
                     }} name='sDocument' component={DemandDocumentPage} />
                     <Tab.Screen name='sGetPayment' initialParams={{
-                        id:demand.Id,
+                        id:id,
                         type:"demands"
                     }} options={{
                         tabBarLabel:"Ödəmələr"

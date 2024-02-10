@@ -11,6 +11,7 @@ import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
 import { MovesGlobalContext } from '../MovesGlobalState'
 import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
+import GetRowProsessing from '../../../../../../Global/Components/GetRowProsessing'
 
 const Moves = ({ navigation }) => {
 
@@ -50,21 +51,26 @@ const Moves = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
-            <DocumentDateFilter info={setMoves} api={'moves/get.php'} obj={{
-                dr: 1,
-                sr: "Moment",
-                pg: 0,
-                lm: 100,
-            }} />
-            <DocumentSearch
-                apiObject={{
-                    products: true,
-                    api: 'moves/get.php',
-                    stockFrom: true,
-                    stockTo: true,
-                    momentFirst: true,
-                    momentEnd: true
-                }} getData={getMoves} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setMoves} apiAdress={'moves/get.php'} />
+            <GetRowProsessing
+                firstWidth={'90%'}
+                firstContent={
+                    <DocumentDateFilter info={setMoves} api={'moves/get.php'} obj={{
+                        dr: 1,
+                        sr: "Moment",
+                        pg: 0,
+                        lm: 100,
+                    }} />
+
+                } endWidth={'10%'} endContent={<DocumentSearch
+                    apiObject={{
+                        products: true,
+                        api: 'moves/get.php',
+                        stockFrom: true,
+                        stockTo: true,
+                        momentFirst: true,
+                        momentEnd: true
+                    }} getData={getMoves} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setMoves} apiAdress={'moves/get.php'} />}
+            />
             {
                 moves == null ?
                     <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

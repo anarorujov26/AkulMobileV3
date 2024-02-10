@@ -54,7 +54,7 @@ const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiA
             </View> */}
             <TouchableOpacity onPress={() => {
                 setModalVisible(true)
-            }} style={{ width: "100%", backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>
+            }} style={{ width: "100%", backgroundColor: "white", justifyContent: 'center', alignItems: 'center',height:50}}>
                 <Ionicons name={'filter'} color={'black'} size={25} />
             </TouchableOpacity>
             <FilterModal obj={{

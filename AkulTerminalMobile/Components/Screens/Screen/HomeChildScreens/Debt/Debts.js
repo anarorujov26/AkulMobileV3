@@ -8,6 +8,7 @@ import CustomColors from '../../../../../Global/Colors/CustomColors'
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable'
 import DocumentSearch from '../../../../../Global/Components/DocumentSearch'
 import DocumentDateFilter from '../../../../../Global/UI/DocumentDateFilter'
+import GetRowProsessing from '../../../../../Global/Components/GetRowProsessing'
 
 const Debts = ({ navigation }) => {
 
@@ -43,25 +44,30 @@ const Debts = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1 }}>
-            <DocumentDateFilter body={true} setBody={setSumma} info={setDebts} api={'settlements/get.php'} obj={{
-                dr: 1,
-                sr: "Moment",
-                pg: 0,
-                lm: 100,
-            }} />
-            <DocumentSearch
-            apiObject={{
-                api:"settlements/get.php",
-                customer:true,
-                customerName:"Qarşı-Tərəf",
-                group:true,
-                owner:true,
-                price:true,
-                momentFirst:true,
-                momentEnd:true,
-                zeros:true
-            }}
-            getData={getDebts} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDebts} apiAdress={'settlements/get.php'} />
+            <GetRowProsessing firstWidth={'90%'} firstContent={
+                <DocumentDateFilter body={true} setBody={setSumma} info={setDebts} api={'settlements/get.php'} obj={{
+                    dr: 1,
+                    sr: "Moment",
+                    pg: 0,
+                    lm: 100,
+                }} />
+            } endWidth={'10%'} endContent={
+                <DocumentSearch
+                    apiObject={{
+                        api: "settlements/get.php",
+                        customer: true,
+                        customerName: "Qarşı-Tərəf",
+                        group: true,
+                        owner: true,
+                        price: true,
+                        momentFirst: true,
+                        momentEnd: true,
+                        zeros: true
+                    }}
+                    getData={getDebts} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setDebts} apiAdress={'settlements/get.php'} />
+            } />
+
+
             {
                 debts == null ?
                     <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

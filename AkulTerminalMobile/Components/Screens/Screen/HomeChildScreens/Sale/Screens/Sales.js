@@ -11,6 +11,7 @@ import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
 import { SalesGlobalContext } from '../SalesGlobalState'
 import DocumentDateFilter from '../../../../../../Global/UI/DocumentDateFilter'
+import GetRowProsessing from '../../../../../../Global/Components/GetRowProsessing'
 
 const Sales = ({ navigation }) => {
 
@@ -45,27 +46,32 @@ const Sales = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
-            <DocumentDateFilter body={true} setBody={setSumma} info={setSales} api={'sales/get.php'} obj={{
-                dr: 1,
-                sr: "Moment",
-                pg: 0,
-                lm: 100,
-            }} />
-            <DocumentSearch
-                apiObject={{
-                    api: "sales/get.php",
-                    pay: true,
-                    products: true,
-                    customer: true,
-                    customerName: "Müştəri",
-                    stock: true,
-                    salePoints: true,
-                    momentFirst: true,
-                    momentEnd: true,
-                    employees: true
+            <GetRowProsessing firstWidth={'90%'} firstContent={
+                <DocumentDateFilter body={true} setBody={setSumma} info={setSales} api={'sales/get.php'} obj={{
+                    dr: 1,
+                    sr: "Moment",
+                    pg: 0,
+                    lm: 100,
+                }} />
+            } endWidth={'10%'} endContent={
+                <DocumentSearch
+                    apiObject={{
+                        api: "sales/get.php",
+                        pay: true,
+                        products: true,
+                        customer: true,
+                        customerName: "Müştəri",
+                        stock: true,
+                        salePoints: true,
+                        momentFirst: true,
+                        momentEnd: true,
+                        employees: true
 
-                }}
-                getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSales} apiAdress={'sales/get.php'} />
+                    }}
+                    getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSales} apiAdress={'sales/get.php'} />
+            } />
+
+
             {
                 sales == null ?
                     <View style={{ alignItems: 'center', marginTop: 20, width: '100%' }}>

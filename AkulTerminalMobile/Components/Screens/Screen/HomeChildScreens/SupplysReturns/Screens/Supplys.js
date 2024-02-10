@@ -11,6 +11,7 @@ import CustomPrimaryButton from '../../../../../../Global/UI/CustomPrimaryButton
 import DocumentSearch from '../../../../../../Global/Components/DocumentSearch'
 import { FlatList } from 'react-native'
 import DocumentDateFilter from './../../../../../../Global/UI/DocumentDateFilter';
+import GetRowProsessing from '../../../../../../Global/Components/GetRowProsessing'
 
 const Supplys = ({ navigation }) => {
 
@@ -24,7 +25,7 @@ const Supplys = ({ navigation }) => {
             sr: "Moment",
             pg: 0,
             lm: 100,
-            token:await AsyncStorage.getItem("token")
+            token: await AsyncStorage.getItem("token")
         }
         const result = await Api("supplyreturns/get.php", obj);
         if (result.data.Headers.ResponseStatus !== "0") {
@@ -50,21 +51,31 @@ const Supplys = ({ navigation }) => {
     return (
 
         <View style={{ flex: 1, alignItems: 'center' }}>
-            <DocumentDateFilter info={setSupplys} api={'supplyreturns/get.php'} obj={{
-                dr: 1,
-                sr: "Moment",
-                pg: 0,
-                lm: 100,
-            }} />
-            <DocumentSearch apiObject={{
-                api: "supplyreturns/get.php",
-                products: true,
-                stock: true,
-                customer: true,
-                customerName: "Təchizatçı",
-                momentFirst: true,
-                momentEnd: true
-            }} getData={getSupplys} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSupplys} apiAdress={'supplyreturns/get.php'} />
+            <GetRowProsessing
+                firstWidth={'90%'}
+                firstContent={
+                    <DocumentDateFilter info={setSupplys} api={'supplyreturns/get.php'} obj={{
+                        dr: 1,
+                        sr: "Moment",
+                        pg: 0,
+                        lm: 100,
+                    }} />
+                }
+                endWidth={'10%'}
+                endContent={
+                    <DocumentSearch apiObject={{
+                        api: "supplyreturns/get.php",
+                        products: true,
+                        stock: true,
+                        customer: true,
+                        customerName: "Təchizatçı",
+                        momentFirst: true,
+                        momentEnd: true
+                    }} getData={getSupplys} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSupplys} apiAdress={'supplyreturns/get.php'} />
+                }
+            />
+
+
             {
                 supplys == null ?
                     <View style={{ alignItems: 'center', marginTop: 20 }}>
