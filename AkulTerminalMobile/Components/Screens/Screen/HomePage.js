@@ -189,6 +189,22 @@ let data = [
         image: require('../../../Images/Pages/wallet.png')
       }
     ]
+  ],
+  [
+    [
+      "İstehsalat",
+      {
+        id: 8,
+        imageName: "fork"
+      }
+    ],
+    [
+      {
+        name: "İstehsalat",
+        navName: "productions",
+        image: require('../../../Images/Pages/productions.png')
+      },
+    ]
   ]
 ];
 

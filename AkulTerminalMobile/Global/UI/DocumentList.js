@@ -4,7 +4,9 @@ import CustomColors from '../Colors/CustomColors'
 
 const DocumentList = (props) => {
     return (
-        <TouchableOpacity style={styles.listContainer} onPress={() => { props.navigation.navigate(props.location, { id: props.id }) }}>
+        <TouchableOpacity style={styles.listContainer} onPress={() => { if(props.navigation){
+            props.navigation.navigate(props.location, { id: props.id })
+        } }}>
             <View style={styles.listFirs}>
                 <View style={styles.listFirsContainer}>
                     <View style={styles.avatar}>

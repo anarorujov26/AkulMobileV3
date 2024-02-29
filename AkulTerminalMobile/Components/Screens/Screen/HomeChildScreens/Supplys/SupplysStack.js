@@ -37,7 +37,6 @@ const SupplysStack = () => {
 
   const { supply, setSupply, setSupplyListRender, setSaveButton } = useContext(SupplysGlobalContext);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [selectionModal, setSelectionModal] = useState(false);
   const [paymentModal, setPaymentModal] = useState(false);
 
 

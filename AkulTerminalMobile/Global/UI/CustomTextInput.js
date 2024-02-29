@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: 'white',
         flexDirection: 'row',
-        borderRadius: 5
     },
     firsContainer: {
         width: '22%',

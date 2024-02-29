@@ -25,6 +25,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Dashboard from './Screen/HomeChildScreens/Dashboards/Dashboard';
 import CustomersMain from './Screen/HomeChildScreens/Customers/CustomersMain';
 import EmployeesMain from './Screen/HomeChildScreens/Employees/EmployeesMain';
+import ProductionsMain from './Screen/HomeChildScreens/Productions/ProductionsMain';
 
 const StackScreens = () => {
     const navigation = useNavigation();
@@ -82,6 +83,7 @@ const StackScreens = () => {
             <Stack.Screen name='accountsPage' component={AccountsStack} />
             <Stack.Screen name='customers' component={CustomersMain} />
             <Stack.Screen name='employees' component={EmployeesMain} />
+            <Stack.Screen name='productions' component={ProductionsMain} />
             <Stack.Screen options={{
                 headerShown: true,
                 headerBackVisible: false,

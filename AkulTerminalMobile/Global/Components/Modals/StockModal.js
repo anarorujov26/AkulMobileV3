@@ -6,7 +6,7 @@ import CustomColors from '../../Colors/CustomColors'
 import DocumentStockBalanceControl from '../DocumentStockBalanceControl'
 import { FlatList } from 'react-native'
 
-const StockModal = ({ modalVisible, setModalVisible, idType, nameType, state, save, answer, data }) => {
+const StockModal = ({ modalVisible, setModalVisible, idType, nameType, state, save, data, dontControl }) => {
 
   const [group, setGroup] = useState([]);
 
@@ -16,10 +16,13 @@ const StockModal = ({ modalVisible, setModalVisible, idType, nameType, state, sa
   }
 
   const getStock = async (item) => {
+    console.log(data);
     let datas = data;
     datas[idType] = item.Id,
-      datas[nameType] = item.Name;
-    datas = await DocumentStockBalanceControl(datas)
+    datas[nameType] = item.Name;
+    if (!dontControl) {
+      datas = await DocumentStockBalanceControl(datas)
+    }
     setModalVisible(false);
     save(true);
     state(datas);
