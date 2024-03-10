@@ -1,4 +1,4 @@
-import { FlatList, Linking, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Linking, Modal, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Demands from './Screens/Demands';
@@ -30,6 +30,10 @@ import axios from 'axios';
 import TmpModal from '../../../../../Global/Components/Modals/TmpModal';
 import CustomPrimaryButton from '../../../../../Global/UI/CustomPrimaryButton';
 import getTemplates from '../../../../../Global/Components/getTemplates';
+import CustomTextInput from '../../../../../Global/UI/CustomTextInput';
+import EnteredDiscount from '../../../../../Global/Components/EnteredDiscount';
+import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable';
+import getAmountDiscount from '../../../../../Global/Components/getAmountDiscount';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +42,10 @@ const DemandsStack = () => {
     const [modalAnswer, setModalAnswer] = useState(false)
     const [tmps, setTmps] = useState([]);
     const [tmpModal, setTmpModal] = useState(false);
+
+    const [discount, setDiscount] = useState(0);
+
+    const [discountModalAnswer, setDiscountModalAnswer] = useState(false);
 
     let navigation = useNavigation();
 
@@ -77,6 +85,43 @@ const DemandsStack = () => {
             html: result.data,
             id: demand.Id
         })
+    }
+
+    const getDiscount = async () => {
+
+        if (demand.Positions[0]) {
+            let amount = 0
+            let dmnd = { ...demand };
+            let positions = [...demand.Positions];
+            for (let index = 0; index < positions.length; index++) {
+                positions[index].Price = EnteredDiscount(ConvertFixedTable(Number(positions[index].BasicPrice)), ConvertFixedTable(Number(discount)))
+            }
+
+            for (let index = 0; index < positions.length; index++) {
+                amount += Number(positions[index].Price) * Number(positions[index].Quantity);
+            }
+
+            dmnd.Positions = positions;
+            dmnd.Amount = amount;
+
+            let documentBasicAmount = 0;
+            let amnt = Number(dmnd.Amount);
+            let ps = [...dmnd.Positions];
+            for (let i = 0; i < ps.length; i++) {
+                documentBasicAmount += Number(ps[i].BasicPrice) * Number(ps[i].Quantity);
+            }
+             
+            dmnd.Discount = documentBasicAmount - amnt;
+            dmnd.AmountDiscount = await getAmountDiscount(dmnd)
+
+            setDemand(dmnd);
+            setDiscountModalAnswer(false)
+            setDiscount(0);
+            setSaveButton(true)
+        } else {
+            alert("Məhsul yoxdur!")
+        }
+
     }
 
     return (
@@ -140,6 +185,10 @@ const DemandsStack = () => {
                 <CustomSuccessButton text={"Ödəniş"} width={'100%'} onPress={() => {
                     setPaymentModal(true)
                 }} />
+                <View style={{ margin: 10 }} />
+                <CustomPrimaryButton text={"%"} width={'100%'} onPress={() => {
+                    setDiscountModalAnswer(true)
+                }} />
             </MoreCohices>
             {
                 tmps[0] &&
@@ -154,10 +203,76 @@ const DemandsStack = () => {
                     )} />
                 </TmpModal>
             }
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={discountModalAnswer}
+                onRequestClose={() => {
+                    setDiscountModalAnswer(!discountModalAnswer);
+                }}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <CustomTextInput keyboardType="numeric" value={String(discount)} onChangeText={(e) => {
+                            setDiscount(e.replace(',', '.'));
+                        }} addStyle={{
+                            borderWidth: 1,
+                            borderRadius: 5,
+                            borderColor: "#bccbcb"
+                        }} text={'Endirim'} width={'100%'} />
+                        <CustomPrimaryButton onPress={getDiscount} text={'Hesabla'} addStyle={{
+                            width: '100%',
+                            marginTop: 10,
+                        }} />
+                    </View>
+                </View>
+            </Modal>
         </>
     )
 }
 
 export default DemandsStack
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        width: '95%'
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+    },
+    buttonOpen: {
+        backgroundColor: '#F194FF',
+    },
+    buttonClose: {
+        backgroundColor: '#2196F3',
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    },
+})

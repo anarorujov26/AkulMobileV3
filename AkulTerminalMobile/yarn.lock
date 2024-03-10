@@ -1710,10 +1710,10 @@
   dependencies:
     merge-options "^3.0.4"
 
-"@react-native-camera-roll/camera-roll@>= 5.0.0":
-  version "7.2.1"
-  resolved "https://registry.npmjs.org/@react-native-camera-roll/camera-roll/-/camera-roll-7.2.1.tgz"
-  integrity sha512-exebBnDm/92D9FOO/+vCoG3dynZ1bnCgfd3pgSf+Q7dkyOZMt+wvZxX+PNlYhXYBoajkjv27if9aZdDhpUVASQ==
+"@react-native-camera-roll/camera-roll@^7.4.2", "@react-native-camera-roll/camera-roll@>= 5.0.0":
+  version "7.4.2"
+  resolved "https://registry.npmjs.org/@react-native-camera-roll/camera-roll/-/camera-roll-7.4.2.tgz"
+  integrity sha512-+GIFl5ZFByvsdhU+D4a4d4RgqiJwoqWaKPDCesMY04w/36upCpc7fTc4dyK4/H6+MO8kdyltSBkOZAIdBf27uQ==
 
 "@react-native-community/cli-clean@11.3.7":
   version "11.3.7"
@@ -7220,6 +7220,13 @@ react-native-date-picker@^4.3.3:
   resolved "https://registry.npmjs.org/react-native-date-picker/-/react-native-date-picker-4.3.3.tgz"
   integrity sha512-Lq2hGZkwoyCMsxi/uw4KVGu4/xdPZ8AHEx2SU5KY2mipHFpX+r4n5/gXa+rpCRkARJaTFYPZ7S59bT9KMh7fGw==
 
+react-native-document-picker@^9.1.1:
+  version "9.1.1"
+  resolved "https://registry.npmjs.org/react-native-document-picker/-/react-native-document-picker-9.1.1.tgz"
+  integrity sha512-BW+7DbsILuFThlBm7NUFVUmKKf6Awkcf9R0q8wiCU2DlGGtAKQTt2iHpO5+Dn/7WMPB+rqNv3X1HsmJQ0t5R3g==
+  dependencies:
+    invariant "^2.2.4"
+
 react-native-gesture-handler@^2.13.4, react-native-gesture-handler@^2.2.1, "react-native-gesture-handler@>= 1.0.0":
   version "2.13.4"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.13.4.tgz"
@@ -7341,7 +7348,7 @@ react-native-webview@^13.6.3:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
-react-native-windows@>=0.62, react-native-windows@>=0.62.0:
+react-native-windows@*, react-native-windows@>=0.62, react-native-windows@>=0.62.0:
   version "0.72.19"
   resolved "https://registry.npmjs.org/react-native-windows/-/react-native-windows-0.72.19.tgz"
   integrity sha512-6TB0PQMUv05BBNh66t3GRptwPZsXRj/aMp7V8IHOlord4n88uhKZ3aE2JliP1eei4uahkj/tvbkQeNJeh3APBQ==

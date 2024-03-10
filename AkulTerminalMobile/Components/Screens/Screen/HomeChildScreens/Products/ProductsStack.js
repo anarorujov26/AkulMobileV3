@@ -7,6 +7,7 @@ import ProductSearchScan from './ProductSearchScan';
 import CustomColors from '../../../../../Global/Colors/CustomColors';
 import ProductsHome from './ProductsHome';
 import ShareComponents from '../../../../../Global/Components/Modals/ShareComponents';
+import PhotosData from '../../../../../Global/Components/PhotosData';
 
 const ProductsStack = () => {
 
@@ -30,6 +31,9 @@ const ProductsStack = () => {
             <Stack.Screen options={{
                 title: "Share",
             }} name='share' component={ShareComponents} />
+            <Stack.Screen options={{
+                title:"Galery"
+            }} name='galery' component={PhotosData}/>
         </Stack.Navigator>
     )
 }

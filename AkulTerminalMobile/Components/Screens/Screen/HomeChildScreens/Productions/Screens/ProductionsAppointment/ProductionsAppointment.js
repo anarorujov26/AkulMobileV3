@@ -43,29 +43,33 @@ const ProductionsAppointment = () => {
       {
         production !== null &&
         <>
-          <CustomTextInput onChangeText={(e) => { setInput('Name', e) }} value={String(production.Name)} text={"İstehsalat №"} width={'100%'} />
+          <CustomTextInput onChangeText={(e) => { setProduction(rel => ({...rel,['Name']:e})),setSaveButton(true) }} value={String(production.Name)} text={"İstehsalat №"} width={'100%'} />
           <TouchableOpacity onPress={() => {
             setDateModal(true);
+            setSaveButton(true)
           }}>
             <CustomTextInput editable={false} onChangeText={(e) => { setInput('Moment', e) }} value={String(production.Moment)} text={"Tarix"} width={'100%'} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             setOwnerModal(true);
+            setSaveButton(true)
           }}>
             <CustomTextInput editable={false} onChangeText={(e) => { setInput('OwnerId', e) }} value={String(production.OwnerName)} text={"Cavabdeh"} width={'100%'} />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => {
             setDepartmentModal(true);
+            setSaveButton(true)
           }}>
             <CustomTextInput editable={false} onChangeText={(e) => { setInput('DepartmentId', e) }} value={String(production.DepartmentName)} text={"Şöbə"} width={'100%'} />
           </TouchableOpacity>
 
           <CustomTextInput placeholder="" editable={false} text={'Keçrilib'} width={'100%'} addStyle={{ borderRadius: 0 }} end={true} endText={
             <Checkbox
-              checked={production.Status == 1 ? true : false || production.Status ? production.Status : production.Status}
+              checked={production.Status == 1 ? true : false}
               onChange={(e) => {
-
+                setProduction(rel => ({ ...rel, ['Status']: e.target.checked ? 1 : 0}))
+                setSaveButton(true)
               }}
             >
             </Checkbox>} />

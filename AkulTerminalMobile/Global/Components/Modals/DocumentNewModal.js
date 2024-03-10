@@ -12,6 +12,7 @@ import { ToastAndroid } from 'react-native';
 import Api from '../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PricePermission from '../PricePermission';
+import getAmountDiscount from '../getAmountDiscount';
 
 const DocumentNewModal = ({ route, navigation }) => {
 
@@ -73,10 +74,24 @@ const DocumentNewModal = ({ route, navigation }) => {
         }
         productOBJ.Quantity = Number(productOBJ.Quantity) + Number(productOBJ.NewQuantity)
         const answer = InspectionPositions(state.Positions, productOBJ.Id || productOBJ.ProductId);
+        
         if (answer.result) {
             data.Positions[answer.index] = { ...productOBJ };
         } else {
             data.Positions.push(productOBJ);
+        }
+
+        if (type != "BuySupply" && type != "Buy") {
+            let documentBasicAmount = 0;
+            let amount = Number(data.Amount);
+            let ps = [...data.Positions];
+            for (let i = 0; i < ps.length; i++) {
+                documentBasicAmount += Number(ps[i].BasicPrice) * Number(ps[i].Quantity);
+            }
+
+            data.Discount = documentBasicAmount - amount;
+
+            data.AmountDiscount = await getAmountDiscount(data)
         }
         setIsLoading(false);
         setButton(true)
@@ -90,6 +105,14 @@ const DocumentNewModal = ({ route, navigation }) => {
 
     const getDisPRI = () => {
         setProduct(rel => ({ ...rel, ['Price']: EnteredDiscount(ConvertFixedTable(Number(product.BasicPrice)), ConvertFixedTable(Number(product.Discount))) }))
+    }
+
+    const getDirPRIdublicat = (dis) => {
+        setProduct(rel => ({ ...rel, ['Price']: EnteredDiscount(ConvertFixedTable(Number(product.BasicPrice)), ConvertFixedTable(Number(dis))) }))
+    }
+
+    const getPriceDISdublicat = (e) => {
+        setProduct(rel => ({ ...rel, ['Discount']: RetioDiscount(ConvertFixedTable(Number(product.BasicPrice)), ConvertFixedTable(Number(e))) }))
     }
 
     const getBash = async () => {
@@ -166,9 +189,15 @@ const DocumentNewModal = ({ route, navigation }) => {
                     <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                         {
                             type !== "ct" &&
-                            <CustomTextInput editable={pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Discount)} onBlur={getDisPRI} text={'Endirim%'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Discount']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
+                            <CustomTextInput editable={pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Discount)} onBlur={getDisPRI} text={'Endirim%'} width={'100%'} onChangeText={(e) => {
+                                getDirPRIdublicat(e)
+                                setProduct(rel => ({ ...rel, ['Discount']: e.replace(',', '.') }))
+                            }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
                         }
-                        <CustomTextInput editable={type != "Buy" || type != "BuySupply" && pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Price']: e.replace(',', '.') })) }} />
+                        <CustomTextInput editable={type != "Buy" || type != "BuySupply" && pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => {
+                            getPriceDISdublicat(e)
+                            setProduct(rel => ({ ...rel, ['Price']: e.replace(',', '.') }))
+                        }} />
                         <View style={{ margin: 10 }} ></View>
                         <Text style={{ color: 'grey', fontSize: 15, textAlign: 'center' }}>{'Əlavə miqdar'}</Text>
                         <View style={styles.bottomContainerItem}>

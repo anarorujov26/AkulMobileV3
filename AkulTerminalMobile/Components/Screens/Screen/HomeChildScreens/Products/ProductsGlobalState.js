@@ -8,12 +8,15 @@ export const ProductsGlobalContext = createContext();
 export const ProductsGlobalProvider = (props) => {
 
   const [rendersFromProducts, setRendersFromProducts] = useState(0)
+  const [productGlobal, setProductGlobal] = useState();
 
   return (
     <ProductsGlobalContext.Provider value={
       {
         rendersFromProducts,
-        setRendersFromProducts
+        setRendersFromProducts,
+        productGlobal,
+        setProductGlobal
       }
     }>
       {props.children}

@@ -19,6 +19,8 @@ import DocumentAmmount from '../../../../../../Global/Components/DocumentAmmount
 import modificationsGroup from './../../../../../../Global/Components/modificationsGroup';
 import GetAddUnits from '../../../../../../Global/UI/GetAddUnits';
 import GetPayments from './../../../../../../Global/Components/GetPayments';
+import getAmountDiscount from '../../../../../../Global/Components/getAmountDiscount';
+import getBasicAmount from './../../../../../../Global/Components/getBasicAmount';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -100,6 +102,7 @@ const Demand = ({ route, navigation }) => {
                 navigation.goBack();
             }
             let data = { ...result.data.Body.List[0] }
+            console.log(data);
             let ob = {
                 id: data.CustomerId,
                 token: await AsyncStorage.getItem('token')
@@ -108,6 +111,9 @@ const Demand = ({ route, navigation }) => {
             setDebtQuantity(ConvertFixedTable(debt.data.Body.Debt));
             data.Modifications = await modificationsGroup(result.data.Body.List[0], 'demand');
             data.Positions = GetAddUnits(result)
+
+            data.AmountDiscount = await getAmountDiscount(data)
+            data.BasicAmount = await getBasicAmount(data);
             setDemand(data);
         }
     }
@@ -132,6 +138,8 @@ const Demand = ({ route, navigation }) => {
             obj.token = await AsyncStorage.getItem("token");
 
             const result = await Api('demands/put.php', obj);
+
+            console.log(obj);
 
             if (result.data.Headers.ResponseStatus == "0") {
                 setDemand(null)
@@ -198,22 +206,22 @@ const Demand = ({ route, navigation }) => {
                         tabBarLabel: "Sənəd"
                     }} name='sDocument' component={DemandDocumentPage} />
                     <Tab.Screen name='sGetPayment' initialParams={{
-                        id:id,
-                        type:"demands"
+                        id: id,
+                        type: "demands"
                     }} options={{
-                        tabBarLabel:"Ödəmələr"
-                    }} component={GetPayments}/>
+                        tabBarLabel: "Ödəmələr"
+                    }} component={GetPayments} />
                 </Tab.Navigator>
                 {
                     saveButton &&
-                    <View style={{ flex: 1, position: "absolute", bottom: 40, left: 15, right: 15 }}>
+                    <View style={{ flex: 1, position: "absolute", bottom: 55, left: 15, right: 15 }}>
                         <CustomSuccessSaveButton setIsLoading={setIsLoading} onPress={getSaveProsessing} isLoading={isLoading} disabled={isLoading} width={'100%'} text={'Yadda Saxla'} />
                     </View>
                 }
                 <BackModal modalVisible={dontBackModal} setModalVisible={setDontBackModal} pressExit={getExit} pressContinue={() => { setDontBackModal(false) }} />
                 {
                     demand.Id &&
-                    <DocumentAmmount amount={ConvertFixedTable(demand.Amount)} />
+                    <DocumentAmmount basicamount={demand.BasicAmount} amount={`${ConvertFixedTable(demand.Amount)} (${demand.AmountDiscount}%)`} />
                 }
             </>
     )

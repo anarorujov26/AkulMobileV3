@@ -19,6 +19,7 @@ import getStockName from './../../../../../../Global/Components/getStockName';
 import getOwnerName from '../../../../../../Global/Components/getOwnerName';
 import getDepartmentName from './../../../../../../Global/Components/getDepartmentName';
 import { CustomToLowerCase } from '../../../../../../Global/Components/CustomToLowerCase';
+import moment from 'moment';
 
 function MyTabBar({ state, descriptors, navigation, position }) {
 
@@ -89,28 +90,60 @@ const Production = ({ route, navigation }) => {
   const [dontBackModal, setDontBackModal] = useState(false);
 
   const getProduction = async (documentId) => {
-    if (production != null) {
-      setProduction(null)
-    }
-    let obj = {
-      id: documentId,
-      token: await AsyncStorage.getItem("token")
-    }
+    if (documentId == null) {
+      let obj = {
+        Amount: 0,
+        Name: "",
+        StockFromId: "",
+        StockFromName: "",
+        OwnerId: "",
+        OwnerName: "",
+        Moment: moment().format("YYYY-MM-DD hh:mm:ss"),
+        StockToId: "",
+        StockToName: "",
+        DepartmentId: "",
+        DepartmentName: "",
+        Status: 0,
+        ProductAnswer: false,
+        ProductId: 0,
+        ProductQuantity: 1,
+        IsArch: 0,
+        Pieceworks: [],
+        Outsourceservices: [],
+        Consumption: 0
+      }
+      let owner = (await getOwnerName(null));
+      let depratment = (await getDepartmentName(null));
+      obj.OwnerId = owner.Id;
+      obj.OwnerName = owner.Name;
+      obj.DepartmentId = depratment.Id;
+      obj.DepartmentName = depratment.Name
+      console.log(obj);
+      setProduction(obj);
+      setCompositions([]);
+    } else {
+      if (production != null) {
+        setProduction(null)
+      }
+      let obj = {
+        id: documentId,
+        token: await AsyncStorage.getItem("token")
+      }
 
-    const result = await Api('productions/get.php', obj);
-    console.log(result);
+      const result = await Api('productions/get.php', obj);
 
-    const data = { ...result.data.Body.List[0] };
-    if (await getStockName(data.StockFromId) !== null) {
-      data.StockFromName = await getStockName(data.StockFromId);
-      data.StockToName = await getStockName(data.StockToId);
-      data.OwnerName = (await getOwnerName(data.OwnerId))
-      data.DepartmentName = await getDepartmentName(data.DepartmentId);
-    }
-    data.ProductAnswer = true;
-    setProduction(data);
-    if (result.data.Body.Positions[0]) {
-      setCompositions([...result.data.Body.Positions]);
+      const data = { ...result.data.Body.List[0] };
+      if (await getStockName(data.StockFromId) !== null) {
+        data.StockFromName = await getStockName(data.StockFromId);
+        data.StockToName = await getStockName(data.StockToId);
+        data.OwnerName = (await getOwnerName(data.OwnerId))
+        data.DepartmentName = await getDepartmentName(data.DepartmentId);
+      }
+      data.ProductAnswer = true;
+      setProduction(data);
+      if (result.data.Body.Positions[0]) {
+        setCompositions([...result.data.Body.Positions]);
+      }
     }
   }
 
@@ -128,16 +161,35 @@ const Production = ({ route, navigation }) => {
     newPd.amount = parseFloat(newPd.amount);
     newPd.outsourceservices = [];
     newPd.pieceworks = [];
-    if (newPd.productanswer == false) {
-      const result = await Api('productions/put.php', newPd);
-      console.log(result);
-      if (result.data.Headers.ResponseStatus == 0) {
-        successAlert();
-        setSaveButton(false);
-        getProduction(result.data.Body.ResponseService);
+    if (!Boolean(newPd.productanswer)) {
+      alert("Məhsul mütləq olmalıdır!");
+    } else {
+      if (newPd.stockfromid !== "" && newPd.stocktoid !== "") {
+        if (newPd.name == "") {
+          const result = await Api('productions/newname.php', {
+            n: "",
+            token: await AsyncStorage.getItem("token")
+          })
+
+          newPd.name = result.data.Body.ResponseService
+        }
+
+        const result = await Api('productions/put.php', newPd);
+
+        if (result.data.Headers.ResponseStatus == 0) {
+
+          successAlert();
+          setProductionListRender(rel => rel + 1);
+          setSaveButton(false);
+
+          getProduction(result.data.Body.ResponseService);
+        } else {
+          alert(result.data.Body);
+        }
+      } else {
+        alert("Anbarlar əlavə edilməlidir!");
       }
-    }else{
-      alert("Məhsul mütləq əlavə edilməlidir!")
+
     }
     setIsLoading(false)
   }

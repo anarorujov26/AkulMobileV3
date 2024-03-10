@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useState } from 'react'
 import CustomTextInput from '../../../../../../../Global/UI/CustomTextInput'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -59,7 +59,7 @@ const DemandDocumentPage = ({ navigation }) => {
           })
         }} width={'10%'} text={<AntDesign name='plus' size={20} />} />
       </View>
-      <View style={{ flex: 1, width: '100%' }}>
+      <View style={{ flex: 1, width: '100%',alignItems:'center'}}>
         <FlatList data={demand.Positions} renderItem={({ item, index }) => (
           <PositionsList type={'Sale'} key={item.Id} pageName={'Demand'} location={"documentEditModal"} setButton={setSaveButton} element={item} setState={setDemand} state={demand} index={index} name={item.Name} barcode={`${item.BarCode}`} totalPrice={ConvertFixedTable(Number(ConvertFixedTable(item.Price)) * Number(ConvertFixedTable(item.Quantity)))} priceandquantity={`${ConvertFixedTable(Number(item.Quantity))} əd x ${ConvertFixedTable(Number(item.Price))}`} navigation={navigation} />
         )} />
@@ -75,5 +75,3 @@ const DemandDocumentPage = ({ navigation }) => {
 }
 
 export default DemandDocumentPage
-
-const styles = StyleSheet.create({})

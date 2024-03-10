@@ -68,7 +68,9 @@ const LoginPage = () => {
       Password: password
     })
 
+
     if (result.data.Headers.ResponseStatus == "0") {
+      console.log(result);
       if (saveToAccount) {
         getAccountAddList(login, password)
       }
@@ -80,6 +82,7 @@ const LoginPage = () => {
       setPrefix(Number(a.data.Body.WeightPrefix));
       setAnswer(true);
       await AsyncStorage.setItem('token', result.data.Body.Token);
+      await AsyncStorage.setItem("refresh", result.data.Body.Refresh);
       await AsyncStorage.setItem("pricesType", JSON.stringify({
         priceName: "Satış qiyməti",
         priceId: null

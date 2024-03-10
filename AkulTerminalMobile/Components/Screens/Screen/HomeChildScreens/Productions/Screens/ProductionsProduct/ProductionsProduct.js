@@ -17,11 +17,11 @@ const ProductionsProduct = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <TouchableOpacity onPress={() => { setStockFromModal(true) }}>
-        <CustomTextInput editable={false} text={'Anbardan'} width={'100%'} value={production.StockFromName} end={true} endText={<AntDesign name='right' size={15} />} />
+        <CustomTextInput editable={false} text={'İstehsal Anbarı'} width={'100%'} value={production.StockFromName} end={true} endText={<AntDesign name='right' size={15} />} />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => { setStockToModal(true) }}>
-        <CustomTextInput editable={false} text={'Anbara'} width={'100%'} value={production.StockToName} end={true} endText={<AntDesign name='right' size={15} />} />
+        <CustomTextInput editable={false} text={'Çıxış Anbarı'} width={'100%'} value={production.StockToName} end={true} endText={<AntDesign name='right' size={15} />} />
       </TouchableOpacity>
 
       {

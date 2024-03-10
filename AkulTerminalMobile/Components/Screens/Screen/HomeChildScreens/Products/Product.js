@@ -1,5 +1,5 @@
 import { ActivityIndicator, BackHandler, FlatList, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Api from '../../../../../Global/Components/Api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import CustomColors from '../../../../../Global/Colors/CustomColors'
@@ -20,8 +20,12 @@ import axios from 'axios'
 import RNPrint from 'react-native-print'
 import TmpModal from '../../../../../Global/Components/Modals/TmpModal'
 import getTemplates from '../../../../../Global/Components/getTemplates'
+import { ProductsGlobalContext } from './ProductsGlobalState'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import PhotosData from '../../../../../Global/Components/PhotosData'
 
 const Product = ({ route, navigation }) => {
+  const { productGlobal, setProductGlobal } = useContext(ProductsGlobalContext);
 
   const [pricePermission, setPricePermission] = useState(true);
 
@@ -69,6 +73,7 @@ const Product = ({ route, navigation }) => {
 
       setProduct(obj);
     } else {
+      let globalProductObject = {};
       const result = await Api('products/get.php', {
         id: productId,
         token: await AsyncStorage.getItem('token')
@@ -79,6 +84,13 @@ const Product = ({ route, navigation }) => {
       }
 
       let obj = result.data.Body.List[0]
+      globalProductObject.id = obj.Id;
+      if (obj.Images[0]) {
+        globalProductObject.images = [...obj.Images];
+      }else{
+        globalProductObject.images = [];
+      }
+      setProductGlobal(globalProductObject);
       obj.BuyPrice = ConvertFixedTable(obj.BuyPrice);
       obj.MinPrice = ConvertFixedTable(obj.MinPrice);
       obj.Price = ConvertFixedTable(obj.Price);
@@ -241,13 +253,14 @@ const Product = ({ route, navigation }) => {
       </View>
       :
       <View style={{ flex: 1 }}>
-        <TouchableOpacity onPress={getShare} style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: 5
-        }}>
-          <AntDesign name='printer' color={CustomColors.primary} size={40} />
-        </TouchableOpacity>
+          <TouchableOpacity onPress={getShare} style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 5
+          }}>
+            <AntDesign name='printer' color={CustomColors.primary} size={40} />
+          </TouchableOpacity>
+          <View style={{ width: 40 }} />
         <ScrollView>
           <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
             <View style={{ width: '100%' }}>
@@ -378,11 +391,14 @@ const Product = ({ route, navigation }) => {
 
           </View>
 
+          <PhotosData renderItem={renderList} />
           <View style={{ margin: 40 }} />
-
           <GroupModal save={setSaveButton} modalVisible={group} idType={'GroupId'} nameType={'GroupName'} state={setProduct} setModalVisible={setGroup} />
           <CustomerModal save={setSaveButton} modalVisible={customers} setModalVisible={setCustomers} state={setProduct} idType={'CustomerId'} nameType={'CustomerName'} />
           <BackModal modalVisible={dontBackModal} setModalVisible={setDontBackModal} pressExit={getExit} pressContinue={() => { setDontBackModal(false) }} />
+          {/* <View style={{ width: '100%', height: 100 }}> */}
+
+          {/* </View> */}
         </ScrollView>
         {
           saveButton &&
@@ -408,6 +424,7 @@ const Product = ({ route, navigation }) => {
             }} />
           </TmpModal>
         }
+
       </View>
   )
 }

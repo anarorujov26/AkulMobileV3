@@ -30,11 +30,13 @@ const ItemEditable = ({ route, navigation }) => {
   }
 
   const getSaveInfo = async () => {
+    setSaveButton(true);
     setData(product);
     navigation.goBack();
     successAlert();
   }
   const getDelete = async () => {
+    setSaveButton(true);
     setData(rel => ({ ...rel, ['ProductAnswer']: false }));
 
     const result = await Api('recipes/get.php', {
@@ -66,10 +68,10 @@ const ItemEditable = ({ route, navigation }) => {
       }
 
     }
-    setSaveButton(true)
-
+    
     navigation.goBack();
     successAlert();
+    
   }
 
   useEffect(() => {

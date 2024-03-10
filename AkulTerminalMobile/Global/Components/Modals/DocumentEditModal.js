@@ -15,6 +15,7 @@ import { ToastAndroid } from 'react-native';
 import PricePermission from '../PricePermission';
 import GetUnits from './../../UI/GetUnits';
 import UnitsModal from './UnitsModal';
+import getAmountDiscount from '../getAmountDiscount';
 
 const DocumentEditModal = ({ route, navigation }) => {
 
@@ -67,11 +68,29 @@ const DocumentEditModal = ({ route, navigation }) => {
       return null;
     }
     const answer = InspectionPositions(state.Positions, product.Id || product.ProductId);
+
+
     if (answer.result) {
       data.Positions[answer.index] = product;
     } else {
       data.Positions.push(product);
     }
+
+
+    if (type != "BuySupply" && type != "Buy") {
+      let documentBasicAmount = 0;
+      let amount = Number(data.Amount);
+      let ps = [...data.Positions];
+      for (let i = 0; i < ps.length; i++) {
+        documentBasicAmount += Number(ps[i].BasicPrice) * Number(ps[i].Quantity);
+      }
+
+      data.Discount = documentBasicAmount - amount;
+
+      data.AmountDiscount = await getAmountDiscount(data)
+      
+    }
+
     setIsLoading(false);
     setButton(true)
     setState(data);
@@ -84,6 +103,14 @@ const DocumentEditModal = ({ route, navigation }) => {
 
   const getDisPRI = () => {
     setProduct(rel => ({ ...rel, ['Price']: EnteredDiscount(ConvertFixedTable(Number(product.BasicPrice)), ConvertFixedTable(Number(product.Discount))) }))
+  }
+
+  const getDirPRIdublicat = (dis) => {
+    setProduct(rel => ({ ...rel, ['Price']: EnteredDiscount(ConvertFixedTable(Number(product.BasicPrice)), ConvertFixedTable(Number(dis))) }))
+  }
+
+  const getPriceDISdublicat = (e) => {
+    setProduct(rel => ({ ...rel, ['Discount']: RetioDiscount(ConvertFixedTable(Number(product.BasicPrice)), ConvertFixedTable(Number(e))) }))
   }
 
   const getDelete = () => {
@@ -181,13 +208,22 @@ const DocumentEditModal = ({ route, navigation }) => {
           }
 
           <UnitsModal type={type} data={data} setProduct={setProduct} product={product} />
-          
+
           <View style={{ flex: 1, justifyContent: 'flex-end' }}>
             {
               type !== "ct" &&
-              <CustomTextInput  editable={pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Discount)} onBlur={getDisPRI} text={'Endirim%'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Discount']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
+              <CustomTextInput editable={pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Discount)} onBlur={getDisPRI} text={'Endirim%'} width={'100%'} onChangeText={(e) => {
+                getDirPRIdublicat(e.replace(',', '.'));
+                setProduct(rel => ({
+                  ...rel, ['Discount']: e.replace(',', '.')
+                }));
+              }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
             }
-            <CustomTextInput editable={type == "Buy" || type == "BuySupply" ? true : pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Price']: e.replace(',', '.') })) }} />
+            <CustomTextInput editable={type == "Buy" || type == "BuySupply" ? true : pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => {
+              getPriceDISdublicat(e);
+              setProduct(rel => ({ ...rel, ['Price']: e.replace(',', '.') }))
+
+            }} />
             <View style={{ margin: 10 }} ></View>
             <Text style={{ color: 'grey', fontSize: 15, textAlign: 'center' }}>{'Miqdar'}</Text>
             <View style={styles.bottomContainerItem}>
