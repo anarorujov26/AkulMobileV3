@@ -45,6 +45,8 @@ const PhotosData = ({ renderItem }) => {
                 newFormData.append("token", acToken);
 
                 const imageResult = await axios.post('https://1000.az/api/upload.php', newFormData);
+                console.log(imageResult);
+                console.log(newFormData);
 
                 if (imageResult.data.originalname) {
                     let imageList = {
