@@ -12,4 +12,4 @@ export function CustomToLowerCase(obj) {
         }
         return obj;
     } else return null;
-}
+} 

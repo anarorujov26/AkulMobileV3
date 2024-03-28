@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useState } from 'react'
 import FilterModal from '../FilterModal'
 
-const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiAdress, apiObject }) => {
+const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiAdress, apiObject,setSumma }) => {
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -61,7 +61,7 @@ const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiA
                 dr: 1,
                 pg: 0,
                 lm: 100,
-            }} modalVisible={modalVisible} setModalVisible={setModalVisible} setState={setData} {...apiObject} />
+            }} setSumma={setSumma} modalVisible={modalVisible} setModalVisible={setModalVisible} setState={setData} {...apiObject} />
         </>
     )
 }

@@ -9,10 +9,15 @@ import DocumentList from '../../../../../../Global/UI/DocumentList';
 import { ConvertFixedTable } from '../../../../../../Global/Components/ConvertFixedTable';
 import NewFab from './../../../../../../Global/Components/NewFab';
 import { ProductionsGlobalContext } from '../ProductionsGlobalState';
+import GetRowProsessing from './../../../../../../Global/Components/GetRowProsessing';
+import DocumentDateFilter from './../../../../../../Global/UI/DocumentDateFilter';
+import DocumentSearch from './../../../../../../Global/Components/DocumentSearch';
 
 const Productions = ({ navigation }) => {
 
   const [productionsData, setProductionsData] = useState([]);
+  const [summa, setSumma] = useState({});
+  const [search, setSearch] = useState("");
 
   const { productionListRender,
     setProductionListRender } = useContext(ProductionsGlobalContext);
@@ -31,6 +36,7 @@ const Productions = ({ navigation }) => {
       alert(result.data.Body);
     } else {
       setProductionsData([...result.data.Body.List]);
+      setSumma({ ...result.data.Body });
     }
   }
 
@@ -46,6 +52,30 @@ const Productions = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
+      <GetRowProsessing firstWidth={'90%'} firstContent={
+        <DocumentDateFilter body={true} setBody={setSumma} info={setProductionsData} api={'productions/get.php'} obj={{
+          dr: 1,
+          sr: "Moment",
+          pg: 0,
+          lm: 100,
+        }} />
+      } endWidth={'10%'} endContent={
+        <DocumentSearch
+          apiObject={{
+            api: "productions/get.php",
+            products: true,
+            customer: true,
+            customerName: "Qarşı-Tərəf",
+            stock: true,
+            momentFirst: true,
+            momentEnd: true,
+            ar: true,
+            owner: true,
+            setSumma
+          }}
+          getData={getCOMP} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setProductionsData} apiAdress={'productions/get.php'} />
+      } />
+      <Text style={{ padding: 5, backgroundColor: 'white', color: "#909090", width: '100%', textAlign: "center" }}>Cəm məbləğ {ConvertFixedTable(summa.AllSum)}₼</Text>
       {
         productionsData !== null ?
           productionsData[0] ?

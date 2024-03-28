@@ -54,7 +54,8 @@ const FilterModal = ({
   zeros,
   employees,
   supplier,
-  supplierName
+  supplierName,
+  setSumma
 }) => {
 
   const [thisObj, setThisObj] = useState({});
@@ -178,6 +179,7 @@ const FilterModal = ({
     }
 
     const result = await Api(api, obj)
+    setSumma(result.data.Body)
     if (result.data.Headers.ResponseStatus == "0") {
       if (result.data.Body.List[0]) {
         setState(result.data.Body.List);
@@ -488,7 +490,7 @@ const FilterModal = ({
       <StockFilterModal modalVisible={stockModal} setModalVisible={setStockModal} state={setThisObj} idType={'stockName'} nameType={'stockNAME'} />
       <StockFilterModal modalVisible={stockFromModal} setModalVisible={setStockFromModal} state={setThisObj} idType={'stockNameFrom'} nameType={'stockNAMEFrom'} />
       <StockFilterModal modalVisible={stockToModal} setModalVisible={setStockToModal} state={setThisObj} idType={'stockNameTo'} nameType={'stockNAMETo'} />
-      <OwnerModal modalVisible={ownerModal} setModalVisible={setOwnerModal} state={setThisObj} nameType={'ownerNAME'} idType={'ownerName'} />
+      <OwnerModal modalVisible={ownerModal} setModalVisible={setOwnerModal} state={setThisObj} nameType={'ownerNAME'} idType={'ownerid'} />
       <CustomerGroupsModal modalVisible={customerGP} setModalVisible={setCustomerGP} state={setThisObj} nameType={'customerGroup'} idType={'gp'} />
       <SalePointsModal modalVisible={salePointModal} setModalVisible={setSalePointModal} state={setThisObj} nameType={'slpntName'} idType={'slpnt'} />
       <AccountsModal modalVisible={cashModal} setModalVisible={setCashModal} state={setThisObj} nameType={'cashname'} idType={'cashid'} />
