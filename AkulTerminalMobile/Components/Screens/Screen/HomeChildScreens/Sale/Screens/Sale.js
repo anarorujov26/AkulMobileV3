@@ -86,7 +86,7 @@ const Sale = ({ route, navigation }) => {
     useEffect(() => {
         getSale(id);
     }, [id])
-
+    
     return (
         sale == null ?
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

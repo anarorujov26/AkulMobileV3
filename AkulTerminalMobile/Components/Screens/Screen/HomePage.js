@@ -204,7 +204,12 @@ let data = [
         navName: "productions",
         image: require('../../../Images/Pages/productions.png')
       },
-    ]
+      {
+        name: "İstehsala Sifariş",
+        navName: "productionorders",
+        image: require('../../../Images/Pages/demandorder.png')
+      },
+    ],
   ]
 ];
 

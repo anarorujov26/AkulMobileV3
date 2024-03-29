@@ -83,6 +83,13 @@ const ProductsScanner = ({ route, navigation }) => {
                 cameraStyle={{
                     height: '100%'
                 }}
+                markerStyle={{
+                    width:350,
+                    height:200,
+                    borderWidth:2,
+                    borderStyle:"dashed",
+                    borderRadius:2
+                }}
                 showMarker={!isLoading}
                 flashMode={RNCamera.Constants.FlashMode.torch}
             />

@@ -24,14 +24,18 @@ let data = [
       "Göstəricilər",
       {
         id: 1,
-        imageName: "price"
+        imageName: "dashboard"
       }
     ],
     [
       {
+        name: "Əsas",
+        navName: "dashboards",
+      },
+      {
         name: "Kalatoq",
         navName: "catalogsPage",
-      }
+      },
     ],
   ],
   [
@@ -39,7 +43,7 @@ let data = [
       "Məhsullar",
       {
         id: 2,
-        imageName: "product"
+        imageName: "inbox"
       }
     ],
     [
@@ -49,20 +53,20 @@ let data = [
       },
       {
         name: "Yerdəyişmə",
-        navName: 'move'
+        navName: 'move',
       },
       {
         name: "İnventarizasiya",
-        navName: "inventsPage"
+        navName: "inventsPage",
       },
     ],
   ],
   [
     [
-      "Alış",
+      "Alışlar",
       {
         id: 3,
-        imageName: "supply"
+        imageName: "download"
       }
     ],
     [
@@ -72,16 +76,16 @@ let data = [
       },
       {
         name: "Alış iadəsi",
-        navName: "supplysReturnsMain"
+        navName: "supplysReturnsMain",
       }
     ],
   ],
   [
     [
-      "Satış",
+      "Satışlar",
       {
         id: 4,
-        imageName: "demand"
+        imageName: "upload",
       }
     ],
     [
@@ -91,39 +95,58 @@ let data = [
       },
       {
         name: "Satış iadəsi",
-        navName: "demandReturns"
+        navName: "demandReturns",
       },
       {
         name: "Sifariş",
-        navName: "customerOrdersPage"
+        navName: "customerOrdersPage",
       }
     ],
   ],
   [
     [
-      "Maliyyə",
+      "Tərəf-Müqabil",
       {
         id: 5,
-        imageName: "financial",
+        imageName: "user",
+      }
+    ],
+    [
+      {
+        name: "Tərəf-Müqabil",
+        navName: "customers",
+      },
+      {
+        name: "Əməkdaşlar",
+        navName: "employees",
+      },
+    ],
+  ],
+  [
+    [
+      "Maliyyələr",
+      {
+        id: 5,
+        imageName: "wallet",
       }
     ],
     [
       {
         name: "Ödənişlər",
-        navName: "transactionsPage"
+        navName: "transactionsPage",
       },
       {
         name: "Borclar",
-        navName: "debtPage"
+        navName: "debtPage",
       }
     ]
   ],
   [
     [
-      "Pərakəndə",
+      "Pərakəndələr",
       {
         id: 6,
-        imageName: "rotation"
+        imageName: "shoppingcart"
       }
     ],
     [
@@ -142,7 +165,7 @@ let data = [
       "Hesabatlar",
       {
         id: 7,
-        imageName: "accounts"
+        imageName: "linechart"
       }
     ],
     [
@@ -152,13 +175,32 @@ let data = [
       },
       {
         name: "Mənfəət və Zərər",
-        navName: "profitPage"
+        navName: "profitPage",
       },
       {
         name: "Hesablar",
-        navName: "accountsPage"
+        navName: "accountsPage",
       }
     ]
+  ],
+  [
+    [
+      "İstehsalat",
+      {
+        id: 8,
+        imageName: "fork"
+      }
+    ],
+    [
+      {
+        name: "İstehsalat",
+        navName: "productions",
+      },
+      {
+        name: "İstehsala Sifariş",
+        navName: "productionorders",
+      },
+    ],
   ]
 ];
 
@@ -190,7 +232,7 @@ const Profile = () => {
 
     if (await AsyncStorage.getItem("lt") !== null) {
       setMeasurement(await AsyncStorage.getItem("lt"));
-    }else{
+    } else {
       setMeasurement(2);
     }
     const result = await Api('company/get.php', {
@@ -249,6 +291,9 @@ const Profile = () => {
     setIsLoading(true);
     let lData = [...listData];
     let answers = [...pageSetting];
+    console.log(lData);
+    console.log(answers);
+
     for (let index = 0; index < answers.length; index++) {
       answers[index].answer = false
     }

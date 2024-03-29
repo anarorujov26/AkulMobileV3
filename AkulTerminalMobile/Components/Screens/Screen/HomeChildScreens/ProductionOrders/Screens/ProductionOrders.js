@@ -4,23 +4,22 @@ import Api from '../../../../../../Global/Components/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator } from '@ant-design/react-native';
 import CustomColors from '../../../../../../Global/Colors/CustomColors';
-import SearchBar from '../../../../../../Global/UI/SearchBar';
 import DocumentList from '../../../../../../Global/UI/DocumentList';
 import { ConvertFixedTable } from '../../../../../../Global/Components/ConvertFixedTable';
 import NewFab from './../../../../../../Global/Components/NewFab';
-import { ProductionsGlobalContext } from '../ProductionsGlobalState';
 import GetRowProsessing from './../../../../../../Global/Components/GetRowProsessing';
 import DocumentDateFilter from './../../../../../../Global/UI/DocumentDateFilter';
 import DocumentSearch from './../../../../../../Global/Components/DocumentSearch';
+import { ProductionOrdersGlobalContext } from '../ProductionOrdersGlobalState';
 
-const Productions = ({ navigation }) => {
+const ProductionOrders = ({ navigation }) => {
 
   const [productionsData, setProductionsData] = useState([]);
   const [summa, setSumma] = useState({});
   const [search, setSearch] = useState("");
 
   const { productionListRender,
-    setProductionListRender } = useContext(ProductionsGlobalContext);
+    setProductionListRender } = useContext(ProductionOrdersGlobalContext);
 
   const getCOMP = async () => {
     let obj = {
@@ -30,7 +29,8 @@ const Productions = ({ navigation }) => {
       lm: 100,
       token: await AsyncStorage.getItem("token")
     }
-    const result = await Api('productions/get.php', obj);
+
+    const result = await Api('productionorders/get.php', obj);
 
     if (result.data.Headers.ResponseStatus != "0") {
       alert(result.data.Body);
@@ -53,7 +53,7 @@ const Productions = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <GetRowProsessing firstWidth={'90%'} firstContent={
-        <DocumentDateFilter body={true} setBody={setSumma} info={setProductionsData} api={'productions/get.php'} obj={{
+        <DocumentDateFilter body={true} setBody={setSumma} info={setProductionsData} api={'productionorders/get.php'} obj={{
           dr: 1,
           sr: "Moment",
           pg: 0,
@@ -62,10 +62,8 @@ const Productions = ({ navigation }) => {
       } endWidth={'10%'} endContent={
         <DocumentSearch
           apiObject={{
-            api: "productions/get.php",
+            api: "productionorders/get.php",
             products: true,
-            customer: true,
-            customerName: "Qarşı-Tərəf",
             stock: true,
             momentFirst: true,
             momentEnd: true,
@@ -100,6 +98,6 @@ const Productions = ({ navigation }) => {
   )
 }
 
-export default Productions
+export default ProductionOrders
 
 const styles = StyleSheet.create({})
