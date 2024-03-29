@@ -263,7 +263,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
               onLongPress={onLongPress}
               style={styles.tabButton}
             >
-              <AntDesign name={icon} size={25} color={isFocused ? CustomColors.primaryV3 : 'black'} />
+              <AntDesign name={icon} size={25} color={isFocused ? CustomColors("dark").primaryV3 : 'black'} />
               <View style={{ margin: 1 }} />
               <Text style={[!isFocused ? styles.tabButtonTextActive : styles.tabButtonText]}>
                 {label}
@@ -316,7 +316,7 @@ const GetModal = ({ route }) => {
               </>
               :
               <View style={{ justifyContent: 'center', alignItems: 'center', padding: 20 }}>
-                <ActivityIndicator size={50} color={CustomColors.primaryV3} />
+                <ActivityIndicator size={50} color={CustomColors("dark").primaryV3} />
               </View>
           }
         </View>
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   tabButtonText: {
-    backgroundColor: CustomColors.primaryV3,
+    backgroundColor: CustomColors("dark").primaryV3,
     color: "white",
     borderRadius: 10,
     textAlign: 'center',

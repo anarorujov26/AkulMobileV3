@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: CustomColors.primary,
-    shadowColor: CustomColors.primary,
+    backgroundColor: CustomColors("dark").primary,
+    shadowColor: CustomColors("dark").primary,
     elevation: 10
   },
   buttonPrint: {
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: CustomColors.primary,
-    shadowColor: CustomColors.primary,
+    backgroundColor: CustomColors("dark").primary,
+    shadowColor: CustomColors("dark").primary,
     elevation: 10
   }
 })

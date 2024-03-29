@@ -6,10 +6,10 @@ const CustomTextare = ({ text, width, end, endText, addStyle, press, ...props })
     return (
         <View style={[{ width: width }, styles.container, addStyle]}>
             <View style={styles.firsContainer}>
-                <Text>{text}</Text>
+                <Text style={{color:"black"}}>{text}</Text>
             </View>
             <View style={styles.inputContainer}>
-                <TextInput   {...props} style={[styles.input]} />
+                <TextInput  placeholderTextColor={'grey'}  {...props} style={[styles.input]} />
             </View>
             {
                 end == true &&
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     input: {
         paddingLeft: 20,
         color: "black",
-        height:100
+        height:100,
     },
     endContainer: {
         width: '10%',

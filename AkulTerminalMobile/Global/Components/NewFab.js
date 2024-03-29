@@ -22,10 +22,10 @@ const styles = StyleSheet.create({
     width:65,
     height:65,
     borderRadius:65,
-    backgroundColor:CustomColors.danger,
+    backgroundColor:CustomColors("dark").danger,
     justifyContent:'center',
     alignItems:'center',
-    shadowColor:CustomColors.danger,
+    shadowColor:CustomColors("dark").danger,
     elevation:10
   }
 })

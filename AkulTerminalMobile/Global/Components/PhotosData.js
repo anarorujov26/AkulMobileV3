@@ -109,8 +109,8 @@ const PhotosData = ({ renderItem }) => {
             <TouchableOpacity onPress={() => {
                 setAnswer(!answer)
             }} style={[styles.pricesContainer, { width: '100%' }]} >
-                <AntDesign name={!answer ? 'down' : 'right'} size={20} color={CustomColors.primary} />
-                <Text style={{ color: CustomColors.primary }}>  Şəkillər</Text>
+                <AntDesign name={!answer ? 'down' : 'right'} size={20} color={CustomColors("dark").primary} />
+                <Text style={{ color: CustomColors("dark").primary }}>  Şəkillər</Text>
             </TouchableOpacity>
 
             {

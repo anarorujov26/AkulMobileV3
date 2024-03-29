@@ -139,7 +139,7 @@ const OrderNewModal = ({ route, navigation }) => {
         product == null ?
 
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size={50} color={CustomColors.primary} />
+                <ActivityIndicator size={50} color={CustomColors("dark").primary} />
             </View>
             :
 
@@ -161,21 +161,21 @@ const OrderNewModal = ({ route, navigation }) => {
                     <View style={{ margin: 20 }} />
                     {
                         type == "BuySupply" &&
-                        <CustomTextInput editable={pricePermission} onSubmitEditing={getBash} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.SalePrice)} text={'Satış qiyməti'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['SalePrice']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
+                        <CustomTextInput editable={pricePermission} onSubmitEditing={getBash} addStyleInput={{ fontSize: 20, color: CustomColors("dark").connectedPrimary }} keyboardType={"numeric"} value={String(product.SalePrice)} text={'Satış qiyməti'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['SalePrice']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
                     }
                     <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-                        <CustomTextInput editable={type != "Buy" || type != "BuySupply" && pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Price']: e.replace(',', '.') })) }} />
+                        <CustomTextInput editable={type != "Buy" || type != "BuySupply" && pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors("dark").connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['Price']: e.replace(',', '.') })) }} />
                         <View style={{ margin: 10 }} ></View>
                         <Text style={{ color: 'grey', fontSize: 15, textAlign: 'center' }}>{'Əlavə miqdar'}</Text>
                         <View style={styles.bottomContainerItem}>
                             <TouchableOpacity onPress={() => { setProduct(rel => ({ ...rel, ['NewQuantity']: ConvertFixedTable(Number(product.NewQuantity)) - 1 })); }}>
-                                <AntDesign color={CustomColors.primary} size={70} name='minussquare' />
+                                <AntDesign color={CustomColors("dark").primary} size={70} name='minussquare' />
                             </TouchableOpacity>
                             <TextInput keyboardType='numeric' value={String(product.NewQuantity)} style={[styles.input, { textAlign: 'center', width: '50%' }]} onChangeText={(e) => {
                                 setProduct(rel => ({ ...rel, ['NewQuantity']: e.replace(',', '.') }));
                             }} />
                             <TouchableOpacity onPress={() => { setProduct(rel => ({ ...rel, ['NewQuantity']: ConvertFixedTable(Number(product.NewQuantity)) + 1 })); }}>
-                                <AntDesign color={CustomColors.primary} size={70} name='plussquare' />
+                                <AntDesign color={CustomColors("dark").primary} size={70} name='plussquare' />
                             </TouchableOpacity>
                         </View>
                         <View style={{ margin: 15 }} />
@@ -213,6 +213,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         height: 60, marginTop: 4,
         borderBottomWidth: 1,
-        color: CustomColors.primary
+        color: CustomColors("dark").primary
     }
 })

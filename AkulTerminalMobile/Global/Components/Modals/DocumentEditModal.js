@@ -167,7 +167,7 @@ const DocumentEditModal = ({ route, navigation }) => {
     product == null ?
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size={50} color={CustomColors.primary} />
+        <ActivityIndicator size={50} color={CustomColors("dark").primary} />
       </View>
       :
 
@@ -176,7 +176,7 @@ const DocumentEditModal = ({ route, navigation }) => {
           <View style={{ width: '100%', flexDirection: 'row' }}>
             <Text style={styles.name}>{product.Name || product.ProductName}</Text>
             <TouchableOpacity onPress={getDelete} style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
-              <MaterialIcons name='delete-outline' size={25} color={CustomColors.danger} />
+              <MaterialIcons name='delete-outline' size={25} color={CustomColors("dark").danger} />
             </TouchableOpacity>
           </View>
           {
@@ -204,7 +204,7 @@ const DocumentEditModal = ({ route, navigation }) => {
           <View style={{ margin: 20 }} />
           {
             type == "BuySupply" &&
-            <CustomTextInput editable={pricePermission} onSubmitEditing={getBash} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.SalePrice)} text={'Satış qiyməti'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['SalePrice']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
+            <CustomTextInput editable={pricePermission} onSubmitEditing={getBash} addStyleInput={{ fontSize: 20, color: CustomColors("dark").connectedPrimary }} keyboardType={"numeric"} value={String(product.SalePrice)} text={'Satış qiyməti'} width={'100%'} onChangeText={(e) => { setProduct(rel => ({ ...rel, ['SalePrice']: e.replace(',', '.') })) }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
           }
 
           <UnitsModal type={type} data={data} setProduct={setProduct} product={product} />
@@ -212,14 +212,14 @@ const DocumentEditModal = ({ route, navigation }) => {
           <View style={{ flex: 1, justifyContent: 'flex-end' }}>
             {
               type !== "ct" &&
-              <CustomTextInput editable={pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Discount)} onBlur={getDisPRI} text={'Endirim%'} width={'100%'} onChangeText={(e) => {
+              <CustomTextInput editable={pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors("dark").connectedPrimary }} keyboardType={"numeric"} value={String(product.Discount)} onBlur={getDisPRI} text={'Endirim%'} width={'100%'} onChangeText={(e) => {
                 getDirPRIdublicat(e.replace(',', '.'));
                 setProduct(rel => ({
                   ...rel, ['Discount']: e.replace(',', '.')
                 }));
               }} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
             }
-            <CustomTextInput editable={type == "Buy" || type == "BuySupply" ? true : pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => {
+            <CustomTextInput editable={type == "Buy" || type == "BuySupply" ? true : pricePermission} addStyleInput={{ fontSize: 20, color: CustomColors("dark").connectedPrimary }} keyboardType={"numeric"} value={String(product.Price)} onBlur={getPriceDIS} text={type == "Buy" || type == "BuySupply" ? 'Alış Qiyməti' : 'Satış Qiymət'} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} onChangeText={(e) => {
               getPriceDISdublicat(e);
               setProduct(rel => ({ ...rel, ['Price']: e.replace(',', '.') }))
 
@@ -228,13 +228,13 @@ const DocumentEditModal = ({ route, navigation }) => {
             <Text style={{ color: 'grey', fontSize: 15, textAlign: 'center' }}>{'Miqdar'}</Text>
             <View style={styles.bottomContainerItem}>
               <TouchableOpacity onPress={() => { setProduct(rel => ({ ...rel, ['Quantity']: ConvertFixedTable(Number(product.Quantity)) - 1 })); }}>
-                <AntDesign color={CustomColors.primary} size={70} name='minussquare' />
+                <AntDesign color={CustomColors("dark").primary} size={70} name='minussquare' />
               </TouchableOpacity>
               <TextInput keyboardType='numeric' value={String(product.Quantity)} style={[styles.input, { textAlign: 'center', width: '50%' }]} onChangeText={(e) => {
                 setProduct(rel => ({ ...rel, ['Quantity']: e.replace(',', '.') }));
               }} />
               <TouchableOpacity onPress={() => { setProduct(rel => ({ ...rel, ['Quantity']: ConvertFixedTable(Number(product.Quantity)) + 1 })); }}>
-                <AntDesign color={CustomColors.primary} size={70} name='plussquare' />
+                <AntDesign color={CustomColors("dark").primary} size={70} name='plussquare' />
               </TouchableOpacity>
             </View>
             <View style={{ margin: 15 }} />
@@ -273,6 +273,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 60, marginTop: 4,
     borderBottomWidth: 1,
-    color: CustomColors.primary
+    color: CustomColors("dark").primary
   }
 })

@@ -72,7 +72,7 @@ const Setting = ({ navigation }) => {
             {
               infoData === null ?
                 <View style={{ padding: 10 }}>
-                  <ActivityIndicator color={CustomColors.primary} size={30} />
+                  <ActivityIndicator color={CustomColors("dark").primary} size={30} />
                 </View>
                 :
                 <View style={styles.containerr}>
@@ -86,7 +86,7 @@ const Setting = ({ navigation }) => {
                     <Text>{login}</Text>
                   </View>
                   <TouchableOpacity onPress={getEXIT} style={styles.profileExit}>
-                    <Ionicons name='exit-outline' size={20} color={CustomColors.danger} />
+                    <Ionicons name='exit-outline' size={20} color={CustomColors("dark").danger} />
                   </TouchableOpacity>
 
                 </View>
@@ -100,7 +100,7 @@ const Setting = ({ navigation }) => {
             emp !== null &&
             <View style={{ width: '100%', alignItems: 'center', marginTop: 10 }}>
               <TouchableOpacity onPress={getEMPClick}>
-                <CustomTextInput text={'Əməkdaşlar'} value={emp} width={'95%'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors.primary }} editable={false} />
+                <CustomTextInput text={'Əməkdaşlar'} value={emp} width={'95%'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors("dark").primary }} editable={false} />
               </TouchableOpacity>
             </View>
           }
@@ -109,7 +109,7 @@ const Setting = ({ navigation }) => {
             flex: 1,
             justifyContent: 'flex-end',
           }}>
-            <Text style={{ fontSize: 20, color: CustomColors.primary, marginBottom: 10 }}>{Version}</Text>
+            <Text style={{ fontSize: 20, color: CustomColors("dark").primary, marginBottom: 10 }}>{Version}</Text>
           </View>
         </View>
       </ScrollView>
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   profileAvatar: {
     width: 50,
     height: 50,
-    backgroundColor: CustomColors.primary,
+    backgroundColor: CustomColors("dark").primary,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10

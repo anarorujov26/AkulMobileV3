@@ -249,7 +249,7 @@ const Product = ({ route, navigation }) => {
   return (
     product == null ?
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size={50} color={CustomColors.primary} />
+        <ActivityIndicator size={50} color={CustomColors("dark").primary} />
       </View>
       :
       <View style={{ flex: 1 }}>
@@ -258,7 +258,7 @@ const Product = ({ route, navigation }) => {
             justifyContent: 'center',
             marginTop: 5
           }}>
-            <AntDesign name='printer' color={CustomColors.primary} size={40} />
+            <AntDesign name='printer' color={CustomColors("dark").primary} size={40} />
           </TouchableOpacity>
           <View style={{ width: 40 }} />
         <ScrollView>
@@ -344,16 +344,16 @@ const Product = ({ route, navigation }) => {
                     <TouchableOpacity onPress={() => {
                       setPricesTYpes(true);
                     }} style={styles.pricesContainer}>
-                      <AntDesign name='right' size={20} color={CustomColors.primary} />
-                      <Text style={{ color: CustomColors.primary }}>  Qiymət növləri</Text>
+                      <AntDesign name='right' size={20} color={CustomColors("dark").primary} />
+                      <Text style={{ color: CustomColors("dark").primary }}>  Qiymət növləri</Text>
                     </TouchableOpacity>
                     :
                     <>
                       <TouchableOpacity onPress={() => {
                         setPricesTYpes(false);
                       }} style={styles.pricesContainer}>
-                        <AntDesign name='down' size={20} color={CustomColors.primary} />
-                        <Text style={{ color: CustomColors.primary }}>  Qiymət növləri</Text>
+                        <AntDesign name='down' size={20} color={CustomColors("dark").primary} />
+                        <Text style={{ color: CustomColors("dark").primary }}>  Qiymət növləri</Text>
                       </TouchableOpacity>
                       {
                         pricesList[0] ?
@@ -375,7 +375,7 @@ const Product = ({ route, navigation }) => {
                           </>
                           :
                           <View style={{ alignItems: 'center' }}>
-                            <ActivityIndicator size={20} color={CustomColors.primary} />
+                            <ActivityIndicator size={20} color={CustomColors("dark").primary} />
                           </View>
                       }
                     </>

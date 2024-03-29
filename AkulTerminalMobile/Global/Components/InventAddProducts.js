@@ -78,7 +78,7 @@ const InventAddProducts = ({ route, navigation }) => {
             <SearchBar width={'100%'} text={'Axtarış'} onChangeText={(e) => { setSearch_value(e) }} placeholder={'...'} vl={search_value} setVL={setSearch_value} />
             {
                 products == null ?
-                    <Text style={{ marginTop: 50, textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: CustomColors.primary }}>Məhsul axtarın</Text>
+                    <Text style={{ marginTop: 50, textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: CustomColors("dark").primary }}>Məhsul axtarın</Text>
                     :
                     products[0] ?
                         <View style={{ flex: 1, width: '100%' }}>
@@ -97,7 +97,7 @@ const InventAddProducts = ({ route, navigation }) => {
                                                 item.Pic ?
                                                     <Image style={styles.avatar} source={{ uri: item.Pic }} />
                                                     :
-                                                    <View style={[styles.avatar, { backgroundColor: CustomColors.greyV1 }]}>
+                                                    <View style={[styles.avatar, { backgroundColor: CustomColors("dark").greyV1 }]}>
                                                         <Text style={styles.avatarName}>{item.Name.slice(0, 2)}</Text>
                                                     </View>
                                             }
@@ -129,7 +129,7 @@ const InventAddProducts = ({ route, navigation }) => {
                         </View>
                         :
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator size={50} color={CustomColors.primary} />
+                            <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                         </View>
             }
             <ImageModal imageModal={imageModal} setImageModal={setImageModal} name={pItem.Name} price={pItem.Price} pic={pItem.Pic} />
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     customerName: {
-        color: CustomColors.primary
+        color: CustomColors("dark").primary
     },
     price: {
         color: 'black'

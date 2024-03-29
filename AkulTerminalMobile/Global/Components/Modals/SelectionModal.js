@@ -15,10 +15,10 @@ const SelectionModal = ({ modalVisible, setModalVisible, getDelete, getPayment }
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <TouchableOpacity style={styles.listItem} onPress={getDelete}>
-            <Text style={{ color: CustomColors.primary }}>Sil</Text>
+            <Text style={{ color: CustomColors("dark").primary }}>Sil</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.listItem} onPress={getPayment}>
-            <Text style={{ color: CustomColors.primary }}>Ödəmə</Text>
+            <Text style={{ color: CustomColors("dark").primary }}>Ödəmə</Text>
           </TouchableOpacity>
         </View>
       </View>

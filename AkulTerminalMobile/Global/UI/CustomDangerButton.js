@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: CustomColors.danger,
+        backgroundColor: CustomColors("dark").danger,
         borderRadius: 5
     }
 })

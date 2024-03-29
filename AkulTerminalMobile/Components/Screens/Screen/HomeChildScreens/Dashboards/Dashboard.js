@@ -27,7 +27,7 @@ const Dashboard = () => {
       {
         info === null ? 
         <View style={{flex:1,width:'100%',justifyContent:'center',alignItems:'center'}}>
-          <ActivityIndicator size={50} color={CustomColors.primary}/>
+          <ActivityIndicator size={50} color={CustomColors("dark").primary}/>
         </View>
         :
           <ScrollView style={{ width: '100%' }} >

@@ -80,7 +80,7 @@ const Sales = ({ navigation }) => {
                     :
                     !sales[0] ?
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator size={50} color={CustomColors.primary} />
+                            <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                         </View>
                         :
                         <>

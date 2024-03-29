@@ -42,13 +42,13 @@ const GetPayments = ({ route, navigation }) => {
   return (
     id == null ?
     <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-      <Text style={{color:CustomColors.primary,fontWeight:'bold',fontSize:20,}}>Sənət yaradılmayıb!</Text>
+      <Text style={{color:CustomColors("dark").primary,fontWeight:'bold',fontSize:20,}}>Sənət yaradılmayıb!</Text>
     </View>
     :
     <View style={{ flex: 1, backgroundColor: "white" }}>
       {
         data == null ?
-          <Text style={{ textAlign: 'center', color: CustomColors.primary, marginTop: 10, fontWeight: 'bold' }}>Ödəmə yoxdur!</Text>
+          <Text style={{ textAlign: 'center', color: CustomColors("dark").primary, marginTop: 10, fontWeight: 'bold' }}>Ödəmə yoxdur!</Text>
           :
           data[0] ?
 
@@ -84,7 +84,7 @@ const GetPayments = ({ route, navigation }) => {
             :
 
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <ActivityIndicator size={50} color={CustomColors.primary} />
+              <ActivityIndicator size={50} color={CustomColors("dark").primary} />
             </View>
       }
     </View>

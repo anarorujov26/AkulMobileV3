@@ -89,7 +89,7 @@ const DocumentInventEditModal = ({ route, navigation }) => {
     product == null ?
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size={50} color={CustomColors.primary} />
+        <ActivityIndicator size={50} color={CustomColors("dark").primary} />
       </View>
       :
 
@@ -98,7 +98,7 @@ const DocumentInventEditModal = ({ route, navigation }) => {
           <View style={{ width: '100%', flexDirection: 'row' }}>
             <Text style={styles.name}>{product.Name}</Text>
             <TouchableOpacity onPress={getDelete} style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
-              <MaterialIcons name='delete-outline' size={25} color={CustomColors.danger} />
+              <MaterialIcons name='delete-outline' size={25} color={CustomColors("dark").danger} />
             </TouchableOpacity>
           </View>
           <Text style={{ color: 'black', fontSize: 16 }}>{product.BarCode}</Text>
@@ -125,14 +125,14 @@ const DocumentInventEditModal = ({ route, navigation }) => {
             <Text style={{ color: 'grey', fontSize: 15, textAlign: 'center' }}>{'Faktiki qalıq'}</Text>
             <View style={styles.bottomContainerItem}>
               <TouchableOpacity onPress={() => { setProduct(rel => ({ ...rel, ['Quantity']: ConvertFixedTable(Number(product.Quantity)) - 1 })); getStockBalance(product,Number(product.Quantity) - 1); }}>
-                <AntDesign color={CustomColors.primary} size={70} name='minussquare' />
+                <AntDesign color={CustomColors("dark").primary} size={70} name='minussquare' />
               </TouchableOpacity>
               <TextInput keyboardType='numeric' value={String(product.Quantity)} style={[styles.input, { textAlign: 'center', width: '50%' }]} onChangeText={(e) => {
                 setProduct(rel => ({ ...rel, ['Quantity']: e.replace(',', '.') }));
                 getStockBalance(product,e);
               }} />
               <TouchableOpacity onPress={() => { setProduct(rel => ({ ...rel, ['Quantity']: ConvertFixedTable(Number(product.Quantity)) + 1 })); getStockBalance(product,Number(product.Quantity) + 1) }}>
-                <AntDesign color={CustomColors.primary} size={70} name='plussquare' />
+                <AntDesign color={CustomColors("dark").primary} size={70} name='plussquare' />
               </TouchableOpacity>
             </View>
             <View style={{ margin: 15 }} />
@@ -172,6 +172,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 60, marginTop: 4,
     borderBottomWidth: 1,
-    color: CustomColors.primary
+    color: CustomColors("dark").primary
   }
 })

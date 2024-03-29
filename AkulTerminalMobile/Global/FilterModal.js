@@ -232,7 +232,7 @@ const FilterModal = ({
             {
               thisObj == null ?
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                  <ActivityIndicator size={30} color={CustomColors.primary} />
+                  <ActivityIndicator size={30} color={CustomColors("dark").primary} />
                 </View>
                 :
                 <>
@@ -469,7 +469,7 @@ const FilterModal = ({
                     <TouchableOpacity onPress={getAPI} style={styles.button}>
                       {
                         isLoading ?
-                          <ActivityIndicator size={20} color={CustomColors.primary} />
+                          <ActivityIndicator size={20} color={CustomColors("dark").primary} />
                           :
                           <Text style={styles.text}>Axtar</Text>
 
@@ -551,7 +551,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: CustomColors.primary,
+    color: CustomColors("dark").primary,
   }
 });
 

@@ -47,7 +47,7 @@ const GetUnits = ({ modalVisible, setModalVisible, units, data, setData, type })
             }}>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={{ fontSize: 25, color: "white", backgroundColor: CustomColors.primary, width: '100%', textAlign: 'center', padding: 4, borderRadius: 5 }}>Vahidlər</Text>
+                    <Text style={{ fontSize: 25, color: "white", backgroundColor: CustomColors("dark").primary, width: '100%', textAlign: 'center', padding: 4, borderRadius: 5 }}>Vahidlər</Text>
                     <TouchableOpacity disabled={data.UnitId == units[0].Id} onPress={() => {
                         selectDefaultUnit(units[0])
                     }} style={styles.button}>

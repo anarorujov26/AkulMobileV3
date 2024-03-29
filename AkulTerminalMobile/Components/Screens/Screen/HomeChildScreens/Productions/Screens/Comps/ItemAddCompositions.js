@@ -75,7 +75,7 @@ const ItemAddCompositions = ({ route, navigation }) => {
             {
                 products == null ?
                     <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
-                        <ActivityIndicator size={50} color={CustomColors.primary} />
+                        <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                     </View>
                     :
                     products[0] ?
@@ -96,7 +96,7 @@ const ItemAddCompositions = ({ route, navigation }) => {
                         </View>
                         :
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator size={50} color={CustomColors.primary} />
+                            <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                         </View>
             }
         </View>
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     customerName: {
-        color: CustomColors.connectedPrimary
+        color: CustomColors("dark").connectedPrimary
     },
     price: {
         color: 'black',

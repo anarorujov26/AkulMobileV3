@@ -70,7 +70,7 @@ const SalesStack = () => {
             <Stack.Navigator screenOptions={{
                 headerBackVisible: false,
                 headerTitleAlign: 'center',
-                headerTintColor: CustomColors.greyV2
+                headerTintColor: CustomColors("dark").greyV2
             }}>
                 <Stack.Screen options={{
                     title: "Pərakəndə Satışlar"
@@ -85,7 +85,7 @@ const SalesStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors.primary} />
+                            <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors("dark").primary} />
                         </TouchableOpacity>
                     ),
                     headerLeft: () => (
@@ -94,7 +94,7 @@ const SalesStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <Entypo name='share' size={25} color={CustomColors.primary} />
+                            <Entypo name='share' size={25} color={CustomColors("dark").primary} />
                         </TouchableOpacity>
                     )
                 }} name='sale' component={Sale} />

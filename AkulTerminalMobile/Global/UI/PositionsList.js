@@ -23,7 +23,7 @@ const PositionsList = ({ state, setState, setButton, pageName,ds, type, ...props
                             props.element.Pic ?
                                 <Image style={styles.avatar} source={{ uri: props.element.Pic }} />
                                 :
-                                <View style={[styles.avatar, { backgroundColor: CustomColors.greyV1 }]}>
+                                <View style={[styles.avatar, { backgroundColor: CustomColors("dark").greyV1 }]}>
                                     <Text style={styles.avatarName}>{props.name.slice(0, 2)}</Text>
                                 </View>
                         }
@@ -37,7 +37,9 @@ const PositionsList = ({ state, setState, setButton, pageName,ds, type, ...props
                 </View>
                 <View style={styles.listEndContainer}>
                     <Text style={styles.price}>{ConvertFixedTable(Number(props.totalPrice))} ₼</Text>
-                    <Text style={styles.stock}>{props.priceandquantity}</Text>
+                    <Text style={{
+                        color:'grey'
+                    }}>{props.priceandquantity}</Text>
                 </View>
             </TouchableOpacity>
             <ImageModal imageModal={imageModal} setImageModal={setImageModal} name={props.element.name} price={ConvertFixedTable(Number(props.totalPrice))} pic={props.element.Pic} />
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: CustomColors.greyV1,
+        backgroundColor: CustomColors("dark").greyV1,
     },
     listContainer: {
         width: '100%',
@@ -89,9 +91,10 @@ const styles = StyleSheet.create({
     },
     barcode: {
         fontSize: 13,
+        color:"grey"
     },
     customerName: {
-        color: CustomColors.primary
+        color: CustomColors("dark").primary
     },
     price: {
         color: 'black'

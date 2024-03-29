@@ -72,7 +72,7 @@ const InventScanner = ({ route, navigation }) => {
             {
                 isLoading &&
                 <View style={{ flex: 1, position: 'absolute', right: 0, bottom: 0, left: 0, top: '50%' }}>
-                    <ActivityIndicator size={50} color={CustomColors.primary} />
+                    <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                 </View>
             }
 

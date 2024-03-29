@@ -14,8 +14,8 @@ const DocumentInItems = ({ data, itemOne, itemTwo }) => {
                 <TouchableOpacity onPress={() => {
                     setAnswer(false)
                 }} style={[styles.pricesContainer, { width: '100%' }]} >
-                    <AntDesign name='right' size={20} color={CustomColors.primary} />
-                    <Text style={{ color: CustomColors.primary }}>  Modifikasiyalar</Text>
+                    <AntDesign name='right' size={20} color={CustomColors("dark").primary} />
+                    <Text style={{ color: CustomColors("dark").primary }}>  Modifikasiyalar</Text>
                 </TouchableOpacity>
                 {
                         data.Modifications.map((element, index) => {
@@ -32,8 +32,8 @@ const DocumentInItems = ({ data, itemOne, itemTwo }) => {
             <TouchableOpacity onPress={() => {
                 setAnswer(true)
             }} style={[styles.pricesContainer, { width: '100%' }]}>
-                <AntDesign name='down' size={20} color={CustomColors.primary} />
-                <Text style={{ color: CustomColors.primary }}>  Modifikasiyalar</Text>
+                <AntDesign name='down' size={20} color={CustomColors("dark").primary} />
+                <Text style={{ color: CustomColors("dark").primary }}>  Modifikasiyalar</Text>
             </TouchableOpacity>
     )
 }

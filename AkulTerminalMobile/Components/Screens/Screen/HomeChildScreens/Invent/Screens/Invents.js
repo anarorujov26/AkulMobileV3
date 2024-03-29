@@ -83,7 +83,7 @@ const Invents = ({ navigation }) => {
             )} />
             :
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <ActivityIndicator size={40} color={CustomColors.primary} />
+              <ActivityIndicator size={40} color={CustomColors("dark").primary} />
             </View>
       }
       <NewFab press={() => {

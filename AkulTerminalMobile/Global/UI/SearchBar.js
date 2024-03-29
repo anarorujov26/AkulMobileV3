@@ -9,10 +9,10 @@ const SearchBar = ({ text, width, addStyle, vl, setVL, ...props }) => {
     return (
         <View style={[{ width: width }, styles.container, addStyle]}>
             <View style={styles.firsContainer}>
-                <Text><EvilIcon name='search' size={30}/></Text>
+                <Text><EvilIcon color={'black'} name='search' size={30}/></Text>
             </View>
             <View style={styles.inputContainer}>
-                <TextInput value={vl} placeholder={'Axtarış....'} {...props} style={[styles.input]} />
+                <TextInput placeholderTextColor={'grey'} value={vl} placeholder={'Axtarış....'} {...props} style={[styles.input]} />
             </View>
             {
                 vl != '' &&

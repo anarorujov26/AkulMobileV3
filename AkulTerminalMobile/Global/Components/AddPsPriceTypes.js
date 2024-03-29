@@ -87,7 +87,7 @@ const AddPsPriceTypes = ({ route, navigation }) => {
                     :
                     !priceTypes[0] ?
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator size={50} color={CustomColors.primary} />
+                            <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                         </View>
                         :
 
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: CustomColors.connectedPrimary,
+        backgroundColor: CustomColors("dark").connectedPrimary,
     },
     listContainer: {
         width: '100%',

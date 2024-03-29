@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     padding: 10,
     borderWidth: 1,
-    borderColor: CustomColors.primary
+    borderColor: CustomColors("dark").primary
   },
   loginTypeContainerLeft: {
     width: '80%',

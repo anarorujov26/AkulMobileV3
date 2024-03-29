@@ -56,14 +56,14 @@ const OrdersStack = () => {
             <Stack.Navigator screenOptions={{
                 headerTitleAlign: 'center',
                 headerBackVisible: false,
-                headerTintColor: CustomColors.connectedPrimary
+                headerTintColor: CustomColors("dark").connectedPrimary
 
             }}>
                 <Stack.Screen options={{
                     title: "Pərakəndə sifariş",
                     headerLeft:()=>(
                         <TouchableOpacity onPress={getSetting}>
-                            <MaterialIcons name='settings' size={23} color={CustomColors.primary}/>
+                            <MaterialIcons name='settings' size={23} color={CustomColors("dark").primary}/>
                         </TouchableOpacity> 
                     )
                 }} name='catalogs' component={Orders} />
@@ -75,7 +75,7 @@ const OrdersStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialIcons name='delete-outline' size={25} color={CustomColors.danger} />
+                            <MaterialIcons name='delete-outline' size={25} color={CustomColors("dark").danger} />
                         </TouchableOpacity>
                     )
                 }} name='order' component={Order} />

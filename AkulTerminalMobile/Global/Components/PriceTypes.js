@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: CustomColors.connectedPrimary,
+        backgroundColor: CustomColors("dark").connectedPrimary,
     },
     listContainer: {
         width: '100%',

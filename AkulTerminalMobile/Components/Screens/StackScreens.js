@@ -41,7 +41,7 @@ const StackScreens = () => {
                 headerTitle: "SƏHİFƏLƏR",
                 headerTitleAlign: 'center',
                 headerStyle: {
-                    backgroundColor: CustomColors.primaryV3,
+                    backgroundColor: CustomColors("dark").primaryV3,
                 },
                 headerTitleStyle: {
                     color: 'white'
@@ -70,14 +70,14 @@ const StackScreens = () => {
                 headerShown: true,
                 headerTitle: "Göstəricilər",
                 headerTitleAlign: 'center',
-                headerTitleStyle: { color: CustomColors.greyV2 },
+                headerTitleStyle: { color: CustomColors("dark").greyV2 },
                 headerBackVisible: false
             }} />
             <Stack.Screen name='profitPage' component={Profits} options={{
                 headerShown: true,
                 headerTitle: "Mənfəət və Zərər",
                 headerTitleAlign: 'center',
-                headerTitleStyle: { color: CustomColors.greyV2 },
+                headerTitleStyle: { color: CustomColors("dark").greyV2 },
                 headerBackVisible: false
             }} />
             <Stack.Screen name='accountsPage' component={AccountsStack} />

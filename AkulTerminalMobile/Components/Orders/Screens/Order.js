@@ -52,7 +52,7 @@ function MyTabBar({ state, descriptors, navigation }) {
                             accessibilityLabel={options.tabBarAccessibilityLabel}
                             testID={options.tabBarTestID}
                             onPress={onPress}
-                            style={[styles.topTabButton, isFocused && { borderBottomWidth: 2, borderColor: CustomColors.primary }]}
+                            style={[styles.topTabButton, isFocused && { borderBottomWidth: 2, borderColor: CustomColors("dark").primary }]}
                         >
                             <Text style={{ color: 'black' }}>
                                 {label}
@@ -170,7 +170,7 @@ const Order = ({ route, navigation }) => {
     return (
         order == null ?
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size={50} color={CustomColors.primary} />
+                <ActivityIndicator size={50} color={CustomColors("dark").primary} />
             </View>
             :
             <>

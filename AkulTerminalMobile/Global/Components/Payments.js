@@ -143,8 +143,8 @@ const Payments = ({ navigation, route, type, pT, info, setInfo, listRender, moda
                 <View style={{ width: '100%', backgroundColor: "#E8E8E8", height: 50, justifyContent: 'space-between', padding: 5, alignItems: 'center', flexDirection: 'row' }}>
                   <Text style={{ color: "#B0B0B0", fontSize: 15, fontWeight: 'bold' }}>Mədaxil {paymentType ? 'nağd' : 'nağdsız'}</Text>
                   <Switch
-                    trackColor={{ false: '#767577', true: CustomColors.primary }}
-                    thumbColor={paymentType ? CustomColors.primaryV2 : '#f4f3f4'}
+                    trackColor={{ false: '#767577', true: CustomColors("dark").primary }}
+                    thumbColor={paymentType ? CustomColors("dark").primaryV2 : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={(e) => {
                       setPaymentType(e);
@@ -158,8 +158,8 @@ const Payments = ({ navigation, route, type, pT, info, setInfo, listRender, moda
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5, width: '100%', height: 50, borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: "#bcbcbc" }}>
                   <Text style={{ color: "#606060", fontWeight: 'bold' }}>Tam ödəniş</Text>
                   <Switch
-                    trackColor={{ false: '#767577', true: CustomColors.primary }}
-                    thumbColor={totalPrice ? CustomColors.primaryV2 : '#f4f3f4'}
+                    trackColor={{ false: '#767577', true: CustomColors("dark").primary }}
+                    thumbColor={totalPrice ? CustomColors("dark").primaryV2 : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={(e) => {
                       setTotalPrice(e)
@@ -217,7 +217,7 @@ const Payments = ({ navigation, route, type, pT, info, setInfo, listRender, moda
               </View>
               :
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20, color: CustomColors.primaryV2 }}>Sənəd yaradılmayıb!</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20, color: CustomColors("dark").primaryV2 }}>Sənəd yaradılmayıb!</Text>
               </View>
           }
         </View>

@@ -76,7 +76,7 @@ const Debts = ({ navigation }) => {
                     :
                     !debts[0] ?
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator size={50} color={CustomColors.primary} />
+                            <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                         </View>
                         :
                         <>
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: CustomColors.greyV1,
+        backgroundColor: CustomColors("dark").greyV1,
     },
     listContainer: {
         width: '100%',
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     customerName: {
-        color: CustomColors.connectedPrimary
+        color: CustomColors("dark").connectedPrimary
     },
     price: {
         color: 'black',
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     },
     header: {
         height: 70, width: '100%',
-        backgroundColor: CustomColors.primary,
+        backgroundColor: CustomColors("dark").primary,
         borderTopStartRadius: 30,
         borderTopRightRadius: 30,
         justifyContent: 'center',

@@ -151,7 +151,7 @@ const Transaction = ({ route, navigation }) => {
             {
                 tran == null ?
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <ActivityIndicator size={50} color={CustomColors.primary} />
+                        <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                     </View>
                     :
                     <>
@@ -182,7 +182,7 @@ const Transaction = ({ route, navigation }) => {
                         {
                             id !== null &&
                             <View style={{width:'100%',padding:5,backgroundColor:"white",borderTopWidth:1,borderColor:"#ececec",flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                                <Text style={{color:CustomColors.danger}}>Qalıq borc:</Text>
+                                <Text style={{color:CustomColors("dark").danger}}>Qalıq borc:</Text>
                                 <Text style={{color:'black'}}>{ConvertFixedTable(tran.DebtAmount)}</Text>
                             </View>
                         }

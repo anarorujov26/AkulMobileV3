@@ -86,7 +86,7 @@ const Productions = ({ navigation }) => {
             </View>
             :
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <ActivityIndicator text='Yüklənir...' size={50} color={CustomColors.primaryV3} />
+              <ActivityIndicator text='Yüklənir...' size={50} color={CustomColors("dark").primaryV3} />
             </View>
           :
           <View>

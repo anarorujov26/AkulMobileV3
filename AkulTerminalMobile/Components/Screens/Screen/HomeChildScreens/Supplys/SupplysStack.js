@@ -85,7 +85,7 @@ const SupplysStack = () => {
       <Stack.Navigator screenOptions={{
         headerTitleAlign: 'center',
         headerBackVisible: false,
-        headerTintColor: CustomColors.greyV2
+        headerTintColor: CustomColors("dark").greyV2
 
       }}>
         <Stack.Screen options={{
@@ -101,7 +101,7 @@ const SupplysStack = () => {
               accessibilityRole="button"
               style={[styles.topTabButton]}
             >
-              <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors.primary} />
+              <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors("dark").primary} />
             </TouchableOpacity>
           ),
           headerLeft: () => (
@@ -110,7 +110,7 @@ const SupplysStack = () => {
               accessibilityRole="button"
               style={[styles.topTabButton]}
             >
-              <Entypo name='share' size={25} color={CustomColors.primary} />
+              <Entypo name='share' size={25} color={CustomColors("dark").primary} />
             </TouchableOpacity>
           )
         }} name='supply' component={Supply} />

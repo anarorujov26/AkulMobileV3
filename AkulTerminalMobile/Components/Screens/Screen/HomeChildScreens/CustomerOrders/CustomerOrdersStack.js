@@ -78,7 +78,7 @@ const CustomerOrdersStack = () => {
             <Stack.Navigator screenOptions={{
                 headerBackVisible: false,
                 headerTitleAlign: 'center',
-                headerTintColor: CustomColors.greyV2
+                headerTintColor: CustomColors("dark").greyV2
             }}>
                 <Stack.Screen options={{
                     title: "Sifariş"
@@ -93,7 +93,7 @@ const CustomerOrdersStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors.primary} />
+                            <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors("dark").primary} />
                         </TouchableOpacity>
                     ),
                     headerLeft: () => (
@@ -102,7 +102,7 @@ const CustomerOrdersStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <Entypo name='share' size={25} color={CustomColors.primary} />
+                            <Entypo name='share' size={25} color={CustomColors("dark").primary} />
                         </TouchableOpacity>
                     )
                 }} name='customerOrder' component={CustomerOrder} />

@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     customerName: {
-        color: CustomColors.connectedPrimary
+        color: CustomColors("dark").connectedPrimary
     },
     price: {
         color: 'black',
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     },
     header: {
         height: 70, width: '100%',
-        backgroundColor: CustomColors.primary,
+        backgroundColor: CustomColors("dark").primary,
         borderTopStartRadius: 30,
         borderTopRightRadius: 30,
         justifyContent: 'center',

@@ -27,7 +27,7 @@ const AddCardProducts = ({ name, price, pic, press, ...props }) => {
                         <Image source={{ uri: pic }} style={styles.image} />
                         :
                         <View style={[styles.image, {
-                            backgroundColor: CustomColors.greyV1,
+                            backgroundColor: CustomColors("dark").greyV1,
                             justifyContent: 'center',
                             alignItems: 'center'
                         }]}>

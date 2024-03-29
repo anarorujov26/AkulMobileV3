@@ -256,7 +256,7 @@ const Customer = ({ route, navigation }) => {
                     </List>
                     :
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ActivityIndicator size={50} color={CustomColors.primaryV3} />
+                        <ActivityIndicator size={50} color={CustomColors("dark").primaryV3} />
                     </View>
             }
             <CustomersGroupModal modalVisible={gpModal} setModalVisible={setGpModal} save={setSaveButton} idType={'GroupId'} nameType={'GroupName'} state={setCustomer} />

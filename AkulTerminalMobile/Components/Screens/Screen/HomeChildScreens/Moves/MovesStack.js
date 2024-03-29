@@ -77,7 +77,7 @@ const MovesStack = () => {
             <Stack.Navigator screenOptions={{
                 headerBackVisible: false,
                 headerTitleAlign: 'center',
-                headerTintColor: CustomColors.greyV2
+                headerTintColor: CustomColors("dark").greyV2
             }}>
                 <Stack.Screen options={{
                     title: "Yerdəyişmə"
@@ -92,7 +92,7 @@ const MovesStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors.primary} />
+                            <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors("dark").primary} />
                         </TouchableOpacity>
                     ),
                     headerLeft: () => (
@@ -101,7 +101,7 @@ const MovesStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <Entypo name='share' size={25} color={CustomColors.primary} />
+                            <Entypo name='share' size={25} color={CustomColors("dark").primary} />
                         </TouchableOpacity>
                     )
                 }} name='demand' component={Move} />

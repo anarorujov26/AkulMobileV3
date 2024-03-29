@@ -54,11 +54,11 @@ const Orders = ({ navigation }) => {
                     :
                     !orders[0] ?
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator size={50} color={CustomColors.primary} />
+                            <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                         </View>
                         :
                         <FlatList refreshing={isRefresh} onRefresh={getOrders} data={orders} renderItem={({ item, index }) => (
-                            <DocumentorderList key={item.Id} index={<FontAwesome name={item.Accept == 1 ? 'circle' : 'circle-o'} color={item.Accept == 1 ? CustomColors.success : CustomColors.danger} size={25}/>} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'order'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
+                            <DocumentorderList key={item.Id} index={<FontAwesome name={item.Accept == 1 ? 'circle' : 'circle-o'} color={item.Accept == 1 ? CustomColors("dark").success : CustomColors("dark").danger} size={25}/>} customername={item.CustomerName} moment={item.Moment} name={item.Name} navigation={navigation} location={'order'} id={item.Id} amount={ConvertFixedTable(Number(item.Amount))} />
                         )} />
             }
             <NewFab press={() => {

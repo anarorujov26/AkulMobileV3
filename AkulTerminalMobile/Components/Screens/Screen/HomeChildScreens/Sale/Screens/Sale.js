@@ -50,7 +50,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
                             accessibilityLabel={options.tabBarAccessibilityLabel}
                             testID={options.tabBarTestID}
                             onPress={onPress}
-                            style={[styles.topTabButton, isFocused && { borderBottomWidth: 2, borderColor: CustomColors.primary }]}
+                            style={[styles.topTabButton, isFocused && { borderBottomWidth: 2, borderColor: CustomColors("dark").primary }]}
                         >
                             <Text style={{ color: 'black' }}>
                                 {label}
@@ -75,6 +75,7 @@ const Sale = ({ route, navigation }) => {
             token: await AsyncStorage.getItem('token')
         }
         const result = await axios.post('https://api.akul.az/1.0/dev/controllers/sales/get.php', obj);
+        console.log(result);
         if (result.data.Headers.ResponseStatus !== "0") {
             navigation.goBack();
         }
@@ -89,7 +90,7 @@ const Sale = ({ route, navigation }) => {
     return (
         sale == null ?
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size={50} color={CustomColors.primary} />
+                <ActivityIndicator size={50} color={CustomColors("dark").primary} />
             </View>
             :
             <>

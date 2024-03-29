@@ -45,7 +45,7 @@ const EmployeesStack = () => {
             <Stack.Navigator screenOptions={{
                 headerBackVisible: false,
                 headerTitleAlign: 'center',
-                headerTintColor: CustomColors.greyV2
+                headerTintColor: CustomColors("dark").greyV2
             }}>
                 <Stack.Screen options={{
                     title: "Əməkdaşlar"
@@ -58,7 +58,7 @@ const EmployeesStack = () => {
                             accessibilityRole="button"
                             style={[styles.topTabButton]}
                         >
-                            <MaterialIcons name='delete' size={25} color={CustomColors.danger} />
+                            <MaterialIcons name='delete' size={25} color={CustomColors("dark").danger} />
                         </TouchableOpacity>
                     ),
                 }} name='emp' component={Employee} />

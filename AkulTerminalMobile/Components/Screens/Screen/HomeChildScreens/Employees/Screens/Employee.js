@@ -124,7 +124,7 @@ const Employee = ({ route, navigation }) => {
   return (
     employee === null ?
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size={50} color={CustomColors.primary} />
+        <ActivityIndicator size={50} color={CustomColors("dark").primary} />
       </View>
       :
       <View style={{ flex: 1 }}>

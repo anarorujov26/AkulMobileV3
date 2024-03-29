@@ -84,7 +84,7 @@ const getPrintTMP = async (tId) => {
       <Stack.Navigator screenOptions={{
         headerTitleAlign: 'center',
         headerBackVisible: false,
-        headerTintColor: CustomColors.greyV2
+        headerTintColor: CustomColors("dark").greyV2
 
       }}>
         <Stack.Screen options={{
@@ -100,7 +100,7 @@ const getPrintTMP = async (tId) => {
               accessibilityRole="button"
               style={[styles.topTabButton]}
             >
-              <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors.primary} />
+              <MaterialIcons name='format-list-bulleted' size={25} color={CustomColors("dark").primary} />
             </TouchableOpacity>
           ),
           headerLeft: () => (
@@ -109,7 +109,7 @@ const getPrintTMP = async (tId) => {
               accessibilityRole="button"
               style={[styles.topTabButton]}
             >
-              <Entypo name='share' size={25} color={CustomColors.primary} />
+              <Entypo name='share' size={25} color={CustomColors("dark").primary} />
             </TouchableOpacity>
           )
         }} name='supply' component={Supply} />

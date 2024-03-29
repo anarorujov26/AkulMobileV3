@@ -15,7 +15,7 @@ const UnitsModal = ({ data, type, product, setProduct }) => {
             <TouchableOpacity onPress={() => {
                 setModalVisible(true)
             }}>
-                <CustomTextInput editable={false} addStyleInput={{ fontSize: 20, color: CustomColors.connectedPrimary }} keyboardType={"numeric"} text={'Vahid'} value={data.UnitName} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
+                <CustomTextInput editable={false} addStyleInput={{ fontSize: 20, color: CustomColors("dark").connectedPrimary }} keyboardType={"numeric"} text={'Vahid'} value={data.UnitName} width={'100%'} addStyle={{ borderRadius: 0, borderBottomWidth: 1 }} />
             </TouchableOpacity>
 
             <GetUnits type={type} data={product} setData={setProduct} units={data.units} modalVisible={modalVisible} setModalVisible={setModalVisible} />

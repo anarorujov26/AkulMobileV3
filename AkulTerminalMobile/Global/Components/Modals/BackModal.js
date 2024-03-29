@@ -17,7 +17,7 @@ const BackModal = ({ modalVisible, setModalVisible, pressExit, pressContinue }) 
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     {/* <Text style={{ fontSize: 18, color: 'orange', textAlign: 'center' }}>Diqqət!</Text> */}
-                    <MaterialCommunityIcons name='alert-circle' size={60} color={CustomColors.orange}/>
+                    <MaterialCommunityIcons name='alert-circle' size={60} color={CustomColors("dark").orange}/>
                     <Text style={{ fontSize: 15,fontWeight:'bold',marginTop:10,width:'100%', color: 'black', textAlign: 'center' }}>Dəyişikliklər yadda saxlanılmayacaq!</Text>
                     <View style={{margin:10}}></View>
                     <View style={{ width:'100%',flexDirection: 'row', display: 'flex',marginTop:10}}>

@@ -63,7 +63,7 @@ const GetAccountsModal = ({ modalVisible, setModalVisible, setLogin, setPassword
                             </ScrollView>
                             :
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <ActivityIndicator size={50} color={CustomColors.primary} />
+                                <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                             </View>
                     }
                 </TouchableOpacity>
@@ -140,9 +140,9 @@ const styles = StyleSheet.create({
         padding:10,
         borderRadius:20,
         alignItems:'center',
-        borderColor:CustomColors.greyV2
+        borderColor:CustomColors("dark").greyV2
     },
     otherText:{
-        color:CustomColors.grey
+        color:CustomColors("dark").grey
     }
 })

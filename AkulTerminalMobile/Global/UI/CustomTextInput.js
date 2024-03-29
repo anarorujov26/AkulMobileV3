@@ -1,15 +1,16 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { TextInput } from 'react-native'
+import CustomColors from '../Colors/CustomColors'
 
-const CustomTextInput = ({ text, width, end, endText,addStyle,addStyleInput, press, ...props }) => {
+const CustomTextInput = ({ text, width, end, endText, addStyle, addStyleInput, press, ...props }) => {
     return (
-        <View style={[{ width: width }, styles.container,addStyle]}>
+        <View style={[{ width: width }, styles.container, addStyle]}>
             <View style={styles.firsContainer}>
-                <Text>{text}</Text>
+                <Text style={{ color: CustomColors("dark").black }}>{text}</Text>
             </View>
             <View style={end != true ? styles.inputContainerEnd : styles.inputContainer}>
-                <TextInput {...props} style={[styles.input,addStyleInput]} />
+                <TextInput {...props} style={[styles.input, addStyleInput]} />
             </View>
             {
                 end == true &&
@@ -43,12 +44,12 @@ const styles = StyleSheet.create({
         width: '75%',
     },
     input: {
-        paddingLeft:20,
-        color:"black"
+        paddingLeft: 20,
+        color: CustomColors("dark").black
     },
     endContainer: {
         width: '10%',
-        justifyContent:'center',
-        alignItems:'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 })

@@ -11,7 +11,7 @@ const Item = ({ data, setData, d, ...props }) => {
       <TouchableOpacity disabled={d} style={styles.listContainer} onPress={() => { props.navigation.navigate(props.location, { data, setData, item: props.item }) }}>
         <View style={styles.listFirs}>
           <View style={styles.listFirsContainer}>
-            <View style={[styles.avatar, { backgroundColor: CustomColors.greyV1 }]}>
+            <View style={[styles.avatar, { backgroundColor: CustomColors("dark").greyV1 }]}>
               <Text style={styles.avatarName}>{props.name.slice(0, 2)}</Text>
             </View>
           </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: CustomColors.greyV1,
+    backgroundColor: CustomColors("dark").greyV1,
   },
   listContainer: {
     width: '100%',
@@ -78,9 +78,10 @@ const styles = StyleSheet.create({
   },
   barcode: {
     fontSize: 13,
+    color:'grey'
   },
   customerName: {
-    color: CustomColors.primary
+    color: CustomColors("dark").primary
   },
   price: {
     color: 'black'

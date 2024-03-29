@@ -275,7 +275,7 @@ const Profile = () => {
             {
               infoData === null ?
                 <View style={{ padding: 10 }}>
-                  <ActivityIndicator color={CustomColors.primary} size={30} />
+                  <ActivityIndicator color={CustomColors("dark").primary} size={30} />
                 </View>
                 :
                 <View style={styles.containerr}>
@@ -289,7 +289,7 @@ const Profile = () => {
                     <Text>{login}</Text>
                   </View>
                   <TouchableOpacity onPress={getEXIT} style={styles.profileExit}>
-                    <Ionicons name='exit-outline' size={20} color={CustomColors.danger} />
+                    <Ionicons name='exit-outline' size={20} color={CustomColors("dark").danger} />
                   </TouchableOpacity>
 
                 </View>
@@ -299,12 +299,12 @@ const Profile = () => {
               <Text style={{ padding: 10 }}>Balans: {infoData.CashBalance}</Text>
             }
             <TouchableOpacity onPress={getListClick}>
-              <CustomTextInput placeholder="..." text={'List tipi'} width={'100%'} value={listType > 1 ? 'Kart' : 'List'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors.primary }} editable={false} />
+              <CustomTextInput placeholder="..." text={'List tipi'} width={'100%'} value={listType > 1 ? 'Kart' : 'List'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors("dark").primary }} editable={false} />
             </TouchableOpacity>
             <View style={{ margin: 10 }} />
             {
               listType > 1 &&
-              <CustomTextInput placeholder="..." text={'Sıra ölçüsü'} width={'100%'} value={String(measurement)} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors.primary }} onChangeText={getListInput} />
+              <CustomTextInput placeholder="..." text={'Sıra ölçüsü'} width={'100%'} value={String(measurement)} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors("dark").primary }} onChangeText={getListInput} />
             }
             {
               saveButton &&
@@ -317,7 +317,7 @@ const Profile = () => {
             {
               settingPermission &&
               <TouchableOpacity onPress={getClick}>
-                <CustomTextInput placeholder="..." text={'Səhifələr'} width={'100%'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors.primary, marginTop: 50 }} editable={false} />
+                <CustomTextInput placeholder="..." text={'Səhifələr'} width={'100%'} addStyle={{ borderRadius: 5, borderWidth: 1, borderColor: CustomColors("dark").primary, marginTop: 50 }} editable={false} />
               </TouchableOpacity>
             }
 
@@ -325,7 +325,7 @@ const Profile = () => {
               pageEditModal &&
                 listData == null ?
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                  <ActivityIndicator size={30} color={CustomColors.primary} />
+                  <ActivityIndicator size={30} color={CustomColors("dark").primary} />
                 </View>
                 :
                 <FlatList data={listData} renderItem={({ item, index }) => (
@@ -338,7 +338,7 @@ const Profile = () => {
                     }
                   }}>
                     <CustomTextInput placeholder="..." text={'Səhifə'} value={item.name} width={'100%'} addStyle={[
-                      { borderRadius: 5, borderWidth: 1, borderColor: CustomColors.primary, marginTop: 20, height: 45 },
+                      { borderRadius: 5, borderWidth: 1, borderColor: CustomColors("dark").primary, marginTop: 20, height: 45 },
                       item.answer && { backgroundColor: "#dcdcdc" }
                     ]} editable={false} />
                   </TouchableOpacity>
@@ -361,7 +361,7 @@ const Profile = () => {
             flex: 1,
             justifyContent: 'flex-end',
           }}>
-            <Text style={{ fontSize: 20, color: CustomColors.primary, marginBottom: 10 }}>{Version}</Text>
+            <Text style={{ fontSize: 20, color: CustomColors("dark").primary, marginBottom: 10 }}>{Version}</Text>
           </View>
         </View>
       </ScrollView>
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
   profileAvatar: {
     width: 50,
     height: 50,
-    backgroundColor: CustomColors.primary,
+    backgroundColor: CustomColors("dark").primary,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10

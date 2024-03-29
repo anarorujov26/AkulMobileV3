@@ -13,7 +13,7 @@ const SalePStack = () => {
         <Stack.Navigator screenOptions={{
             headerTitleAlign: 'center',
             headerBackVisible: false,
-            headerTintColor: CustomColors.greyV2
+            headerTintColor: CustomColors("dark").greyV2
         }}>
             <Stack.Screen options={{
                 title: 'Mənfəət',

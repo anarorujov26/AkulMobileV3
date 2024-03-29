@@ -69,7 +69,7 @@ const ItemEditableComNew = ({ route, navigation }) => {
         product == null ?
 
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size={50} color={CustomColors.primary} />
+                <ActivityIndicator size={50} color={CustomColors("dark").primary} />
             </View>
             :
 
@@ -95,13 +95,13 @@ const ItemEditableComNew = ({ route, navigation }) => {
                         <Text style={{ color: 'grey', fontSize: 15, textAlign: 'center' }}>{'Miqdar'}</Text>
                         <View style={styles.bottomContainerItem}>
                             <TouchableOpacity onPress={() => { setProduct(rel => ({ ...rel, ['Quantity']: ConvertFixedTable(Number(product.Quantity)) - 1 })); }}>
-                                <AntDesign color={CustomColors.primary} size={70} name='minussquare' />
+                                <AntDesign color={CustomColors("dark").primary} size={70} name='minussquare' />
                             </TouchableOpacity>
                             <TextInput keyboardType='numeric' value={String(product.Quantity)} style={[styles.input, { textAlign: 'center', width: '50%' }]} onChangeText={(e) => {
                                 setProduct(rel => ({ ...rel, ['Quantity']: e.replace(',', '.') }));
                             }} />
                             <TouchableOpacity onPress={() => { setProduct(rel => ({ ...rel, ['Quantity']: ConvertFixedTable(Number(product.Quantity)) + 1 })); }}>
-                                <AntDesign color={CustomColors.primary} size={70} name='plussquare' />
+                                <AntDesign color={CustomColors("dark").primary} size={70} name='plussquare' />
                             </TouchableOpacity>
                         </View>
 
@@ -144,6 +144,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         height: 60, marginTop: 4,
         borderBottomWidth: 1,
-        color: CustomColors.primary
+        color: CustomColors("dark").primary
     }
 })

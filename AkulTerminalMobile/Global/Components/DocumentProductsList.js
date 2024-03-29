@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: CustomColors.primary,
+    backgroundColor: CustomColors("dark").primary,
   },
   listContainer: {
     width: '100%',
@@ -74,6 +74,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   customerName: {
-    color: CustomColors.primary
+    color: CustomColors("dark").primary
   }
 })

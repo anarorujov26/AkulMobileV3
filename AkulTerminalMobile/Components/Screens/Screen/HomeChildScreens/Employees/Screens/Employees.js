@@ -76,7 +76,7 @@ const Employees = ({ navigation }) => {
                         </View>
                         :
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <ActivityIndicator size={50} color={CustomColors.primary} />
+                            <ActivityIndicator size={50} color={CustomColors("dark").primary} />
                         </View>
             }
             <NewFab press={() => {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: CustomColors.greyV1,
+        backgroundColor: CustomColors("dark").greyV1,
     },
     listContainer: {
         width: '100%',
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     customerName: {
-        color: CustomColors.connectedPrimary
+        color: CustomColors("dark").connectedPrimary
     },
     price: {
         color: 'black',
