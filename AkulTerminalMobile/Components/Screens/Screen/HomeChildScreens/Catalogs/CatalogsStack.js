@@ -21,6 +21,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MoreCohices from '../../../../../Global/Components/Modals/MoreCohices';
 import CustomDangerButton from '../../../../../Global/UI/CustomDangerButton';
 import TmpModal from '../../../../../Global/Components/Modals/TmpModal';
+import ProductCreateCOMP from '../../../../../Global/Components/ProductCreateCOMP';
 
 const Stack = createNativeStackNavigator();
 
@@ -117,7 +118,7 @@ const CatalogsStack = () => {
         <Stack.Screen options={{
           title: "Kataloq"
         }} name='addPS' component={AddProducts} />
-        <Stack.Screen name='productsCreate' component={Product} options={{
+        <Stack.Screen name='productsCreate' component={ProductCreateCOMP} options={{
           title: "Məhsul"
         }} />
         <Stack.Screen options={{ title: "Qiymet növü" }} name='priceTypes' component={AddPsPriceTypes} />

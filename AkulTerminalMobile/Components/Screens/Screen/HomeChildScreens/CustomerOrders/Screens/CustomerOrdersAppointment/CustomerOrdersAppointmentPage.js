@@ -9,16 +9,17 @@ import { CustomerOrdersGlobalContext } from '../../CustomerOrdersGlobalState';
 import OrderTypeModal from './../../../../../../../Global/Components/Modals/OrderTypeModal';
 import { GlobalContext } from '../../../../../../../Global/Components/GlobalState';
 import DocumentInItems from '../../../../../../../Global/Components/DocumentInItems';
+import DocumentPhotoComponent from '../../../../../../../Global/Components/DocumentsPhotoComponent';
 
 const CustomerOrdersAppointmentPage = ({ navigation }) => {
 
   const { prices } = useContext(GlobalContext);
-  const { customerOrder, setCustomerOrder, saveButton, setSaveButton } = useContext(CustomerOrdersGlobalContext);
+  const { customerOrder, setCustomerOrder, saveButton, setSaveButton,setCustomerOrdersListRender } = useContext(CustomerOrdersGlobalContext);
   const [datePicker, setDatePicker] = useState(false);
   const [orderType, setOrderType] = useState(false);
 
   return (
-    <View>
+    <View style={{flex:1}}>
       <CustomTextInput placeholder="..." text={'№'} width={'100%'} value={customerOrder.Name} addStyle={{ borderRadius: 0 }} onChangeText={(e) => {
         setCustomerOrder(rel => ({ ...rel, ['Name']: e }));
         if (!saveButton) setSaveButton(true)
@@ -61,6 +62,12 @@ const CustomerOrdersAppointmentPage = ({ navigation }) => {
       <DocumentInItems data={customerOrder} itemOne={'title'} itemTwo={'value'}/>
       <MyDatePicker setState={setSaveButton} date={customerOrder.Moment == "" ? new Date() : new Date(moment(customerOrder.Moment).format('YYYY-MM-DD'))} setDate={setCustomerOrder} type={'Moment'} open={datePicker} setOpen={setDatePicker} />
       <OrderTypeModal setButton={setSaveButton} setData={setCustomerOrder} type={'PaymentMethod'} modalVisible={orderType} setModalVisible={setOrderType} />
+     {
+      customerOrder.Id != null ?
+      <DocumentPhotoComponent type={'customerorders'} data={customerOrder} renderItem={setCustomerOrder}/>
+      :
+      ''
+     }
     </View>
   )
 }

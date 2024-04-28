@@ -27,6 +27,7 @@ import MoreCohices from '../../../../../Global/Components/Modals/MoreCohices';
 import CustomDangerButton from '../../../../../Global/UI/CustomDangerButton';
 import TmpModal from '../../../../../Global/Components/Modals/TmpModal';
 import CustomSuccessButton from '../../../../../Global/UI/CustomSuccessButton';
+import ProductCreateCOMP from '../../../../../Global/Components/ProductCreateCOMP';
 
 const Stack = createNativeStackNavigator();
 
@@ -122,7 +123,7 @@ const DemandsStack = () => {
                 }} name='addPS' component={AddProducts} />
                 <Stack.Screen options={{
                     title: "Məhsul"
-                }} name='productsCreate' component={Product} />
+                }} name='productsCreate' component={ProductCreateCOMP} />
                 <Stack.Screen options={{
                     title: "Qiymət növü"
                 }} name='priceTypes' component={AddPsPriceTypes} />

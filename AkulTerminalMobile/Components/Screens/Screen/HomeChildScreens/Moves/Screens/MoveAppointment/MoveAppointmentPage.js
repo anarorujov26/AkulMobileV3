@@ -8,15 +8,16 @@ import CustomTextare from '../../../../../../../Global/UI/CustomTextare';
 import { GlobalContext } from '../../../../../../../Global/Components/GlobalState';
 import { MovesGlobalContext } from '../../MovesGlobalState';
 import DocumentInItems from '../../../../../../../Global/Components/DocumentInItems';
+import DocumentPhotoComponent from '../../../../../../../Global/Components/DocumentsPhotoComponent';
 
 const MoveAppointmentPage = ({ navigation }) => {
 
   const { prices } = useContext(GlobalContext);
-  const { move, setMove, saveButton, setSaveButton } = useContext(MovesGlobalContext);
+  const { move, setMove, saveButton, setSaveButton,setMoveListRender } = useContext(MovesGlobalContext);
   const [datePicker, setDatePicker] = useState(false);
 
   return (
-    <View>
+    <View style={{flex:1}}>
       <CustomTextInput placeholder="..." text={'№'} width={'100%'} value={move.Name} addStyle={{ borderRadius: 0 }} onChangeText={(e) => {
         setMove(rel => ({ ...rel, ['Name']: e }));
         if (!saveButton) setSaveButton(true)
@@ -51,8 +52,14 @@ const MoveAppointmentPage = ({ navigation }) => {
       }}>
         <CustomTextInput placeholder="..." editable={false} text={'Qiymət növü'} width={'100%'} value={prices.priceName} end={true} endText={<AntDesign name='right' size={15} />} />
       </Pressable>
-      <DocumentInItems data={move} itemOne={'title'} itemTwo={'value'}/>
+      <DocumentInItems data={move} itemOne={'title'} itemTwo={'value'}/>  
       <MyDatePicker setState={setSaveButton} date={move.Moment == "" ? new Date() : new Date(moment(move.Moment).format('YYYY-MM-DD'))} setDate={setMove} type={'Moment'} open={datePicker} setOpen={setDatePicker} />
+      {
+        move.Id != null ?
+        <DocumentPhotoComponent type={'move'} data={move} renderItem={setMoveListRender}/>
+        :
+        ''
+      }
     </View>
   )
 }

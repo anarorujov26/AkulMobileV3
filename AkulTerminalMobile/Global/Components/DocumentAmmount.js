@@ -1,30 +1,30 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import CustomColors from '../Colors/CustomColors'
 
 const DocumentAmmount = ({ amount, basicamount }) => {
   return (
     <View>
       {
-        basicamount &&
+        basicamount ?
         <View style={styles.amountContainer}>
           <View style={styles.firstBlock}>
             <Text style={{ fontSize: 14, color: '#bcbcbc' }}>Ümumi məbləğ:</Text>
           </View>
           <View style={styles.endBlock}>
-            <Text style={{ fontSize: 14, color: '#bcbcbc' }}>{basicamount} ₼</Text>
+            <Text style={{ fontSize: 14, color: '#bcbcbc' }}>{String(basicamount)} ₼</Text>
           </View>
         </View>
+        :
+        ''
       }
       <View style={styles.amountContainerr}>
         <View style={styles.firstBlock}>
           <Text style={{ fontSize: 16, color: 'black', padding: 0 }}>Yekun məbləğ:</Text>
         </View>
         <View style={styles.endBlock}>
-          <Text style={{ fontSize: 16, color: 'black', padding: 0 }}>{amount} ₼</Text>
+          <Text style={{ fontSize: 16, color: 'black', padding: 0 }}>{String(amount)} ₼</Text>
         </View>
       </View>
-
     </View>
   )
 }
@@ -37,14 +37,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 2
+    paddingLeft: 10,
+    paddingRight: 10
   },
   amountContainer: {
     width: '100%',
     backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 2
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   firstBlock: {
   },

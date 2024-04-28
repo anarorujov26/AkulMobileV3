@@ -21,22 +21,17 @@ import RNPrint from 'react-native-print'
 import TmpModal from '../../../../../Global/Components/Modals/TmpModal'
 import getTemplates from '../../../../../Global/Components/getTemplates'
 import { ProductsGlobalContext } from './ProductsGlobalState'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import PhotosData from '../../../../../Global/Components/PhotosData'
 
 const Product = ({ route, navigation }) => {
   const { productGlobal, setProductGlobal } = useContext(ProductsGlobalContext);
-
   const [pricePermission, setPricePermission] = useState(true);
-
   const [quantity, setQuantity] = useState(1);
-
   const { type, renderList } = route.params;
-
   const [pricesList, setPricesList] = useState([]);
 
-  const [product, setProduct] = useState(null);
   const { id } = route.params
+  const [product, setProduct] = useState(null);
   const [group, setGroup] = useState(false);
   const [customers, setCustomers] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -87,7 +82,7 @@ const Product = ({ route, navigation }) => {
       globalProductObject.id = obj.Id;
       if (obj.Images[0]) {
         globalProductObject.images = [...obj.Images];
-      }else{
+      } else {
         globalProductObject.images = [];
       }
       setProductGlobal(globalProductObject);
@@ -253,14 +248,14 @@ const Product = ({ route, navigation }) => {
       </View>
       :
       <View style={{ flex: 1 }}>
-          <TouchableOpacity onPress={getShare} style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 5
-          }}>
-            <AntDesign name='printer' color={CustomColors("dark").primary} size={40} />
-          </TouchableOpacity>
-          <View style={{ width: 40 }} />
+        <TouchableOpacity onPress={getShare} style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: 5
+        }}>
+          <AntDesign name='printer' color={CustomColors("dark").primary} size={40} />
+        </TouchableOpacity>
+        <View style={{ width: 40 }} />
         <ScrollView>
           <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
             <View style={{ width: '100%' }}>
@@ -391,7 +386,12 @@ const Product = ({ route, navigation }) => {
 
           </View>
 
-          <PhotosData renderItem={renderList} />
+          {
+            product.Id != null ?
+              <PhotosData renderItem={renderList} />
+              :
+              ''
+          }
           <View style={{ margin: 40 }} />
           <GroupModal save={setSaveButton} modalVisible={group} idType={'GroupId'} nameType={'GroupName'} state={setProduct} setModalVisible={setGroup} />
           <CustomerModal save={setSaveButton} modalVisible={customers} setModalVisible={setCustomers} state={setProduct} idType={'CustomerId'} nameType={'CustomerName'} />

@@ -8,10 +8,11 @@ import CustomTextare from '../../../../../../../Global/UI/CustomTextare';
 import { InventGlobalContext } from '../../InventGlobalState';
 import { GlobalContext } from '../../../../../../../Global/Components/GlobalState';
 import DocumentInItems from './../../../../../../../Global/Components/DocumentInItems';
+import DocumentPhotoComponent from '../../../../../../../Global/Components/DocumentsPhotoComponent';
 
 const InventAppointmentPage = ({ navigation }) => {
 
-  const { invent, setInvent, saveButton, setSaveButton, setMissing, missing } = useContext(InventGlobalContext);
+  const { invent, setInvent, saveButton, setSaveButton, setMissing, missing, setInventListRender } = useContext(InventGlobalContext);
   const [datePicker, setDatePicker] = useState(false);
   const { prices, setPrices } = useContext(GlobalContext);
 
@@ -62,6 +63,12 @@ const InventAppointmentPage = ({ navigation }) => {
       }
       <DocumentInItems data={invent} itemOne={'title'} itemTwo={'value'} />
       <MyDatePicker setState={setSaveButton} date={invent.Moment == "" ? new Date() : new Date(moment(invent.Moment).format('YYYY-MM-DD'))} setDate={setInvent} type={'Moment'} open={datePicker} setOpen={setDatePicker} />
+      {
+        invent.Id != null ?
+        <DocumentPhotoComponent type={'inventory'} data={invent} renderItem={setInventListRender} />
+        :
+        ''
+      }
     </ScrollView>
   )
 }

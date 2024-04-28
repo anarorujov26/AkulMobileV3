@@ -8,11 +8,12 @@ import CustomTextare from '../../../../../../../Global/UI/CustomTextare';
 import { DemandsGlobalContext } from '../../DemandsGlobalState';
 import { GlobalContext } from '../../../../../../../Global/Components/GlobalState';
 import DocumentInItems from './../../../../../../../Global/Components/DocumentInItems';
+import DocumentPhotoComponent from '../../../../../../../Global/Components/DocumentsPhotoComponent';
 
 const DemandAppointmentPage = ({ navigation }) => {
 
   const { prices } = useContext(GlobalContext);
-  const { demand, setDemand, saveButton, setSaveButton } = useContext(DemandsGlobalContext);
+  const { demand, setDemand, saveButton, setSaveButton, setDemandListRender } = useContext(DemandsGlobalContext);
   const [datePicker, setDatePicker] = useState(false);
 
   return (
@@ -51,11 +52,17 @@ const DemandAppointmentPage = ({ navigation }) => {
       }}>
         <CustomTextInput placeholder="..." editable={false} text={'Qiymət növü'} width={'100%'} value={prices.priceName} end={true} endText={<AntDesign name='right' size={15} />} />
       </Pressable>
-      <DocumentInItems data={demand} itemOne={'title'} itemTwo={'value'}/>
+      <DocumentInItems data={demand} itemOne={'title'} itemTwo={'value'} />
       <MyDatePicker setState={setSaveButton} date={demand.Moment == "" ? new Date() : new Date(moment(demand.Moment).format('YYYY-MM-DD'))} setDate={setDemand} type={'Moment'} open={datePicker} setOpen={setDatePicker} />
+      {
+        demand.Id != null ?
+        <DocumentPhotoComponent type={'demand'} renderItem={setDemandListRender} data={demand} />
+        :
+        ''
+      }
     </ScrollView>
   )
-}
+} 
 
 export default DemandAppointmentPage
 

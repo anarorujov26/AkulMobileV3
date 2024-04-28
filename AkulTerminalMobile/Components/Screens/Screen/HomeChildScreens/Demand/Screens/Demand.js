@@ -80,6 +80,7 @@ const Demand = ({ route, navigation }) => {
 
     const getDemand = async (productId) => {
         if (productId == null) {
+            
             let obj = {
                 Name: "",
                 CustomerId: "",
@@ -92,6 +93,7 @@ const Demand = ({ route, navigation }) => {
                 Status: 0
             }
             setDemand(obj);
+
         } else {
             let obj = {
                 id: productId,
@@ -101,13 +103,14 @@ const Demand = ({ route, navigation }) => {
             if (result.data.Headers.ResponseStatus !== "0") {
                 navigation.goBack();
             }
+            
             let data = { ...result.data.Body.List[0] }
-            console.log(data);
+
             let ob = {
                 id: data.CustomerId,
                 token: await AsyncStorage.getItem('token')
             }
-            const debt = await Api("customers/getdata.php", ob)
+            const debt = await Api("customers/getdata.php", ob);
             setDebtQuantity(ConvertFixedTable(debt.data.Body.Debt));
             data.Modifications = await modificationsGroup(result.data.Body.List[0], 'demand');
             data.Positions = GetAddUnits(result)
@@ -152,7 +155,6 @@ const Demand = ({ route, navigation }) => {
             }
             setIsLoading(false)
         }
-
     }
 
     const successAlert = () => {
@@ -221,7 +223,7 @@ const Demand = ({ route, navigation }) => {
                 <BackModal modalVisible={dontBackModal} setModalVisible={setDontBackModal} pressExit={getExit} pressContinue={() => { setDontBackModal(false) }} />
                 {
                     demand.Id &&
-                    <DocumentAmmount basicamount={demand.BasicAmount} amount={`${ConvertFixedTable(demand.Amount)} (${demand.AmountDiscount}%)`} />
+                    <DocumentAmmount basicamount={ConvertFixedTable(demand.BasicAmount)} amount={""+`${ConvertFixedTable(demand.Amount)} (${demand.AmountDiscount}%)`} />
                 }
             </>
     )

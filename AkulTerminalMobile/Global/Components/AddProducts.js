@@ -50,6 +50,7 @@ const AddProducts = ({ route, navigation }) => {
         obj.pricetype = prices.priceId;
       }
     }
+    console.log(obj);
     const result = await Api('products/getfast.php', obj);
     setUnits(result.data.Body.ProductUnits);
 

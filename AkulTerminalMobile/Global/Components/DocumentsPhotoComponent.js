@@ -1,27 +1,23 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image, ToastAndroid } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Api from './Api';
 import Api2 from './Api2';
-import axios from 'axios';
-import { ProductsGlobalContext } from '../../Components/Screens/Screen/HomeChildScreens/Products/ProductsGlobalState';
-import { CustomToLowerCase } from './CustomToLowerCase';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CustomColors from '../Colors/CustomColors';
+import axios from 'axios';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const PhotosData = ({ renderItem }) => {
+const DocumentPhotoComponent = ({ type, renderItem, data }) => {
 
-    const { productGlobal, setProductGlobal } = useContext(ProductsGlobalContext);
 
     const [clickAnswer, setClickAnswer] = useState(false);
     const [answer, setAnswer] = useState(false);
+    const [images, setImages] = useState([]);
 
     const pickDocument = async () => {
-        let productInfo = { ...productGlobal };
-        let file;
 
+        let file;
         try {
             const res = await DocumentPicker.pick({
                 type: DocumentPicker.types.allFiles,
@@ -35,46 +31,28 @@ const PhotosData = ({ renderItem }) => {
             if (accessToken.data.Headers.ResponseStatus == "0") {
 
                 const acToken = accessToken.data.Body.accessToken;
-                
+
 
                 let newFormData = new FormData();
                 newFormData.append("image", file);
-                newFormData.append("linkId", "productId_" + productInfo.id);
+                newFormData.append("linkId", type + "_" + data.Id);
                 newFormData.append("title", "akul");
                 newFormData.append("tags[]", "");
                 newFormData.append("token", acToken);
 
                 const imageResult = await axios.post('https://1000.az/api/upload.php', newFormData);
-                console.log(newFormData);
+                console.log(imageResult);
 
                 if (imageResult.data.originalname) {
-                    let imageList = {
-                        id: productInfo.id,
-                        token: await AsyncStorage.getItem("token")
-                    }
-
-                    if (productInfo.images[0]) {
-                        imageList.images = [...productInfo.images, { ...imageResult.data }];
-                    } else {
-                        imageList.images = [{ ...imageResult.data }]
-                    }
-
-
-                    setProductGlobal(rel => ({ ...rel, ['images']: imageList.images }));
+                    getImagesList();
                     renderItem(4 + 4);
 
-                    console.log(imageList);
-                    const imageAddList = await Api('products/images.php', imageList);
-                    if (imageAddList.data.Headers.ResponseStatus == "0") {
-                        successAlert();
-                    } else {
-                        alert(imageAddList.data.Body)
-                    }
+                    successAlert();
                 } else {
-                    alert("Şəkil formatı (jpg,png,webp)")
+                    alert('Şəkil formatı (jpg,png,webp)');
                 }
-            }
 
+            }
         } catch (err) {
             console.log(err);
         }
@@ -91,15 +69,31 @@ const PhotosData = ({ renderItem }) => {
         )
     }
 
+    const getImagesList = async () => {
+
+        console.log(data);
+
+        const accessToken = await Api2('login/refresh.php', {
+            Refresh: await AsyncStorage.getItem("refresh")
+        })
+
+        if (accessToken.data.Headers.ResponseStatus == "0") {
+
+            const acToken = accessToken.data.Body.accessToken;
+
+            let newFormData = new FormData();
+            newFormData.append("token", acToken);
+            newFormData.append("linkId", type + "_" + data.Id);
+            const result = await axios.post("https://1000.az/api/get.php", newFormData);
+            if (result.data[0]) {
+                setImages([...result.data])
+            }
+        }
+    }
+
 
     useEffect(() => {
-        let newPG = { ...productGlobal };
-        if (newPG.images[0]) {
-            newPG.images.forEach((element, index) => {
-                newPG.images[index] = CustomToLowerCase(newPG.images[index]);
-            })
-        }
-        setProductGlobal(newPG);
+        getImagesList();
     }, [])
 
     return (
@@ -109,7 +103,7 @@ const PhotosData = ({ renderItem }) => {
                 setAnswer(!answer)
             }} style={[styles.pricesContainer, { width: '100%' }]} >
                 <AntDesign name={!answer ? 'down' : 'right'} size={20} color={CustomColors("dark").primary} />
-                <Text style={{ color: CustomColors("dark").primary }}>  Şəkillər</Text>
+                <Text style={{ color: CustomColors("dark").primary }}>Şəkillər</Text>
             </TouchableOpacity>
 
             {
@@ -124,31 +118,33 @@ const PhotosData = ({ renderItem }) => {
                         <Text style={{ color: 'black' }}>Şəkil Yüklə</Text>
                     </TouchableOpacity>
                     <View style={{ margin: 10 }} />
-                    <FlatList style={{}} data={productGlobal.images} renderItem={({ item, index }) => (
-                        <>
-                            <TouchableOpacity activeOpacity={0.9} style={styles.imageContainer}>
-                                <Image source={{ uri: item.path + item.uniqname + "_small." + item.ext }} style={{ width: 180, height: 190 }} />
-                                <View style={styles.bottomContainer}>
-                                    <View style={styles.first}>
-                                        <MaterialCommunityIcons name='image' size={25} color={'#DB4437'} />
+                    {
+                        images[0] &&
+                        <FlatList data={images} renderItem={({ item, index }) => (
+                            <>
+                                <TouchableOpacity activeOpacity={0.9} style={styles.imageContainer}>
+                                    <Image source={{ uri: item.url }} style={{ width: 180, height: 190 }} />
+                                    <View style={styles.bottomContainer}>
+                                        <View style={styles.first}>
+                                            <MaterialCommunityIcons name='image' size={25} color={'#DB4437'} />
+                                        </View>
+                                        <View style={styles.end}>
+                                            <Text numberOfLines={1} style={{
+                                                color: 'black'
+                                            }}>{item.fileName}</Text>
+                                            <Text style={{
+                                                color: "black",
+                                                fontSize: 12
+                                            }}>{item.Id}</Text>
+                                        </View>
                                     </View>
-                                    <View style={styles.end}>
-                                        <Text numberOfLines={1} style={{
-                                            color: 'black'
-                                        }}>{item.originalname}</Text>
-                                        <Text style={{
-                                            color: "black",
-                                            fontSize: 12
-                                        }}>{item.uniqname}</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
+                                </TouchableOpacity>
 
-                        </>
-                    )} numColumns={2} />
+                            </>
+                        )} numColumns={2} />
+                    }
                 </>
             }
-
         </View>
     );
 };
@@ -213,4 +209,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default PhotosData;
+export default DocumentPhotoComponent;

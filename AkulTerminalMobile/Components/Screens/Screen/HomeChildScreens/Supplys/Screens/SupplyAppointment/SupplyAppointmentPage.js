@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Switch, Text, View,ScrollView } from 'react-native'
+import { Pressable, StyleSheet, Switch, Text, View, ScrollView } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { SupplysGlobalContext } from '../../SupplysGlobaState';
 import CustomTextInput from '../../../../../../../Global/UI/CustomTextInput';
@@ -7,10 +7,11 @@ import moment from 'moment/moment';
 import MyDatePicker from '../../../../../../../Global/UI/MyDatePicker';
 import CustomTextare from '../../../../../../../Global/UI/CustomTextare';
 import DocumentInItems from '../../../../../../../Global/Components/DocumentInItems';
+import DocumentPhotoComponent from '../../../../../../../Global/Components/DocumentsPhotoComponent';
 
 const SupplyAppointmentPage = () => {
 
-  const { supply, setSupply, saveButton, setSaveButton } = useContext(SupplysGlobalContext);
+  const { supply, setSupply, saveButton, setSaveButton, setSupplyListRender } = useContext(SupplysGlobalContext);
   const [datePicker, setDatePicker] = useState(false);
 
   return (
@@ -40,8 +41,14 @@ const SupplyAppointmentPage = () => {
         setSupply(rel => ({ ...rel, ['Description']: e }));
         if (!saveButton) setSaveButton(true)
       }} addStyle={{ borderRadius: 0 }} />
-      <DocumentInItems data={supply} itemOne={'title'} itemTwo={'value'}/>
+      <DocumentInItems data={supply} itemOne={'title'} itemTwo={'value'} />
       <MyDatePicker setState={setSaveButton} date={supply.Moment == "" ? new Date() : new Date(moment(supply.Moment).format('YYYY-MM-DD'))} setDate={setSupply} type={'Moment'} open={datePicker} setOpen={setDatePicker} />
+      {
+        supply.Id != null ?
+        <DocumentPhotoComponent type="supply" renderItem={setSupplyListRender} data={supply} />
+        :
+        ''
+      }
     </ScrollView>
   )
 }

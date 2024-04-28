@@ -26,5 +26,4 @@ export const CustomerOrdersGlobalProvider = (props) => {
       {props.children}
     </CustomerOrdersGlobalContext.Provider>
   );
-
 }

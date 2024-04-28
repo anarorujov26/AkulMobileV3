@@ -8,11 +8,8 @@ import { ConvertFixedTable } from '../../../../../../../Global/Components/Conver
 import CustomerModal from '../../../../../../../Global/Components/Modals/CustomerModal';
 import StockModal from '../../../../../../../Global/Components/Modals/StockModal';
 import { DemandsGlobalContext } from '../../DemandsGlobalState'
-import { GlobalContext } from '../../../../../../../Global/Components/GlobalState'
 
 const DemandDocumentPage = ({ navigation }) => {
-
-  const { listType } = useContext(GlobalContext);
 
   const { demand, setDemand, saveButton, setSaveButton, debtQuantity } = useContext(DemandsGlobalContext)
   const [customer, setCustomer] = useState(false);

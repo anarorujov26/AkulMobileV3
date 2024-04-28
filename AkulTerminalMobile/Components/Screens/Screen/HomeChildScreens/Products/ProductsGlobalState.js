@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import { useState } from "react";
 import { createContext } from "react";
-import { GlobalContext } from "../../../../../Global/Components/GlobalState";
 
 export const ProductsGlobalContext = createContext();
 

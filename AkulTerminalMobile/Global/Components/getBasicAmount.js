@@ -11,7 +11,7 @@ const getBasicAmount = async (data) => {
         
         return basicAmount;
     } else {
-        return 0;
+        return '0';
     }
 }
 

@@ -24,6 +24,7 @@ import CustomDangerButton from '../../../../../Global/UI/CustomDangerButton';
 import CustomSuccessButton from '../../../../../Global/UI/CustomSuccessButton';
 import TmpModal from '../../../../../Global/Components/Modals/TmpModal';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ProductCreateCOMP from '../../../../../Global/Components/ProductCreateCOMP';
 
 const Stack = createNativeStackNavigator();
 
@@ -126,7 +127,7 @@ const SupplysStack = () => {
         <Stack.Screen options={{
           title: "Alış"
         }} name='addPS' component={AddProducts} />
-        <Stack.Screen name='productsCreate' component={Product} options={{
+        <Stack.Screen name='productsCreate' component={ProductCreateCOMP} options={{
           title: "Məhsul"
         }} />
       </Stack.Navigator>

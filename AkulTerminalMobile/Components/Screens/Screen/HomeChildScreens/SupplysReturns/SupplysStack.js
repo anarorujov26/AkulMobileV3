@@ -26,6 +26,7 @@ import MoreCohices from '../../../../../Global/Components/Modals/MoreCohices';
 import CustomDangerButton from '../../../../../Global/UI/CustomDangerButton';
 import CustomSuccessButton from '../../../../../Global/UI/CustomSuccessButton';
 import TmpModal from '../../../../../Global/Components/Modals/TmpModal';
+import ProductCreateCOMP from '../../../../../Global/Components/ProductCreateCOMP';
 
 const Stack = createNativeStackNavigator();
 
@@ -125,7 +126,7 @@ const getPrintTMP = async (tId) => {
         <Stack.Screen options={{
           title: "Alış iadə"
         }} name='addPS' component={AddProducts} />
-        <Stack.Screen name='productsCreate' component={Product} options={{
+        <Stack.Screen name='productsCreate' component={ProductCreateCOMP} options={{
           title: 'Məhsul'
         }} />
       </Stack.Navigator>

@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
+import PricePermission from "./PricePermission";
 
 export const GlobalContext = createContext();
 
@@ -39,12 +40,12 @@ export const GlobalProvider = (props) => {
             answer: true,
         },
         {
-            id:8,
-            answer:true
+            id: 8,
+            answer: true
         },
         {
-            id:9,
-            answer:true
+            id: 9,
+            answer: true
         }
     ]);
 
@@ -56,8 +57,13 @@ export const GlobalProvider = (props) => {
             setLoginTYPE(JSON.parse(await AsyncStorage.getItem("type")));
         }
         if (await AsyncStorage.getItem("pricesType") !== null) {
-            setPrices(JSON.parse(await AsyncStorage.getItem("pricesType")));
+            if (await PricePermission()) {
+                setPrices(JSON.parse(await AsyncStorage.getItem("pricesType")));
+            } else {
+                setPrices({ priceId: null, priceName: "Satış qiyməti" });
+            }
         }
+
         if (await AsyncStorage.getItem("pS") !== null) {
             setPageSetting(JSON.parse(await AsyncStorage.getItem("pS")))
         }

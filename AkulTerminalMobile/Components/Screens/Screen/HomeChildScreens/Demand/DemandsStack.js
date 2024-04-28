@@ -34,6 +34,7 @@ import CustomTextInput from '../../../../../Global/UI/CustomTextInput';
 import EnteredDiscount from '../../../../../Global/Components/EnteredDiscount';
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable';
 import getAmountDiscount from '../../../../../Global/Components/getAmountDiscount';
+import ProductCreateCOMP from '../../../../../Global/Components/ProductCreateCOMP';
 
 const Stack = createNativeStackNavigator();
 
@@ -168,7 +169,7 @@ const DemandsStack = () => {
                 }} name='addPS' component={AddProducts} />
                 <Stack.Screen options={{
                     title: "Məhsul"
-                }} name='productsCreate' component={Product} />
+                }} name='productsCreate' component={ProductCreateCOMP} />
                 <Stack.Screen options={{
                     title: "Satış"
                 }} name='documentNewModal' component={DocumentNewModal} />

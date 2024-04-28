@@ -34,8 +34,8 @@ const AddPsPriceTypes = ({ route, navigation }) => {
 
             let documentData = { ...data };
             await AsyncStorage.setItem("pricesType", JSON.stringify({ priceId: item.Id, priceName: item.Name }))
-            setPrices({ priceId: item.Id, priceName: item.Name })
-
+            setPrices({ priceId: item.Id, priceName: item.Name });
+            
             if (documentData.Positions[0]) {
                 let ids = [];
                 documentData.Positions.forEach((item) => {
