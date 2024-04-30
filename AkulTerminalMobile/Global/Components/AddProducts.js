@@ -26,7 +26,7 @@ const AddProducts = ({ route, navigation }) => {
   const [units, setUnits] = useState(null);
 
 
-  const [search_value, setSearch_value] = useState();
+  const [search_value, setSearch_value] = useState(null);
   const [products, setProducts] = useState(null);
   const [maxPG, setMaxPG] = useState(null);
   const [pg, setPg] = useState(1)
@@ -35,10 +35,12 @@ const AddProducts = ({ route, navigation }) => {
 
   const getProductsSearch = async () => {
 
+    console.log(search_value);
+
     let obj = {
       ar: 0,
       dr: 1,
-      fast: search_value,
+      fast: search_value == null ? "" : search_value.trim(),
       gp: "",
       lm: 30,
       pg: pg - 1,
@@ -79,6 +81,7 @@ const AddProducts = ({ route, navigation }) => {
       }
     }
 
+
     if (type !== "Buy" && type !== "BuySupply") {
       if (prices.priceId !== null) {
         product.Price = product[PriceTypeProses(prices.priceId)];
@@ -87,14 +90,20 @@ const AddProducts = ({ route, navigation }) => {
     navigation.navigate(location, { data: product, setState, state, type, setButton, pageName })
   }
 
-
   useEffect(() => {
     getProductsSearch();
   }, [])
 
   useEffect(() => {
+    if (search_value == null) return;
     setPg(1);
     let timer = setTimeout(() => {
+      if (search_value.length != 0) {
+        if (search_value.trim().length == 0) return;
+        getProductsSearch();
+      } else {
+        getProductsSearch();
+      }
       getProductsSearch();
     }, 500);
     return () => clearTimeout(timer);
@@ -105,7 +114,6 @@ const AddProducts = ({ route, navigation }) => {
       <SearchBar width={'100%'} text={'Axtarış'} onChangeText={(e) => { setSearch_value(e) }} placeholder={'...'} vl={search_value} setVL={setSearch_value} />
       {
         products == null ?
-          // <Text style={{ marginTop: 50, textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: CustomColors("dark").primary }}>Məhsul axtarın</Text>
           <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
             <ActivityIndicator size={50} color={CustomColors("dark").primary} />
           </View>

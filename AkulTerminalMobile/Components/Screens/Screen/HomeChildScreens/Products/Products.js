@@ -57,7 +57,7 @@ const Products = ({ navigation }) => {
     let obj = {
       ar: 0,
       dr: 1,
-      fast: search_value,
+      fast: search_value.trim(),
       gp: "",
       lm: 100,
       pg: pg - 1,

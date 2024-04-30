@@ -11,26 +11,21 @@ const SpendTypeModal = ({ modalVisible, setModalVisible, idType, nameType, state
     const [group, setGroup] = useState([]);
 
     const getGroups = async () => {
-        setGroup([
-            {
-                Name: "Pərakəndə",
-                Id: "retail"
-            },
-            {
-                Name: "Topdan satış",
-                Id: 'wholesale'
-            },
-            {
-                Name: "Hamısı",
-                Id: "all"
-            }
-        ])
+        
+        const result = await Api('spenditems/get.php',{
+            pg:0,
+            token:await AsyncStorage.getItem("token")
+        });
+
+        if(result.data.Body.List[0]){
+            setGroup(result.data.Body.List)
+        }
     }
 
     useEffect(() => {
         getGroups();
     }, [])
-
+    
     return (
         <Modal
             animationType="slide"
@@ -50,7 +45,6 @@ const SpendTypeModal = ({ modalVisible, setModalVisible, idType, nameType, state
                                     save(true);
                                 }
                                 setModalVisible(false);
-
                             }}>
                                 <View style={styles.listFirs}>
                                     <View style={styles.listFirsContainer}>

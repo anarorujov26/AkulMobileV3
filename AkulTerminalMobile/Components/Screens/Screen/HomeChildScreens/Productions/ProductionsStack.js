@@ -20,14 +20,7 @@ import ItemAddCompositions from './Screens/Comps/ItemAddCompositions';
 const Stack = createNativeStackNavigator();
 
 const ProductionsStack = () => {
-
-  const navigation = useNavigation();
-
-  const [modalAnswer, setModalAnswer] = useState(false);
-
-  const getShare = async () => {
-
-  }
+  
 
   return (
     <>
