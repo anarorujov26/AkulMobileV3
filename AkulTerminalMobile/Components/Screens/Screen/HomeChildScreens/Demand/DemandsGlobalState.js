@@ -8,6 +8,7 @@ export const DemandsGlobalProvider = (props) => {
     const [demand,setDemand]=useState(null);
     const [saveButton,setSaveButton]=useState(false);
     const [debtQuantity,setDebtQuantity]=useState('');
+    const [customerInfo,setCustomerInfo] = useState(null);
 
 
     return (
@@ -20,7 +21,9 @@ export const DemandsGlobalProvider = (props) => {
                 saveButton,
                 setSaveButton,
                 debtQuantity,
-                setDebtQuantity
+                setDebtQuantity,
+                customerInfo,
+                setCustomerInfo
             }
         }>
             {props.children}

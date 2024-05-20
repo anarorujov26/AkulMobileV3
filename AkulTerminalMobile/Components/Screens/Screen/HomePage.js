@@ -224,7 +224,6 @@ function MyTabBar({ state, descriptors, navigation, position }) {
               if (element[0][0] === route.name) {
                 icon = element[0][1].imageName;
               } 
-              console.log(data);
             });
 
             return icon;

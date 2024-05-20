@@ -1,5 +1,5 @@
 import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CustomTextInput from '../../../../../../../Global/UI/CustomTextInput'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import CustomPrimaryButton from '../../../../../../../Global/UI/CustomPrimaryButton'
@@ -8,12 +8,67 @@ import { ConvertFixedTable } from '../../../../../../../Global/Components/Conver
 import CustomerModal from '../../../../../../../Global/Components/Modals/CustomerModal';
 import StockModal from '../../../../../../../Global/Components/Modals/StockModal';
 import { DemandsGlobalContext } from '../../DemandsGlobalState'
+import Api from '../../../../../../../Global/Components/Api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const DemandDocumentPage = ({ navigation }) => {
 
-  const { demand, setDemand, saveButton, setSaveButton, debtQuantity } = useContext(DemandsGlobalContext)
+  const { demand, setDemand, saveButton, setSaveButton, debtQuantity, customerInfo, setCustomerInfo } = useContext(DemandsGlobalContext)
   const [customer, setCustomer] = useState(false);
   const [stock, setStock] = useState(false);
+
+  const getCustomerInfoApi = async () => {
+    let demandData = { ...demand };
+    if (demandData.CustomerId == "") return;
+
+    let obj = {
+      id: demandData.CustomerId,
+      token: await AsyncStorage.getItem("token")
+    }
+
+    const result = await Api('customers/getdata.php', obj)
+    const customer = result.data.Body.CustomerData;
+    setCustomerInfo(customer);
+
+    if (demandData.Positions[0]) {
+
+      let sendApiJson = {
+        products: [],
+        pricetype: customer.PriceTypeId,
+        token: await AsyncStorage.getItem("token")
+      }
+
+      for (let index = 0; index < demandData.Positions.length; index++) {
+        sendApiJson.products.push(demandData.Positions[index].ProductId)
+      }
+
+      const result = await Api('products/getproductsrate.php', sendApiJson);
+
+      if (result.data.Headers.ResponseStatus == "0") {
+
+        let newPriceFromProducts = result.data.Body.List
+        for (let index = 0; index < newPriceFromProducts.length; index++) {
+          for (let indexProduct = 0; indexProduct < demandData.Positions.length; indexProduct++) {
+            if (newPriceFromProducts[index].ProductId == demandData.Positions[indexProduct].ProductId) {
+              demandData.Positions[indexProduct].BasicPrice = ConvertFixedTable(newPriceFromProducts[index].Price);
+              demandData.Positions[indexProduct].Price = ConvertFixedTable(newPriceFromProducts[index].Price);
+              let discountPrice = (newPriceFromProducts[index].Price / 100) * ConvertFixedTable(customer.Discount);
+              demandData.Positions[index].Price = demandData.Positions[index].Price - discountPrice;
+            }
+          }
+        }
+
+      }
+
+      setDemand(demandData);
+
+    }
+
+  }
+
+  useEffect(() => {
+    getCustomerInfoApi();
+  }, [demand.CustomerId])
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
@@ -56,7 +111,7 @@ const DemandDocumentPage = ({ navigation }) => {
           })
         }} width={'10%'} text={<AntDesign name='plus' size={20} />} />
       </View>
-      <View style={{ flex: 1, width: '100%',alignItems:'center'}}>
+      <View style={{ flex: 1, width: '100%', alignItems: 'center' }}>
         <FlatList data={demand.Positions} renderItem={({ item, index }) => (
           <PositionsList type={'Sale'} key={item.Id} pageName={'Demand'} location={"documentEditModal"} setButton={setSaveButton} element={item} setState={setDemand} state={demand} index={index} name={item.Name} barcode={`${item.BarCode}`} totalPrice={ConvertFixedTable(Number(ConvertFixedTable(item.Price)) * Number(ConvertFixedTable(item.Quantity)))} priceandquantity={`${ConvertFixedTable(Number(item.Quantity))} əd x ${ConvertFixedTable(Number(item.Price))}`} navigation={navigation} />
         )} />

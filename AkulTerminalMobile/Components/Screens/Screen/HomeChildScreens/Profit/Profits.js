@@ -1,25 +1,23 @@
 import { View, Text, StyleSheet, ActivityIndicator, BackHandler } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import Api from '../../../../../Global/Components/Api'
-import { FlatList } from 'react-native';
 import CustomColors from '../../../../../Global/Colors/CustomColors';
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PStatusList from './../../../../../Global/Components/PStatusList';
-import Item from '@ant-design/react-native/lib/list/ListItem';
 import { Accordion, List } from '@ant-design/react-native';
-import DashBoardComponents from '../../../../../Global/Components/Modals/DashBoardComponents';
+import DocumentSearch from '../../../../../Global/Components/DocumentSearch';
 
 const Profits = () => {
 
     const [profit, setProfit] = useState(null);
 
     const [activeSections, setActiveSections] = useState([2, 0]);
+    const [search,setSearch] = useState("");
 
     const onChange = (updatedActiveSections) => {
         setActiveSections(updatedActiveSections);
     };
-
+    
     const getInfo = async () => {
         let obj = {
             dr: 1,
@@ -42,6 +40,13 @@ const Profits = () => {
             </View>
             :
             <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <DocumentSearch
+                    apiObject={{
+                        momentFirst: true,
+                        momentEnd: true
+                    }}
+                    getData={getInfo} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setProfit} apiAdress={'profit/get.php'} />
+
                 <View style={styles.listItem}>
                     <Text style={{ color: 'black', fontSize: 20 }}>Satış dövrüyyəsi</Text>
                     <Text style={{ color: 'black', fontSize: 20 }}>{ConvertFixedTable(profit.SaleSum)}</Text>
@@ -67,7 +72,6 @@ const Profits = () => {
                                     <List.Item extra={ConvertFixedTable(element.Amount)}>{element.Name}</List.Item>
                                 ))
                             }
-
                         </List>
                     </Accordion.Panel>
                 </Accordion>

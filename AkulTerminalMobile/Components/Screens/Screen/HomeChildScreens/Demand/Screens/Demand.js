@@ -74,7 +74,7 @@ const Tab = createMaterialTopTabNavigator();
 const Demand = ({ route, navigation }) => {
 
     const { id } = route.params
-    const { saveButton, demand, setDemand, setSaveButton, setDemandListRender, setDebtQuantity } = useContext(DemandsGlobalContext)
+    const { saveButton, demand, setDemand, setSaveButton, setDemandListRender, setDebtQuantity,setCustomerInfo } = useContext(DemandsGlobalContext)
     const [isLoading, setIsLoading] = useState(false);
     const [dontBackModal, setDontBackModal] = useState(false);
 
@@ -106,6 +106,15 @@ const Demand = ({ route, navigation }) => {
             
             let data = { ...result.data.Body.List[0] }
 
+            let customerInfoApiSendObj = {
+                id:data.CustomerId,
+                token:await AsyncStorage.getItem('token')
+            }
+
+            const postCustomerInfo = await Api('customers/getdata.php',customerInfoApiSendObj);
+
+            setCustomerInfo({...postCustomerInfo.data.Body.CustomerData});
+
             let ob = {
                 id: data.CustomerId,
                 token: await AsyncStorage.getItem('token')
@@ -114,7 +123,6 @@ const Demand = ({ route, navigation }) => {
             setDebtQuantity(ConvertFixedTable(debt.data.Body.Debt));
             data.Modifications = await modificationsGroup(result.data.Body.List[0], 'demand');
             data.Positions = GetAddUnits(result)
-
             data.AmountDiscount = await getAmountDiscount(data)
             data.BasicAmount = await getBasicAmount(data);
             setDemand(data);
@@ -141,8 +149,6 @@ const Demand = ({ route, navigation }) => {
             obj.token = await AsyncStorage.getItem("token");
 
             const result = await Api('demands/put.php', obj);
-
-            console.log(obj);
 
             if (result.data.Headers.ResponseStatus == "0") {
                 setDemand(null)

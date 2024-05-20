@@ -35,7 +35,7 @@ const AddPsPriceTypes = ({ route, navigation }) => {
             let documentData = { ...data };
             await AsyncStorage.setItem("pricesType", JSON.stringify({ priceId: item.Id, priceName: item.Name }))
             setPrices({ priceId: item.Id, priceName: item.Name });
-            
+
             if (documentData.Positions[0]) {
                 let ids = [];
                 documentData.Positions.forEach((item) => {
@@ -47,6 +47,8 @@ const AddPsPriceTypes = ({ route, navigation }) => {
                     token: await AsyncStorage.getItem("token"),
                 }
                 const result = await Api('products/getproductsrate.php', obj);
+                console.log(obj);
+                console.log(result);
                 let pricecTypes = result.data.Body.List
                 documentData.Positions.forEach((item, index) => {
                     documentData.Positions[index].Price = 0

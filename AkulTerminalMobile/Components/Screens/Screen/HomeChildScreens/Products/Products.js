@@ -15,7 +15,6 @@ import { GlobalContext } from '../../../../../Global/Components/GlobalState';
 import FilterModal from './../../../../../Global/FilterModal';
 import { TouchableOpacity } from 'react-native';
 import { ActivityIndicator } from '@ant-design/react-native';
-import getTemplates from './../../../../../Global/Components/getTemplates';
 
 const Products = ({ navigation }) => {
 

@@ -3,9 +3,7 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Demands from './Screens/Demands';
 import Demand from './Screens/Demand';
-import DocumentEditModal from '../../../../../Global/Components/Modals/DocumentEditModal';
 import ProductsScanner from '../../../../../Global/UI/ProductsScanner';
-import AddProducts from '../../../../../Global/Components/AddProducts';
 import CustomColors from '../../../../../Global/Colors/CustomColors';
 import AnswerModal from '../../../../../Global/Components/Modals/AnswerModal';
 import { TouchableOpacity, useWindowDimensions } from 'react-native';
@@ -16,10 +14,7 @@ import { useState } from 'react';
 import Api from '../../../../../Global/Components/Api';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Product from '../Products/Product';
 import AddPsPriceTypes from '../../../../../Global/Components/AddPsPriceTypes';
-import DocumentNewModal from '../../../../../Global/Components/Modals/DocumentNewModal';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Payments from '../../../../../Global/Components/Payments';
 import MoreCohices from './../../../../../Global/Components/Modals/MoreCohices';
 import CustomDangerButton from '../../../../../Global/UI/CustomDangerButton';
@@ -35,6 +30,9 @@ import EnteredDiscount from '../../../../../Global/Components/EnteredDiscount';
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable';
 import getAmountDiscount from '../../../../../Global/Components/getAmountDiscount';
 import ProductCreateCOMP from '../../../../../Global/Components/ProductCreateCOMP';
+import DocumentDemandEditModal from './Screens/Shared/DocumentDemandEditModal';
+import DocumentDemandNewModal from './Screens/Shared/DocumentDemandNewModal';
+import AddDemandProducts from './Screens/Shared/AddDemandProducts';
 
 const Stack = createNativeStackNavigator();
 
@@ -160,19 +158,19 @@ const DemandsStack = () => {
                 }} name='demand' component={Demand} />
                 <Stack.Screen options={{
                     title: "Satış"
-                }} name='documentEditModal' component={DocumentEditModal} />
+                }} name='documentEditModal' component={DocumentDemandEditModal} />
                 <Stack.Screen options={{
                     title: "Satış"
                 }} name='scanner' component={ProductsScanner} />
                 <Stack.Screen options={{
                     title: "Satış"
-                }} name='addPS' component={AddProducts} />
+                }} name='addPS' component={AddDemandProducts} />
                 <Stack.Screen options={{
                     title: "Məhsul"
                 }} name='productsCreate' component={ProductCreateCOMP} />
                 <Stack.Screen options={{
                     title: "Satış"
-                }} name='documentNewModal' component={DocumentNewModal} />
+                }} name='documentNewModal' component={DocumentDemandNewModal} />
                 <Stack.Screen options={{
                     title: "Paylaş"
                 }} name='share' component={ShareComponents} />

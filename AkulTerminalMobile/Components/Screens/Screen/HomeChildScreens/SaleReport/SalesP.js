@@ -68,7 +68,7 @@ const SalesP = ({ navigation }) => {
                             supplierName: "Təchizatçı",
                             supplier: true
                         }}
-                        getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setData={setSales} apiAdress={'salereports/get.php'} />
+                        getData={getSales} placeholder={'Sənəd nömrəsi ilə axtarış...'} search={search} setSearch={setSearch} setSumma={setSumma} setData={setSales} apiAdress={'salereports/get.php'} />
                 }
                 endWidth={'10%'}
             />

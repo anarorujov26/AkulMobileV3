@@ -61,7 +61,7 @@ const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiA
                 dr: 1,
                 pg: 0,
                 lm: 100,
-            }} setSumma={setSumma} modalVisible={modalVisible} setModalVisible={setModalVisible} setState={setData} {...apiObject} />
+            }} setSumma={setSumma?setSumma :""} modalVisible={modalVisible} setModalVisible={setModalVisible} setState={setData} {...apiObject} />
         </>
     )
 }
