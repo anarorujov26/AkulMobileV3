@@ -15,6 +15,7 @@ import { GlobalContext } from '../../../../../Global/Components/GlobalState';
 import FilterModal from './../../../../../Global/FilterModal';
 import { TouchableOpacity } from 'react-native';
 import { ActivityIndicator } from '@ant-design/react-native';
+import LeftNewFab from './../../../../../Global/Components/LeftNewFab';
 
 const Products = ({ navigation }) => {
 
@@ -139,7 +140,7 @@ const Products = ({ navigation }) => {
                       barcode={
                         <Text>
                           {item.BarCode}
-                          <Ionicons name={'cube-outline'} size={13} color={item.StockBalance < 0 ? 'red' : 'green'} /> {item.StockBalance == null ? 0 : item.StockBalance}
+                          <Ionicons name={'cube-outline'} size={13} color={item.StockBalance < 0 ? 'red' : 'green'} /> <Text style={{color:"black"}}>{item.StockBalance == null ? 0 : ConvertFixedTable(item.StockBalance)}</Text>
                         </Text>
                       }
                       price={ConvertFixedTable(item.Price)}
@@ -180,6 +181,9 @@ const Products = ({ navigation }) => {
           renderList: setRendersFromProducts
         })
       }} />
+      <LeftNewFab press={() => {
+        navigation.navigate("scanner",{setVL:setSearch_value})
+      }}/>
       <FilterModal stock={true} setState={setProducts} obj={prObj} api={'products/get.php'} modalVisible={visible} setModalVisible={setVisible} group={true} customer={true} customerName={'Təchizatçı'} ar={true} isWeight={true} />
     </View>
   )

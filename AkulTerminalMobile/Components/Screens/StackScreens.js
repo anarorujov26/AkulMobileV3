@@ -27,6 +27,7 @@ import CustomersMain from './Screen/HomeChildScreens/Customers/CustomersMain';
 import EmployeesMain from './Screen/HomeChildScreens/Employees/EmployeesMain';
 import ProductionsMain from './Screen/HomeChildScreens/Productions/ProductionsMain';
 import ProductionOrdersMain from './Screen/HomeChildScreens/ProductionOrders/ProductionOrdersMain';
+import TransferMain from './Screen/HomeChildScreens/Transfer/TransferMain';
 
 const StackScreens = () => {
     const navigation = useNavigation();
@@ -92,6 +93,12 @@ const StackScreens = () => {
                 title: "Profil Məlumatlar",
                 headerTitleAlign: 'center'
             }} name='profile' component={Profile} />
+            <Stack.Screen options={{
+                headerShown: true,
+                headerBackVisible: false,
+                title: "Pul Transferləri",
+                headerTitleAlign: 'center'
+            }} name='transfersPage' component={TransferMain} />
         </Stack.Navigator>
     )
 }

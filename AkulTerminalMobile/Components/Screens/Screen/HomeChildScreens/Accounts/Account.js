@@ -1,12 +1,10 @@
-import { View, Text, StyleSheet, ActivityIndicator, BackHandler } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Api from '../../../../../Global/Components/Api'
 import { FlatList } from 'react-native';
 import CustomColors from '../../../../../Global/Colors/CustomColors';
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DocumentReturn from './../../../../../Global/Components/DocumentReturn';
-import { useFocusEffect } from '@react-navigation/native';
 
 const Account = ({ route }) => {
 

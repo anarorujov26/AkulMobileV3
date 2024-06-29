@@ -7,7 +7,6 @@ import AddCardProducts from '../../../../../../Global/Components/AddCardProducts
 import { useState } from 'react'
 import ImageModal from '../../../../../../Global/Components/ImageModal'
 
-
 const windowWidth = Dimensions.get('window').width;
 const cardWidth = windowWidth / 2 - 20;
 
@@ -102,6 +101,7 @@ const styles = StyleSheet.create({
   },
   barcode: {
     fontSize: 13,
+    color:"black"
   },
   customerName: {
     color: CustomColors("dark").connectedPrimary

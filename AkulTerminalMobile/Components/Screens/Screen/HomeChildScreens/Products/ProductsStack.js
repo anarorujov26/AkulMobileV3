@@ -5,9 +5,9 @@ import Products from './Products';
 import Product from './Product';
 import ProductSearchScan from './ProductSearchScan';
 import CustomColors from '../../../../../Global/Colors/CustomColors';
-import ProductsHome from './ProductsHome';
 import ShareComponents from '../../../../../Global/Components/Modals/ShareComponents';
 import PhotosData from '../../../../../Global/Components/PhotosData';
+import ProductSC from './../../../../../Global/UI/ProductSC';
 
 const ProductsStack = () => {
 
@@ -34,6 +34,9 @@ const ProductsStack = () => {
             <Stack.Screen options={{
                 title:"Galery"
             }} name='galery' component={PhotosData}/>
+            <Stack.Screen options={{
+                title:"Skanner"
+            }} name='scanner' component={ProductSC}/>
         </Stack.Navigator>
     )
 }

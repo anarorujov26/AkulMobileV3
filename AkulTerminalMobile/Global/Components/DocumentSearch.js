@@ -28,7 +28,6 @@ const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiA
         }
     }
 
-
     useEffect(() => {
         let time;
         setData([]);
@@ -45,13 +44,6 @@ const DocumentSearch = ({ placeholder, getData, search, setSearch, setData, apiA
 
     return (
         <>
-            {/* <View style={{ width: '100%', flexDirection: 'row' }}>
-                <SearchBar text={placeholder} width={'85%'} vl={search} setVL={setSearch} onChangeText={(e) => {
-                    setSearch(e)
-                }}
-                />
-                
-            </View> */}
             <TouchableOpacity onPress={() => {
                 setModalVisible(true)
             }} style={{ width: "100%", backgroundColor: "white", justifyContent: 'center', alignItems: 'center',height:50}}>

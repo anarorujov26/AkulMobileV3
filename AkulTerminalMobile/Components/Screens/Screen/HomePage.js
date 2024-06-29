@@ -140,6 +140,11 @@ let data = [
         name: "Borclar",
         navName: "debtPage",
         image: require('../../../Images/Pages/settlements.png')
+      },
+      {
+        name: "Transferlər",
+        navName: "transfersPage",
+        image: require('../../../Images/Pages/transfer.png')
       }
     ]
   ],
