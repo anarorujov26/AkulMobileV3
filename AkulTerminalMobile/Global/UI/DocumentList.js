@@ -4,30 +4,38 @@ import CustomColors from '../Colors/CustomColors'
 
 const DocumentList = (props) => {
     return (
-        <TouchableOpacity style={styles.listContainer} onPress={() => { if(props.navigation){
-            props.navigation.navigate(props.location, { id: props.id })
-        } }}>
+        <TouchableOpacity style={styles.listContainer} onPress={() => {
+            if (props.navigation) {
+                props.navigation.navigate(props.location, { id: props.id })
+            }
+        }}>
             <View style={styles.listFirs}>
                 <View style={styles.listFirsContainer}>
                     <View style={styles.avatar}>
-                        <Text style={styles.avatarName}>{props.index +1}</Text>
+                        <Text style={styles.avatarName}>{props.index + 1}</Text>
                     </View>
                 </View>
                 <View style={styles.listCenterContiner}>
                     {
                         props.customername &&
-                            <Text style={styles.name}>{props.customername}</Text>
+                        <Text style={styles.name}>{props.customername}</Text>
 
                     }
                     <Text style={styles.barcode}>{props.moment}</Text>
                     {
                         props.name &&
-                    <Text style={styles.customerName}>{props.name}</Text>
+                        <Text style={styles.customerName}>{props.name}</Text>
                     }
                 </View>
             </View>
             <View style={styles.listEndContainer}>
-                <Text style={styles.price}>{props.amount}{!props.pIcon && '₼'}</Text>
+                {
+                    props.amountTwo ?
+                        <Text style={[styles.price,{fontSize:12}]}>{props.amountTwo}{!props.pIcon && '₼'}</Text>
+                        :
+                        ''
+                }
+                <Text style={[styles.price]}>{props.amount}{!props.pIcon && '₼'}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -78,12 +86,13 @@ const styles = StyleSheet.create({
     },
     barcode: {
         fontSize: 13,
-        color:"grey"
+        color: "grey"
     },
     customerName: {
         color: CustomColors("dark").connectedPrimary
     },
     price: {
         color: 'black',
+        fontSize:14
     }
 })

@@ -89,7 +89,7 @@ const Supply = ({ route, navigation }) => {
                 Positions: [],
                 Description: "",
                 Consumption: 0,
-                Status: 0
+                Status: 1
             }
             setSupply(obj);
         } else {

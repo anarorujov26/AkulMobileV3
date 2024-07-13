@@ -16,7 +16,6 @@ const Shifts = ({ navigation }) => {
   const getShifts = async () => {
     let obj = {
       dr: 1,
-      sr: "Moment",
       pg: 0,
       lm: 100,
       token: await AsyncStorage.getItem("token")

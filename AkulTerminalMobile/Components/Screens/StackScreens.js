@@ -28,6 +28,7 @@ import EmployeesMain from './Screen/HomeChildScreens/Employees/EmployeesMain';
 import ProductionsMain from './Screen/HomeChildScreens/Productions/ProductionsMain';
 import ProductionOrdersMain from './Screen/HomeChildScreens/ProductionOrders/ProductionOrdersMain';
 import TransferMain from './Screen/HomeChildScreens/Transfer/TransferMain';
+import StocksBalance from './Screen/HomeChildScreens/StockBalance/StocksBalance';
 
 const StackScreens = () => {
     const navigation = useNavigation();
@@ -68,6 +69,13 @@ const StackScreens = () => {
             <Stack.Screen name='shiftsPage' component={ShiftsMain} />
             <Stack.Screen name='salePage' component={SalesMain} />
             <Stack.Screen name='salePPage' component={SalePStack} />
+            <Stack.Screen name='stocksBalance' component={StocksBalance} options={{
+                headerShown: true,
+                headerTitle: "Anbar qalıq səhifəsi",
+                headerTitleAlign: 'center',
+                headerTitleStyle: { color: CustomColors("dark").greyV2 },
+                headerBackVisible:false
+            }} />
             <Stack.Screen name='dashboards' component={Dashboard} options={{
                 headerShown: true,
                 headerTitle: "Göstəricilər",

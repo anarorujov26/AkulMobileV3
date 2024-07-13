@@ -1,12 +1,11 @@
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Api from '../../../../../Global/Components/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomColors from '../../../../../Global/Colors/CustomColors';
 import { ConvertFixedTable } from '../../../../../Global/Components/ConvertFixedTable';
-import { Card, WingBlank } from '@ant-design/react-native';
 
-const Shift = ({ route, navigation }) => {
+const Shift = ({ navigation, route }) => {
 
     const { id } = route.params;
     const [shift, setShift] = useState(null);
@@ -16,15 +15,43 @@ const Shift = ({ route, navigation }) => {
             id: id,
             token: await AsyncStorage.getItem('token')
         })
+        let jsonData = { ...result.data.Body.List[0] }
+        let modifications = [];
+        Object.keys(jsonData).forEach((item, index) => {
+            if (item.indexOf('_') != -1) {
 
-        setShift(result.data.Body.List[0]);
+                let splitArr = item.split('_');
+
+                modifications.push({
+                    title: splitArr[1],
+                    value: jsonData[item],
+                    type: salesTypeAnswer(splitArr)
+                })
+            }
+        })
+        jsonData.modifications = [...modifications]
+        setShift(jsonData);
+    }
+
+    let salesTypeAnswer = (splitArr) => {
+        let arr = splitArr[0]
+        if (arr == "SalesCash") {
+            return "cash"
+        } else if (arr == "SalesNonCash") {
+            return "noncash"
+        } else if (arr == "SalesCredit") {
+            return "credit"
+        } else if (arr == "SalesUseBonus") {
+            return "bonus"
+        }
     }
 
     useEffect(() => {
         getInfo();
     }, [])
+
     return (
-        <View style={{ flex: 1,backgroundColor:'white',alignItems:'center'}}>
+        <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center' }}>
             {
 
                 shift == null ?
@@ -64,6 +91,24 @@ const Shift = ({ route, navigation }) => {
                                     <Text>{ConvertFixedTable(shift.SalesNonCash)}</Text>
                                 </View>
                             </View>
+
+                            {
+                                shift.modifications.map((item,index) => {
+                                    return (
+                                        ConvertFixedTable(item.value) != 0 &&
+                                        <>
+                                            <View key={index + 1} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '95%', marginTop: 10 }}>
+                                                <View>
+                                                    <Text>{item.title} - {item.type == "cash" ? "Nağd" : item.type == "noncash" ? "Nağdsız" : item.type == "credit" ? "Nisyə" : "Bonus"}</Text>
+                                                </View>
+                                                <View style={{ alignItems: 'flex-end' }}>
+                                                    <Text>{ConvertFixedTable(item.value)}</Text>
+                                                </View>
+                                            </View>
+                                        </>
+                                    );
+                                })
+                            }
                         </View>
                         <View style={styles.firsContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '95%' }}>

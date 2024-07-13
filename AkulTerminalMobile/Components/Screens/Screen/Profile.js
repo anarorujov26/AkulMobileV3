@@ -59,6 +59,10 @@ let data = [
         name: "İnventarizasiya",
         navName: "inventsPage",
       },
+      {
+        name: "Anbar qalığı",
+        navName: "stocksBalance",
+      },
     ],
   ],
   [
@@ -138,6 +142,10 @@ let data = [
       {
         name: "Borclar",
         navName: "debtPage",
+      },
+      {
+        name: "Transfer",
+        navName: "transfersPage",
       }
     ]
   ],

@@ -77,18 +77,17 @@ const item = ({ navigation, route }) => {
     let keysToLower = CustomToLowerCase(infos);
 
     let saveResponse = await Api('cashtransactions/put.php', keysToLower);
-    console.log(keysToLower)
     if (saveResponse.data.Headers.ResponseStatus == "0") {
       successAlert();
       if (renderList) {
         renderList(rel => rel + 1);
       }
+      setSaveButton(false);
+      setThisId(saveResponse.data.Headers.ResponseService);
     } else {
       alert(saveResponse.data.Body);
     }
     setIsLoading(false);
-
-    // cashtransactions/put.php
   }
 
   const successAlert = () => {
@@ -101,7 +100,7 @@ const item = ({ navigation, route }) => {
       50
     )
   }
-
+  
   useEffect(() => {
     getItem();
   }, [])

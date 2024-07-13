@@ -9,12 +9,17 @@ import OrdersMain from './Components/Orders/OrdersMain';
 import eventEmitter from './eventEmitter';
 import AgainLogin from './AgainLogin';
 import { NavigationContainer } from '@react-navigation/native';
+import BalanceModal from './BalanceModal';
+import eventEmitterBalance from './eventEmittierBalance';
+
+
 
 const Home = () => {
 
     const { setPrefix, loginTYPE } = useContext(GlobalContext);
     const [showModal, setShowModal] = useState(false);
     const [token, setToken] = useState("");
+    const [balanceModal, setBalanceModal] = useState(false);
 
     const getToken = async () => {
         let tkn = await AsyncStorage.getItem("token");
@@ -40,6 +45,16 @@ const Home = () => {
         };
     }, []);
 
+    useEffect(() => {
+        eventEmitterBalance.on('showBalanceModal',() => {
+            setBalanceModal(true)
+        })
+
+        return () => {
+            eventEmitterBalance.removeListener('showBalanceModal')
+        }
+    },[])
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -52,6 +67,9 @@ const Home = () => {
                 }
                 {
                     showModal && <AgainLogin showModal={showModal} setShowModal={setShowModal} />
+                }
+                {
+                    balanceModal && <BalanceModal showModal={balanceModal} setShowModal={setBalanceModal} />
                 }
             </NavigationContainer>
         </View>

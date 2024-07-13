@@ -52,6 +52,11 @@ let data = [
         navName: "inventsPage",
         image: require('../../../Images/Pages/inventory.png')
       },
+      {
+        name: "Anbar qalığı",
+        navName: "stocksBalance",
+        image: require('../../../Images/Pages/stocksbalance.png')
+      },
     ],
   ],
   [

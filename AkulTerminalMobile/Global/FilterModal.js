@@ -205,6 +205,9 @@ const FilterModal = ({
     const result = await Api(api, obj2);
     if (result.data.Headers.ResponseStatus == "0") {
       setThisObj(obj);
+      if(setSumma){
+        setSumma(result.data.Body);
+      }
       if (result.data.Body.List[0]) {
         setState(result.data.Body.List);
       } else {

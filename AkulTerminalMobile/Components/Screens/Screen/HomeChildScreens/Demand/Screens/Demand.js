@@ -90,7 +90,7 @@ const Demand = ({ route, navigation }) => {
                 Positions: [],
                 Description: "",
                 Consumption: 0,
-                Status: 0
+                Status: 1
             }
             setDemand(obj);
 

@@ -74,6 +74,7 @@ const Transaction = ({ route, navigation }) => {
                 let tp = type == 'outs' ? 'out' : 'in'
                 let location = api + tp;
                 obj.Modifications = await modificationsGroup(result.data.Body.List[0], location);
+                console.log(obj);
                 setTran(obj);
             }
         }
@@ -99,6 +100,8 @@ const Transaction = ({ route, navigation }) => {
                 }
             }
             let ap = `${api + type}/put.php`
+            obj.link = obj.linkid;
+            console.log(obj);
             const result = await Api(ap, obj);
             if (result.data.Headers.ResponseStatus !== "0") {
                 alert(result.data.Body);
@@ -181,9 +184,9 @@ const Transaction = ({ route, navigation }) => {
                         </TouchableOpacity>
                         {
                             id !== null &&
-                            <View style={{width:'100%',padding:5,backgroundColor:"white",borderTopWidth:1,borderColor:"#ececec",flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                                <Text style={{color:CustomColors("dark").danger}}>Qalıq borc:</Text>
-                                <Text style={{color:'black'}}>{ConvertFixedTable(tran.DebtAmount)}</Text>
+                            <View style={{ width: '100%', padding: 5, backgroundColor: "white", borderTopWidth: 1, borderColor: "#ececec", flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Text style={{ color: CustomColors("dark").danger }}>Qalıq borc:</Text>
+                                <Text style={{ color: 'black' }}>{ConvertFixedTable(tran.DebtAmount)}</Text>
                             </View>
                         }
                         <CustomTextInput keyboardType={'numeric'} editable={true} text={"Məbləğ"} placeholder={'....'} width={'100%'} value={String(tran.Amount)} end={true} endText={<AntDesign name='right' size={15} />} onChangeText={(e) => {

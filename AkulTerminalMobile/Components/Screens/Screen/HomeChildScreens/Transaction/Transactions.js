@@ -16,7 +16,7 @@ const data = [
     {
         name: "Mədaxil",
         apiLC: 'ins'
-    },
+    },  
     {
         name: "Məxaric",
         apiLC: "outs"

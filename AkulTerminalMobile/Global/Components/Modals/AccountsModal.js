@@ -13,7 +13,7 @@ const AccountsModal = ({ modalVisible, setModalVisible, idType, nameType, state,
         const result = await Api('cashes/get.php', { token: await AsyncStorage.getItem('token') })
         setGroup(result.data.Body.List)
     }
-
+    
     useEffect(() => {
         if (modalVisible) {
             getGroups();
@@ -33,26 +33,29 @@ const AccountsModal = ({ modalVisible, setModalVisible, idType, nameType, state,
                     <View style={{ margin: 10 }} />
                     <View style={{ width: '100%', height: '90%' }}>
                         <FlatList data={group} renderItem={({ item, index }) => (
-                            <TouchableOpacity key={item.Id} style={styles.listContainer} onPress={() => {
-                                state(rel => ({ ...rel, [idType]: item.Id }))
-                                state(rel => ({ ...rel, [nameType]: item.Name }))
-                                if (save) {
-                                    save(true);
-                                }
-                                setModalVisible(false);
+                            item.SalePoint == '0' ?
+                                <TouchableOpacity key={item.Id} style={styles.listContainer} onPress={() => {
+                                    state(rel => ({ ...rel, [idType]: item.Id }))
+                                    state(rel => ({ ...rel, [nameType]: item.Name }))
+                                    if (save) {
+                                        save(true);
+                                    }
+                                    setModalVisible(false);
 
-                            }}>
-                                <View style={styles.listFirs}>
-                                    <View style={styles.listFirsContainer}>
-                                        <View style={styles.avatar}>
-                                            <Text style={styles.avatarName}>{item.Name[0] + item.Name[1]}</Text>
+                                }}>
+                                    <View style={styles.listFirs}>
+                                        <View style={styles.listFirsContainer}>
+                                            <View style={styles.avatar}>
+                                                <Text style={styles.avatarName}>{item.Name[0] + item.Name[1]}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.listCenterContiner}>
+                                            <Text style={styles.name}>{item.Name}</Text>
                                         </View>
                                     </View>
-                                    <View style={styles.listCenterContiner}>
-                                        <Text style={styles.name}>{item.Name}</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
+                                </TouchableOpacity>
+                                :
+                                ''
                         )} />
                     </View>
                 </View>
