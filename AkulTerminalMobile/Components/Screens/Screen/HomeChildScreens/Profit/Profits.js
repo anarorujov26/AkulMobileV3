@@ -12,12 +12,12 @@ const Profits = () => {
     const [profit, setProfit] = useState(null);
 
     const [activeSections, setActiveSections] = useState([2, 0]);
-    const [search,setSearch] = useState("");
+    const [search, setSearch] = useState("");
 
     const onChange = (updatedActiveSections) => {
         setActiveSections(updatedActiveSections);
     };
-    
+
     const getInfo = async () => {
         let obj = {
             dr: 1,
@@ -27,6 +27,7 @@ const Profits = () => {
             token: await AsyncStorage.getItem("token")
         }
         const result = await Api('profit/get.php', obj);
+
         setProfit(result.data.Body);
     }
 
@@ -68,9 +69,12 @@ const Profits = () => {
                     <Accordion.Panel header="Xərclər (toplam)">
                         <List>
                             {
-                                profit.SpendItems.map((element, index) => (
-                                    <List.Item extra={ConvertFixedTable(element.Amount)}>{element.Name}</List.Item>
-                                ))
+                                profit.SpendItems ?
+                                    [...profit.SpendItems].map((element, index) => (
+                                        <List.Item extra={ConvertFixedTable(element.Amount)}>{element.Name}</List.Item>
+                                    ))
+                                    :
+                                    ''
                             }
                         </List>
                     </Accordion.Panel>

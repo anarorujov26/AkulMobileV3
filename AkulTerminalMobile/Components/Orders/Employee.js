@@ -16,6 +16,7 @@ const Employee = ({ route, navigation }) => {
     const result = await Api('employees/get.php', {
       token: await AsyncStorage.getItem("token"),
     })
+
     if (result.data.Body.List[0]) {
       setEmployee(result.data.Body.List);
       setEmployeeOld(result.data.Body.List);
@@ -41,6 +42,7 @@ const Employee = ({ route, navigation }) => {
     navigation.goBack();
   }
 
+
   const successAlert = () => {
     ToastAndroid.showWithGravityAndOffset(
       'İstifadəçi seçildi!',
@@ -51,8 +53,7 @@ const Employee = ({ route, navigation }) => {
       50
     )
   }
-
-
+  
   useEffect(() => {
     getEmployeeData();
   }, [])
@@ -77,7 +78,6 @@ const Employee = ({ route, navigation }) => {
         setSearch(e);
       }} setVL={setSearch} width={'100%'} text={'Axtarış'} />
       <View style={{ marginTop: 2 }} />
-
       <ScrollView>
         <TouchableOpacity style={styles.listContainer} onPress={() => { deleteEmployee() }}>
           <View style={styles.flexStart}>

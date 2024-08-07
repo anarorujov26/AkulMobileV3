@@ -13,6 +13,7 @@ import Api from '../../Global/Components/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PricePermission from '../../Global/Components/PricePermission';
 
+
 const OrderNewModal = ({ route, navigation }) => {
 
     const [pricePermission, setPricePermission] = useState(true);
@@ -63,6 +64,7 @@ const OrderNewModal = ({ route, navigation }) => {
         setProduct(productOBJ);
     }
 
+
     const getSaveInfo = async () => {
         let amount = 0;
         setIsLoading(true);
@@ -105,7 +107,7 @@ const OrderNewModal = ({ route, navigation }) => {
                 {
                     ProductId: productData.ProductId,
                     SellPrice: productData.SalePrice,
-                    BuyPrice: productData.BasicPrice
+                    BuyPrice: productData.BasicPrice,
                 }
             ],
             token: await AsyncStorage.getItem("token")

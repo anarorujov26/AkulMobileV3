@@ -292,6 +292,7 @@ function MyTabBar({ state, descriptors, navigation, position }) {
 }
 
 const GetModal = ({ route }) => {
+  
   const {
     list,
     setList,
